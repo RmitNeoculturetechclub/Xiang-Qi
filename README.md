@@ -6,4 +6,4 @@
 
 ## Git merge steps
 
-    push to current branch -> pull request to staging -> pull request to main
+    push to current branch -> pull request to development -> pull request to main
