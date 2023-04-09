@@ -1,3 +1,4 @@
+import essentials
 class gameState(object):
     def __init__(self):
         self.playerTurn = 0
@@ -24,3 +25,12 @@ class gameState(object):
     # exit game
     def exitGame():
         pass
+    
+def main():
+    # prompt simple Terminal GUI for starting game, exitting game and so on
+
+    # Call relative classes and functions based on the command passed in
+    pass
+
+if __name__ == '__main__':
+    main()
