@@ -3,7 +3,7 @@ class Piece(object):
         self._id = 0
         self._name = name
         self.isAlive = True
-        self.currentPosition = 0
+        self.currentPosition = []
         self.possiblePositions = {}
 
     # return the current teritory of this piece (0: White, 1: Black)
