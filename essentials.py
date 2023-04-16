@@ -96,8 +96,6 @@ class Canon(Piece):
     # number of pieces
     canonCounter = 4
 
-    positions = [0 for i in range(10)]
-
     def __init__(self, name):
         Piece.__init__(self, name)
 
