@@ -1,7 +1,8 @@
 # load the current state of the game to the GUI
-def loadCurrentState():
+def load_current_state():
     pass
 
+
 # save the current state of the game to the file
-def saveCurrentState():
+def save_current_state():
     pass

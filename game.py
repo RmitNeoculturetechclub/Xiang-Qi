@@ -1,54 +1,26 @@
-import essentials
-
-
-class gameState(object):
+class GameState(object):
     def __init__(self):
         self.playerTurn = 0
-        self.isOccupied = [
-            [True, True, True, True, True, True, True, True, True],
-            [],
-            [False, True, False, False, False, False, False, True, False],
-            [True, False, True, False, True, False, True, False, True],
-            [],
-            [],
-            [True, True, True, True, True, True, True, True, True],
-            [],
-            [False, True, False, False, False, False, False, True, False],
-            [True, False, True, False, True, False, True, False, True],
-        ]
+        self.isOccupied = {}
 
     # start game
-    def startGame(self):
+    def start_game(self):
         # return boolean
         pass
 
     # create pieces
-    def generatePieces():
+    def generate_pieces(self):
         pass
 
     # update black/white turn
-    def updatePlayerTurn(self):
+    def update_player_turn(self):
         # return boolean
         pass
 
     # check if a position is occupied
-    def isOccuppied(self, position):
-        #return boolean
+    def is_occupied(self, position):
         pass
 
     # exit game
-    def exitGame():
+    def exit_game(self):
         pass
-
-def main():
-    # prompt simple Terminal GUI for starting game, exitting game and so on
-
-    # Call relative classes and functions based on the command passed in
-    
-    # return boolean (false if there is error in a function)
-    pass
-
-# call main
-if __name__ == '__main__':
-    main()
-
