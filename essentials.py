@@ -2,17 +2,20 @@ import global_variable
 
 
 class Piece(object):
+
     def __init__(self, name):
         self._id = 0
         self._name = name
         self.isAlive = True
-        self.currentPosition = [0 for i in range(9)]
-        self.possiblePositions = [0 for i in range(9)]
+        self.currentPosition = 0
+        self.possiblePositions = []
 
     # return the current territory of this piece (0: White, 1: Black)
-    def check_territory(self, current_position):
-        # return 0/1
-        pass
+    def check_territory(self):
+        if self.currentPosition // 10 <= 4:
+            return 1
+        else:
+            return 0
 
     def check_valid_moves(self):
         # return a hash map of all possible moves
@@ -24,7 +27,7 @@ class Piece(object):
 
     def get_position(self):
         # return int
-        pass
+        return self.currentPosition
 
 
 class Rock(Piece):
@@ -93,34 +96,36 @@ class Canon(Piece):
     # number of pieces
     canonCounter = 4
 
+    positions = [0 for i in range(10)]
+
     def __init__(self, name):
         Piece.__init__(self, name)
 
     # TODO
     def check_valid_moves(self):
-        counter = 0
+        is_blocked = 0
         for i in range(10):
-            if i == self.currentPosition[1]:
+            if i == self.currentPosition % 10:
                 continue
-            if global_variable.board[self.currentPosition[0]][i]:
-                counter = counter + 1
+            if global_variable.board[self.currentPosition / 10][i]:
+                is_blocked = is_blocked + 1
                 continue
-            if counter == 2:
-                self.possiblePositions[self.currentPosition[0]] = i
+            if is_blocked == 2:
+                self.possiblePositions.append([int(self.currentPosition / 10), i])
                 break
-            if counter == 0:
-                self.possiblePositions[self.currentPosition[0]] = i
+            if is_blocked == 0:
+                self.possiblePositions.append([int(self.currentPosition / 10), i])
         for i in range(10):
-            if i == self.currentPosition[0]:
+            if i == self.currentPosition // 10:
                 continue
-            if global_variable.board[self.currentPosition[1]][i]:
-                counter = counter + 1
+            if global_variable.board[self.currentPosition % 10][i]:
+                is_blocked = is_blocked + 1
                 continue
-            if counter == 2:
-                self.possiblePositions[self.currentPosition[1]] = i
+            if is_blocked == 2:
+                self.possiblePositions.append([int(self.currentPosition % 10), i])
                 break
-            if counter == 0:
-                self.possiblePositions[self.currentPosition[1]] = i
+            if is_blocked == 0:
+                self.possiblePositions.append([int(self.currentPosition % 10), i])
 
 
 class Pawn(Piece):
