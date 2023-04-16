@@ -7,12 +7,12 @@ class Piece(object):
         self._id = 0
         self._name = name
         self.isAlive = True
-        self.currentPosition = 0
+        self.currentPosition = []
         self.possiblePositions = []
 
     # return the current territory of this piece (0: White, 1: Black)
     def check_territory(self):
-        if self.currentPosition // 10 <= 4:
+        if self.currentPosition[0] <= 4:
             return 1
         else:
             return 0
@@ -103,27 +103,27 @@ class Canon(Piece):
     def check_valid_moves(self):
         is_blocked = 0
         for i in range(10):
-            if i == self.currentPosition % 10:
+            if i == self.currentPosition[1]:
                 continue
-            if global_variable.board[self.currentPosition / 10][i]:
+            if global_variable.board[self.currentPosition[0]][i]:
                 is_blocked = is_blocked + 1
                 continue
             if is_blocked == 2:
-                self.possiblePositions.append([int(self.currentPosition / 10), i])
+                self.possiblePositions.append([self.currentPosition[0], i])
                 break
             if is_blocked == 0:
-                self.possiblePositions.append([int(self.currentPosition / 10), i])
+                self.possiblePositions.append([self.currentPosition[0], i])
         for i in range(10):
-            if i == self.currentPosition // 10:
+            if i == self.currentPosition[0]:
                 continue
-            if global_variable.board[self.currentPosition % 10][i]:
+            if global_variable.board[self.currentPosition[1]][i]:
                 is_blocked = is_blocked + 1
                 continue
             if is_blocked == 2:
-                self.possiblePositions.append([int(self.currentPosition % 10), i])
+                self.possiblePositions.append([self.currentPosition[1], i])
                 break
             if is_blocked == 0:
-                self.possiblePositions.append([int(self.currentPosition % 10), i])
+                self.possiblePositions.append([self.currentPosition[1], i])
 
 
 class Pawn(Piece):
