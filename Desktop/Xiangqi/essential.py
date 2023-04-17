@@ -7,7 +7,7 @@ class General(Piece):
         self.isCheck = False
         self.isCheckMate = False
         self.currentPosition = currentPosition
-
+    #TODO
     def checkValidMoves(self):
         validMoves = {} # hashmap
         row, col = self.currentPosition[0], self.currentPosition[1]
