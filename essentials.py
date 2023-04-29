@@ -93,9 +93,21 @@ class Pawn(Piece):
     # number of pieces
     pawnCounter = 10
 
-    def __init__(self, name):
+    def __init__(self, name, currentPosition, side):
         Piece.__init__(self, name)
+        self.currentPosition = currentPosition
+        self.side = side
 
     # TODO
     def checkValidMoves(self):
-        pass
+        x, y = self.currentPosition
+        increment = -1 if self.side == 'w' else 1
+        if (y >= 5 and self.side == 'b') or (y <= 4 and self.side == 'w'):
+            if x == 0:
+                return [[x + 1, y], [x, y + increment]]
+            elif x == 8:
+                return [[x - 1, y], [x, y + increment]]
+            else:
+                return [[x - 1, y], [x, y + increment], [x + 1, y]]
+        else:
+            return [[x, y + increment]]
