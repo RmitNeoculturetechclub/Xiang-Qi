@@ -1,6 +1,5 @@
 import essentials
 
-
 class gameState(object):
     def __init__(self):
         self.playerTurn = 0
@@ -46,7 +45,23 @@ def main():
     # Call relative classes and functions based on the command passed in
     
     # return boolean (false if there is error in a function)
-    pass
+    board = []
+    with open("board.txt") as f:
+        for line in f.readlines():
+            board.append(line.strip().split(' '))
+    currentPos = [1,9] 
+    p1 = essentials.Pawn('s1',currentPos,'w')
+    moves = p1.checkValidMoves()
+
+    for row in range(10):
+        for col in range(9):
+            if [col,row] == currentPos:
+                print('o',end = "  ")
+            elif [col,row] in moves:
+                print('x',end = "  ")
+            else:
+                print(board[row][col],end = "  ")
+        print()
 
 # call main
 if __name__ == '__main__':
