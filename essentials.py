@@ -95,7 +95,14 @@ class Pawn(Piece):
     # number of pieces
     pawnCounter = 10
 
-    def __init__(self, name, currentPosition, side):
+    def __init__(self, name: str, currentPosition: List[int], side: str) -> None:
+        """Initialize a pawn
+
+        Args:
+            name (str): Name of the piece
+            currentPosition (List[int]): Current position of the piece
+            side (str): Side of the piece ('w' for white, 'b' for black)
+        """
         Piece.__init__(self, name)
         self.currentPosition = currentPosition
         self.side = side
@@ -107,8 +114,8 @@ class Pawn(Piece):
             List[List[int]]: List of possible moves of the pawn
         """
         x, y = self.currentPosition
-        increment = -1 if self.side == 'w' else 1
-        if (y >= 5 and self.side == 'b') or (y <= 4 and self.side == 'w'):
+        increment = 1 if self.side == 'w' else -1
+        if (y >= 5 and self.side == 'w') or (y <= 4 and self.side == 'b'):
             allMoves = [[x - 1, y], [x, y + increment], [x + 1, y]]
             possibleMoves = []
             for move in allMoves:
