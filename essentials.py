@@ -62,11 +62,33 @@ class Pawn(Piece):
 
     def __init__(self, name: str, currentPosition: List[int], side: str) -> None:
         """Initialize a pawn
+                
+        Args:
+            name (str): Name of the piece
+            currentPosition (List[int]): Current position of the piece
+            side (str): Side of the piece ('w' for white, 'b' for black)
+        """
+        Piece.__init__(self, name)
+        self.currentPosition = currentPosition
+        self.side = side
 
-<<<<<<< HEAD
-    # TODO
-    def checkValidMoves(self):
-        pass
+    def checkValidMoves(self) -> List[List[int]]:
+        """Show all the possible moves of the pawn
+
+        Returns:
+            List[List[int]]: List of possible moves of the pawn
+        """
+        x, y = self.currentPosition
+        increment = 1 if self.side == 'w' else -1
+        if (y >= 5 and self.side == 'w') or (y <= 4 and self.side == 'b'):
+            allMoves = [[x - 1, y], [x, y + increment], [x + 1, y]]
+            possibleMoves = []
+            for move in allMoves:
+                if 0 <=move[0] <= 8 and 0 <= move[1] <= 9:
+                    possibleMoves.append(move)
+            return possibleMoves
+        else:
+            return [[x, y + increment]]
 
 class General(Piece):
     # the number of pieces
@@ -101,8 +123,6 @@ class General(Piece):
                     validMoves[(r,c)] = True # (r, c) -> valid next move position
         self.possiblePosition = validMoves
         return validMoves
-
-
 
 class Elephant(Piece):
     # the number of pieces
@@ -151,8 +171,6 @@ class Elephant(Piece):
         self.possiblePosition = validMoves
         return validMoves
     
-
-        
 class Advisor(Piece):
     # number of pieces
     advisorCounter = 4
@@ -185,31 +203,4 @@ class Advisor(Piece):
                     validMoves[(r,c)] = True
         self.possiblePosition = validMoves
         return validMoves
-=======
-        Args:
-            name (str): Name of the piece
-            currentPosition (List[int]): Current position of the piece
-            side (str): Side of the piece ('w' for white, 'b' for black)
-        """
-        Piece.__init__(self, name)
-        self.currentPosition = currentPosition
-        self.side = side
-
-    def checkValidMoves(self) -> List[List[int]]:
-        """Show all the possible moves of the pawn
-
-        Returns:
-            List[List[int]]: List of possible moves of the pawn
-        """
-        x, y = self.currentPosition
-        increment = 1 if self.side == 'w' else -1
-        if (y >= 5 and self.side == 'w') or (y <= 4 and self.side == 'b'):
-            allMoves = [[x - 1, y], [x, y + increment], [x + 1, y]]
-            possibleMoves = []
-            for move in allMoves:
-                if 0 <=move[0] <= 8 and 0 <= move[1] <= 9:
-                    possibleMoves.append(move)
-            return possibleMoves
-        else:
-            return [[x, y + increment]]
 
