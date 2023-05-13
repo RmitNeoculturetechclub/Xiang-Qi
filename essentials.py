@@ -212,4 +212,4 @@ class Advisor(Piece):
             return possibleMoves
         else:
             return [[x, y + increment]]
->>>>>>> origin/development
+
