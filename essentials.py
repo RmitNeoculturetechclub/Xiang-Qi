@@ -94,14 +94,15 @@ class General(Piece):
     # the number of pieces
     generalCounter = 2
     # input: currrentPosition = [row,col]
-    def __init__(self, name, currentPosition):
-        Piece.__init__(self, name, currentPosition)
+    def __init__(self, name: str, currentPosition: List[int], side: str) -> None:
+        Piece.__init__(self, name, currentPosition, side)
         self.isCheck = False
         self.isCheckMate = False
         self.currentPosition = currentPosition
+        self.side = side
     #TODO
     def checkValidMoves(self):
-        validMoves = {} # hashmap
+        validMoves = [] # hashmap
         row, col = self.currentPosition[0], self.currentPosition[1]
 
         # determine the range for the palace based on which side of the board the General is on
@@ -112,7 +113,7 @@ class General(Piece):
             rowRange = range(7, 10)  # rows 7 to 9
             colRange = range(3, 6)  # columns 3 to 5
         else:  # General is not in its palace, cannot move
-            return validMoves # return {}
+            return validMoves # return []
 
         # generate valid moves within the palace
         for r in rowRange:
@@ -120,7 +121,7 @@ class General(Piece):
                 if r == row and c == col:  # current position, skip
                     continue
                 if abs(r - row) + abs(c - col) == 1:  # move one step vertically or horizontally
-                    validMoves[(r,c)] = True # (r, c) -> valid next move position
+                    validMoves.append([r, c]) # (r, c) -> valid next move position
         self.possiblePosition = validMoves
         return validMoves
 
@@ -129,13 +130,15 @@ class Elephant(Piece):
     elephantCounter = 4
     # only two squares diagonally but cannot cross the river in the middle of the board
     # river: the central area of the board that divides the two sides of the playing field (0-4, 5-9)
-    def __init__(self, name):
-        Piece.__init__(self, name)
+    def __init__(self, name: str, currentPosition: List[int], side: str) -> None:
+        # take the same arguments as Pawn does
+        Piece.__init__(self, name, currentPosition, side)
         self.currentPosition = currentPosition
+        self.side = side # side of the piece ('w' for white, 'b' for black)
 
     # TODO
     def checkValidMoves(self):
-        validMoves = {} # hashmap
+        validMoves = [] # hashmap
         row, col = self.currentPosition[0], self.currentPosition[1]
 
         # determine the range for the elephant based on which side of the board it is on
@@ -149,7 +152,7 @@ class Elephant(Piece):
         elif col >= 6:  # elephant is on the right side of the board
             colRange = range(6, 9)  # it can only move to the left (columns 0-5)
         else:  # elephant is in the middle, cannot move, because it would have to cross the river
-            return validMoves  # return {}
+            return validMoves  # return []
 
         # generate valid moves within the elephant's range
         for r in rowRange:
@@ -167,7 +170,7 @@ class Elephant(Piece):
                         continue
                     elif r > row and c > col and self.board[(row+1, col+1)] != None:
                         continue
-                    validMoves[(r,c)] = True
+                    validMoves.append([r, c])
         self.possiblePosition = validMoves
         return validMoves
     
@@ -175,13 +178,15 @@ class Advisor(Piece):
     # number of pieces
     advisorCounter = 4
     # move only one square move diagonally and confined to the palace
-    def __init__(self, name):
+    def __init__(self, name: str, currentPosition: List[int], side: str) -> None:
+        # take the same arguments as Pawn does
         Piece.__init__(self, name)
         self.currentPosition = currentPosition
+        self.side = side # side of the piece ('w' for white, 'b' for black)
 
     # TODO
     def checkValidMoves(self):
-        validMoves = {} # hashmap
+        validMoves = [] # array
         row, col = self.currentPosition[0], self.currentPosition[1]
 
         # determine the range for the palace based on which side of the board the advisor(guard) is on
@@ -192,7 +197,7 @@ class Advisor(Piece):
             rowRange = range(7, 10)  # rows 7 to 9
             colRange = range(3, 6)  # columns 3 to 5
         else:  # advisor is not in its palace, cannot move
-            return validMoves # return {}
+            return validMoves # return []
         
         # generate valid moves within the advisor's range
         for r in rowRange:
@@ -200,7 +205,7 @@ class Advisor(Piece):
                 if r == row and c == col:  # current position, skip
                     continue
                 if abs(r - row) == 1 and abs(c - col) == 1:  # move one step diagonally
-                    validMoves[(r,c)] = True
+                    validMoves.append([r, c])
         self.possiblePosition = validMoves
         return validMoves
 
