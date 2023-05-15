@@ -57,19 +57,21 @@ def main():
             board.append(line.strip().split(' '))
 
     # change this to test different positions
-    currentPos = [1, 5]
+    currentPos = [7, 1] # current valid pos for General
 
     # change this to test different pieces
-    p1 = essentials.Pawn('s1', currentPos, 'w')
+    p1 = essentials.General('s1', currentPos, 'w')
 
     moves = p1.checkValidMoves()
+    print("Current position for the piece:", currentPos)
+    print("Valid positions for the piece:", moves)
 
     for row in range(9, -1, -1):
         for col in range(9):
             if [col, row] == currentPos:
                 print('o', end="  ")
             elif [col, row] in moves:
-                print('x', end="  ")
+                print('x', end="  ") # mark all the validmoves as X
             else:
                 print(board[row][col], end="  ")
         print()
