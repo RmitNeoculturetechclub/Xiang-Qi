@@ -1,3 +1,4 @@
+from typing import List
 import global_variable
 
 
@@ -96,35 +97,39 @@ class Canon(Piece):
     # number of pieces
     canonCounter = 4
 
-    def __init__(self, name):
+    def __init__(self, name: str, currentPosition: List[int], side: str) -> None:
         Piece.__init__(self, name)
+        self.currentPosition = currentPosition
+        self.side = side
 
     # TODO
     def check_valid_moves(self):
         is_blocked = 0
-        for i in range(10):
+        for i in range(0,9):
             if i == self.currentPosition[1]:
+                is_blocked = 0
                 continue
             if global_variable.board[self.currentPosition[0]][i]:
                 is_blocked = is_blocked + 1
-                continue
             if is_blocked == 2:
                 self.possiblePositions.append([self.currentPosition[0], i])
                 break
             if is_blocked == 0:
                 self.possiblePositions.append([self.currentPosition[0], i])
-        for i in range(10):
+        is_blocked = 0
+        for i in range(0,10):
+            tmp_bool = global_variable.board[i][self.currentPosition[1]]
             if i == self.currentPosition[0]:
+                is_blocked = 0
                 continue
-            if global_variable.board[self.currentPosition[1]][i]:
+            if global_variable.board[i][self.currentPosition[1]]:
                 is_blocked = is_blocked + 1
-                continue
             if is_blocked == 2:
-                self.possiblePositions.append([self.currentPosition[1], i])
+                self.possiblePositions.append([i, self.currentPosition[1]])
                 break
             if is_blocked == 0:
-                self.possiblePositions.append([self.currentPosition[1], i])
-
+                self.possiblePositions.append([i, self.currentPosition[1]])
+        return self.possiblePositions;
 
 class Pawn(Piece):
     # number of pieces
