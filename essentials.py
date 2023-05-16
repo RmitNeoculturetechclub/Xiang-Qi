@@ -102,9 +102,9 @@ class General(Piece):
     #TODO
     def checkValidMoves(self):
         validMoves = [] # array
-        x, y = self.currentPosition
-
-        # determine the range for the palace based on which side of the board the General is on
+        y, x = self.currentPosition 
+        # X=ROW, Y=COL
+        # Palace = 0 <= x <= 2 and 3 <= y <= 5 // elif 7 <= x <= 9 and 3 <= y <= 5
         if 0 <= x <= 2 and 3 <= y <= 5:  # General is on the top side of the board
             rowRange = range(0, 3)  # rows 0 to 2
             colRange = range(3, 6)  # columns 3 to 5
@@ -113,55 +113,48 @@ class General(Piece):
             colRange = range(3, 6)  # columns 3 to 5
         else:  # General is not in its palace, cannot move
             return validMoves # return []
-        print("rowRange:", rowRange)
-        print("colRange:", colRange)
-        # generate valid moves within the palace
+
+        # generate valid moves (one step vertically or horizontallywithin the palace)
         for r in rowRange:
             for c in colRange:
                 print("r, c", r, c)
                 if r == x and c == y:  # current position, skip
                     continue
-                if abs(r - x) + abs(c - y) == 1:  # move one step vertically or horizontally
-                    validMoves.append([r, c]) # [r, c] -> valid next move position
+                if abs(r - x) + abs(c - y) == 1:  
+                    validMoves.append([c, r]) # [r, c] -> valid next move position
         self.possiblePosition = validMoves
         return validMoves
 
 class Elephant(Piece):
     # the number of pieces (total for both sides)
     elephantCounter = 4
-    # only two squares diagonally but cannot cross the river in the middle of the board
+    # only two squares diagonally + cannot cross the river in the middle of the board
     # river: the central area of the board that divides the two sides of the playing field (0-4, 5-9)
     def __init__(self, name: str, currentPosition: List[int], side: str) -> None:
-        # take the same arguments as Pawn does
-        Piece.__init__(self, name, currentPosition, side)
+        self.name = name
         self.currentPosition = currentPosition
-        self.side = side # side of the piece ('w' for white, 'b' for black)
+        self.side = side
 
     # TODO
     def checkValidMoves(self):
-        validMoves = [] # hashmap
-        x, y = self.currentPosition
-
-        # determine the range for the elephant based on which side of the board it is on
+        validMoves = [] # array
+        y, x = self.currentPosition 
+        # X=ROW, Y=COL
+        
+        # determine the range for the river
         if x <= 4:  # elephant is on the bottom side of the board
             rowRange = range(0, 5)  # rows 0 to 4
         else:  # elephant is on the top side of the board
             rowRange = range(5, 10)  # rows 5 to 9
         
-        if y <= 2:  # elephant is on the left side of the board
-            colRange = range(0, 3)  # it can only move to the right (columns 3-8)
-        elif y >= 6:  # elephant is on the right side of the board
-            colRange = range(6, 9)  # it can only move to the left (columns 0-5)
-        else:  # elephant is in the middle, cannot move, because it would have to cross the river
-            return validMoves  # return []
-
         # generate valid moves within the elephant's range
         for r in rowRange:
-            for c in colRange:
+            for c in range(9):
+                print("r, c", r, c)
                 if r == x and c == y:  # current position, skip
                     continue
                 if abs(r - x) == 2 and abs(c - y) == 2:  # move two steps diagonally
-                    # check if there are other pieces between the current position of the elephant and the destination position
+                    """# check if there are other pieces between the current position of the elephant and the destination position
                     # cannot cross the river by stepping on a piece.
                     if r < x and c < y and self.board[(x-1, y-1)] != None:
                         continue # trying to move up and to the left / two steps -> middle row-1, col-1
@@ -170,8 +163,8 @@ class Elephant(Piece):
                     elif r > x and c < y and self.board[(x+1, y-1)] != None:
                         continue
                     elif r > x and c > y and self.board[(x+1, y+1)] != None:
-                        continue
-                    validMoves.append([r, c])
+                        continue"""
+                    validMoves.append([c, r])
         self.possiblePosition = validMoves
         return validMoves
     
@@ -180,15 +173,15 @@ class Advisor(Piece):
     advisorCounter = 4
     # move only one square move diagonally and confined to the palace
     def __init__(self, name: str, currentPosition: List[int], side: str) -> None:
-        # take the same arguments as Pawn does
-        Piece.__init__(self, name)
+        self.name = name
         self.currentPosition = currentPosition
-        self.side = side # side of the piece ('w' for white, 'b' for black)
+        self.side = side
 
     # TODO
     def checkValidMoves(self):
         validMoves = [] # array
-        x, y = self.currentPosition
+        y, x = self.currentPosition 
+        # X=ROW, Y=COL
 
         # determine the range for the palace based on which side of the board the advisor(guard) is on
         if 0 <= x <= 2 and 3 <= y <= 5:  # advisor is on the top side of the board
@@ -206,7 +199,7 @@ class Advisor(Piece):
                 if r == x and c == y:  # current position, skip
                     continue
                 if abs(r - x) == 1 and abs(c - y) == 1:  # move one step diagonally
-                    validMoves.append([r, c])
+                    validMoves.append([c, r])
         self.possiblePosition = validMoves
         return validMoves
 

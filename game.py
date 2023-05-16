@@ -57,17 +57,18 @@ def main():
             board.append(line.strip().split(' '))
 
     # change this to test different positions
-    currentPos = [7, 1] # current valid pos for General
+    currentPos = [8, 3] # current valid pos for General
 
     # change this to test different pieces
-    p1 = essentials.General('s1', currentPos, 'w')
+    p1 = essentials.Elephant('s1', currentPos, 'w')
 
     moves = p1.checkValidMoves()
-    print("Current position for the piece:", currentPos)
+    print("Current col:", currentPos[0])
+    print("Current row", currentPos[1])
     print("Valid positions for the piece:", moves)
 
-    for row in range(9, -1, -1):
-        for col in range(9):
+    for row in range(9, -1, -1): # row starts from the bottom (10)
+        for col in range(9): # col (9)
             if [col, row] == currentPos:
                 print('o', end="  ")
             elif [col, row] in moves:
