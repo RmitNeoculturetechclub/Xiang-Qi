@@ -57,10 +57,10 @@ def main():
             board.append(line.strip().split(' '))
 
     # change this to test different positions
-    currentPos = [8, 3] # current valid pos for General
+    currentPos = [3, 8] # current valid pos for General
 
     # change this to test different pieces
-    p1 = essentials.Elephant('s1', currentPos, 'w')
+    p1 = essentials.Advisor('s1', currentPos, 'w')
 
     moves = p1.checkValidMoves()
     print("Current col:", currentPos[0])
