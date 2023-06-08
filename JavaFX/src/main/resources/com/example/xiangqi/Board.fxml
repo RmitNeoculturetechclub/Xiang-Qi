@@ -43,34 +43,34 @@
     <ImageView fx:id="canon_b2" fitHeight="50.0" fitWidth="50.0" layoutX="356.0" layoutY="154.0" onMouseClicked="#canonMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Canon_Black.png" />
     </ImageView>
-    <ImageView fx:id="soldier_b1" fitHeight="50.0" fitWidth="50.0" layoutY="204.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_b1" fitHeight="50.0" fitWidth="50.0" layoutY="204.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Black.png" />
     </ImageView>
-    <ImageView fx:id="soldier_b3" fitHeight="50.0" fitWidth="50.0" layoutX="203.0" layoutY="204.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_b3" fitHeight="50.0" fitWidth="50.0" layoutX="203.0" layoutY="204.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Black.png" />
     </ImageView>
-    <ImageView fx:id="soldier_b2" fitHeight="50.0" fitWidth="50.0" layoutX="100.0" layoutY="204.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_b2" fitHeight="50.0" fitWidth="50.0" layoutX="100.0" layoutY="204.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Black.png" />
     </ImageView>
-    <ImageView fx:id="soldier_b4" fitHeight="50.0" fitWidth="50.0" layoutX="306.0" layoutY="204.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_b4" fitHeight="50.0" fitWidth="50.0" layoutX="306.0" layoutY="204.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Black.png" />
     </ImageView>
-    <ImageView fx:id="soldier_b5" fitHeight="50.0" fitWidth="50.0" layoutX="406.0" layoutY="204.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_b5" fitHeight="50.0" fitWidth="50.0" layoutX="406.0" layoutY="204.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Black.png" />
     </ImageView>
-    <ImageView fx:id="soldier_r1" fitHeight="50.0" fitWidth="50.0" layoutY="347.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_r1" fitHeight="50.0" fitWidth="50.0" layoutY="347.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Red.png" />
     </ImageView>
-    <ImageView fx:id="soldier_r2" fitHeight="50.0" fitWidth="50.0" layoutX="100.0" layoutY="347.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_r2" fitHeight="50.0" fitWidth="50.0" layoutX="100.0" layoutY="347.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Red.png" />
     </ImageView>
-    <ImageView fx:id="soldier_r3" fitHeight="50.0" fitWidth="50.0" layoutX="203.0" layoutY="347.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_r3" fitHeight="50.0" fitWidth="50.0" layoutX="203.0" layoutY="347.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Red.png" />
     </ImageView>
-    <ImageView fx:id="soldier_r4" fitHeight="50.0" fitWidth="50.0" layoutX="306.0" layoutY="347.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_r4" fitHeight="50.0" fitWidth="50.0" layoutX="306.0" layoutY="347.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Red.png" />
     </ImageView>
-    <ImageView fx:id="soldier_r5" fitHeight="50.0" fitWidth="50.0" layoutX="406.0" layoutY="347.0" onMouseClicked="#soliderMove" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="soldier_r5" fitHeight="50.0" fitWidth="50.0" layoutX="406.0" layoutY="347.0" onMouseClicked="#soldierMove" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Soldier_Red.png" />
     </ImageView>
     <ImageView fx:id="advisor_b1" fitHeight="50.0" fitWidth="50.0" layoutX="150.0" layoutY="49.0" onMouseClicked="#advisorMove" pickOnBounds="true" preserveRatio="true">

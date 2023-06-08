@@ -7,6 +7,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BoardController {
@@ -80,18 +82,72 @@ public class BoardController {
 	public void canonMove (MouseEvent mouseEvent) {
 	}
 
-	public void soliderMove (MouseEvent mouseEvent) {
-		// get X and Y of the soldier
-		// create all rectangles that soldier can go
-		// ignore the other pieces
-		// set on mouse clicked for soldier
+	public void soldierMove(MouseEvent mouseEvent) {
 		ImageView tmp = (ImageView) mouseEvent.getSource();
 
-		// Check if the current click is that piece, if not reset all rectangles
-		// And create another rectangles with statement above
-		this.current_clicked_piece = tmp.getId();
+		String currentPiece = tmp.getId();
+		System.out.println("Value of tmp: " + tmp);
+		// Check if the clicked piece is a soldier
+		if (currentPiece.matches("soldier_[br]\\d+")) {
+			// Get the X and Y coordinates of the soldier
+			double soldierX = tmp.getX();
+			double soldierY = tmp.getY();
 
+			// Create rectangles for possible soldier moves
+			createRectangle(soldierX, soldierY + 50); // move forward
+
+			// Set onMouseClicked event handler for the soldier
+			tmp.setOnMouseClicked(e -> {
+				Rectangle clickedRect = findClickedRectangle(e.getX(), e.getY());
+				if (clickedRect != null) {
+					// Move the soldier to the clicked rectangle's position
+					tmp.relocate(clickedRect.getX(), clickedRect.getY());
+
+					// Remove the clicked rectangle from the board
+					board.getChildren().remove(clickedRect);
+				}
+			});
+		} else {
+			// Reset all rectangles if the clicked piece is not a soldier
+			clearRectangles();
+		}
 	}
+
+
+	private void clearRectangles() {
+		List<Node> toRemove = new ArrayList<>();
+		for (Node node : board.getChildren()) {
+			if (node instanceof Rectangle && Objects.equals(node.getId(), "move")) {
+				toRemove.add(node);
+			}
+		}
+		board.getChildren().removeAll(toRemove);
+	}
+
+	private void createRectangle(double x, double y) {
+		Rectangle rec = new Rectangle();
+		rec.setId("move");
+		rec.setX(x);
+		rec.setY(y);
+		rec.setFill(Color.YELLOW);
+		rec.setOpacity(0.5);
+		rec.setWidth(50);
+		rec.setHeight(50);
+		board.getChildren().add(rec);
+	}
+
+	private Rectangle findClickedRectangle(double x, double y) {
+		for (Node node : board.getChildren()) {
+			if (node instanceof Rectangle && Objects.equals(node.getId(), "move")) {
+				Rectangle rect = (Rectangle) node;
+				if (rect.contains(x, y)) {
+					return rect;
+				}
+			}
+		}
+		return null;
+	}
+
 
 	public void advisorMove (MouseEvent mouseEvent) {
 	}
