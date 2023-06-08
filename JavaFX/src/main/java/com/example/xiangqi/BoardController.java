@@ -126,7 +126,7 @@ public class BoardController {
 
 	public void canonMove (MouseEvent mouseEvent) {
 		ImageView tmp = (ImageView) mouseEvent.getSource();
-		int[] currentPos = {1, 7};
+		int[] currentPos = {(int) (tmp.getLayoutX() / 50), (int) ((508 - tmp.getLayoutY()) / 50)};
 		List <int[]> possiblePositions = checkValidMoves(currentPos);
 		// Remove the previous canon moves.
 		board.getChildren().removeIf(node -> node instanceof Rectangle);
@@ -134,11 +134,8 @@ public class BoardController {
 		// Create the canon moves.
 		for (int[] possiblePosition : possiblePositions) {
 			Rectangle rec = new Rectangle();
-			System.out.println(possiblePosition[0]);
 			rec.setX(possiblePosition[0] * 50);
-			System.out.println(possiblePosition[1]);
 			rec.setY(508 - 50 * possiblePosition[1]);
-			System.out.println(rec.getX() + " " + rec.getY());
 			rec.setFill(Color.YELLOW);
 			rec.setOpacity(0.5);
 			rec.setWidth(50);
