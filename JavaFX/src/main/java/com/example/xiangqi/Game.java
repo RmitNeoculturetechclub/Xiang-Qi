@@ -1,5 +1,6 @@
 package com.example.xiangqi;
 
+import com.example.xiangqi.Controller.InitializeManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,8 +11,8 @@ import java.io.IOException;
 public class Game extends Application {
 	@Override
 	public void start (Stage stage) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("Board.fxml"));
-		Scene scene = new Scene(fxmlLoader.load(), 458, 600);
+		InitializeManager initializeManager = new InitializeManager();
+		Scene scene = initializeManager.init();
 		stage.setTitle("XiangQi");
 		stage.setScene(scene);
 		stage.show();
