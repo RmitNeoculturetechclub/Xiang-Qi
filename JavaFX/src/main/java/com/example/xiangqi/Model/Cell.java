@@ -57,6 +57,18 @@ public class Cell {
         this.imageView = pieceImageView;
     }
 
+    public Piece getPiece () {
+        return piece;
+    }
+
+    public int[] getPosition () {
+        return position;
+    }
+
+    public void setPosition (int[] position) {
+        this.position = position;
+    }
+
     public void getAllPossibleCells(Cell[][] GlobalBoard){
         /*
         Change the list name
