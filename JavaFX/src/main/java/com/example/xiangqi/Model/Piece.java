@@ -80,9 +80,12 @@ public class Piece {
 			}
 
 			case Canon -> {
+				// Check if the piece is alive
 				if (! this.isAlive) {
 					break;
 				}
+
+				//get current position of the pieces (checking their names)
 				int[] currentPos = new int[2];
 				for (int i = 0; i < GlobalBoard.length; i++) {
 					for (int j = 0; j < GlobalBoard[i].length; j++) {
@@ -93,6 +96,8 @@ public class Piece {
 
 					}
 				}
+
+				// Assign the possible moves to the list
 				example = Canon.checkValidMoves(currentPos);
 				break;
 			}

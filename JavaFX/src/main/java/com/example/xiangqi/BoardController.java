@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.List;
-import java.util.Objects;
 
 import static com.example.xiangqi.Enums.Constant.InitPieceSetup.XiangQiBoard;
 
@@ -65,15 +64,7 @@ public class BoardController {
 	public void canonMove (MouseEvent mouseEvent) {
 		ImageView tmp = (ImageView) mouseEvent.getSource();
 //		int[] currentPos = {(int) (tmp.getLayoutX() / 50), (int) ((508 - tmp.getLayoutY()) / 50)};
-		Piece canon;
-		if (Objects.equals(tmp.getId(), "canon_b1") || Objects.equals(tmp.getId(), "canon_b2")) {
-
-			// Need updates
-			canon = new Piece("0", "White", "Canon_Black");
-		} else {
-			canon = new Piece("0", "White", "Canon_Red");
-		}
-
+		Piece canon = new Piece("0", "White", "Canon");
 		List <int[]> possiblePositions = canon.getAllPossibleMoves(this.getBoard(tmp));
 		// Remove the previous canon moves.
 		board.getChildren().removeIf(node -> node instanceof Rectangle);
@@ -117,10 +108,13 @@ public class BoardController {
 		piece.setY(y);
 	}
 
+	// Return the current board
 	public Cell[][] getBoard (ImageView images) {
 		Cell[][] Cell = new Cell[10][9];
+		// Loop through the board and set the piece to the cell
 		for (int i = 0; i < XiangQiBoard.length; i++) {
 			for (int j = 0; j < XiangQiBoard[i].length; j++) {
+				// if the current cell is not empty, set the piece to the cell
 				if (! XiangQiBoard[i][j].isEmpty()) {
 					Piece piece = new Piece(i + j + " ", "White", XiangQiBoard[i][j]);
 					Cell[i][j] = new Cell(i, j);
