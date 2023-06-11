@@ -52,24 +52,27 @@ public class InitializeManager {
     }
 
     private void initializeBoard() {
-        for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++){
-            for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++){
+        for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
+            for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++) {
                 Cell cell = new Cell(row, col);
                 String pieceName = InitPieceSetup.XiangQiBoard[row][col];
-
-                if(!pieceName.equals("")){
-                    /*
-                    Extract piece name to player and type
-                    Todo for Lucia: extract the player and piece name from the pieceName and place to the initializer
-                     */
-                    Piece piece = new Piece("id", "", "");
+                System.out.println("PieceName:" + pieceName);
+    
+                if (!pieceName.equals("")) {
+                    // Extract player and piece type from the pieceName
+                    String[] nameParts = pieceName.split("_");
+                    String pieceType = nameParts[0];
+                    String player = nameParts[1];
+    
+                    // Initialize Piece with extracted values
+                    Piece piece = new Piece("", player, pieceType); // id is not defined yet
                     cell.setPiece(piece);
                 }
-
+    
                 board[row][col] = cell;
             }
         }
-    }
+    }    
 
     private void initializePieceImageView() {
         for (Cell[] cells : this.board) {
@@ -99,9 +102,15 @@ public class InitializeManager {
                         // Sad case: Check if current clicked is the last piece, if not then remove all previous rectangle
                     });
 
-                    /*
-                    Todo for Lucia: Calculate the coordinate X and Y from the position in the cell.
-                     */
+                    //Calculate the coordinate X and Y from the position in the cell
+                    
+                    int cellSize = 50; // a cell size of 50 pixels
+                    int cellX = cell.getPosition()[0] * cellSize; // Calculate the X coordinate (row)
+                    int cellY = cell.getPosition()[1] * cellSize; // Calculate the Y coordinate (col)
+
+                    pieceImageView.setX(cellX);
+                    pieceImageView.setY(cellY);
+
                     cell.drawPieceImageView(pieceImageView);
                     this.pane.getChildren().add(cell.getImageView());
                 }

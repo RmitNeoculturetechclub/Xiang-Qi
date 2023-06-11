@@ -21,6 +21,10 @@ public class Cell {
         this.position = new int[]{row, col};
     }
 
+    public int[] getPosition() {
+        return position;
+    }
+
     public Cell(ImageView imageView, Piece piece) {
         this.imageView = imageView;
         this.piece = piece;
@@ -52,6 +56,7 @@ public class Cell {
     public void drawRectangle(Cell clickedCell){}
 
     public void drawPieceImageView(ImageView pieceImageView){
+        
         pieceImageView.setX(50);
         pieceImageView.setY(508.0);
         this.imageView = pieceImageView;
