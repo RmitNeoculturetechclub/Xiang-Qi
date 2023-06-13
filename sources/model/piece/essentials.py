@@ -1,5 +1,3 @@
-from typing import List
-
 class Piece(object):
     def __init__(self, name):
         self._id = 0
@@ -95,32 +93,9 @@ class Pawn(Piece):
     # number of pieces
     pawnCounter = 10
 
-    def __init__(self, name: str, currentPosition: List[int], side: str) -> None:
-        """Initialize a pawn
-
-        Args:
-            name (str): Name of the piece
-            currentPosition (List[int]): Current position of the piece
-            side (str): Side of the piece ('w' for white, 'b' for black)
-        """
+    def __init__(self, name):
         Piece.__init__(self, name)
-        self.currentPosition = currentPosition
-        self.side = side
 
-    def checkValidMoves(self) -> List[List[int]]:
-        """Show all the possible moves of the pawn
-
-        Returns:
-            List[List[int]]: List of possible moves of the pawn
-        """
-        x, y = self.currentPosition
-        increment = 1 if self.side == 'w' else -1
-        if (y >= 5 and self.side == 'w') or (y <= 4 and self.side == 'b'):
-            allMoves = [[x - 1, y], [x, y + increment], [x + 1, y]]
-            possibleMoves = []
-            for move in allMoves:
-                if 0 <=move[0] <= 8 and 0 <= move[1] <= 9:
-                    possibleMoves.append(move)
-            return possibleMoves
-        else:
-            return [[x, y + increment]]
+    # TODO
+    def checkValidMoves(self):
+        pass
