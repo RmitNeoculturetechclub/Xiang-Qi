@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +36,9 @@ public class InitializeManager {
 
     public Scene init() throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(InitializeManager.class.getResource("/com/example/xiangqi/Board.fxml"));
-        pane = (AnchorPane) fxmlLoader.getNamespace().get("board");
+        URL url = InitializeManager.class.getResource("/com/example/xiangqi/Board.fxml");
+        assert url != null;
+        pane = FXMLLoader.load(url);
 
         this.initializeBoard();
         this.initializePieceImageView();
@@ -83,6 +85,7 @@ public class InitializeManager {
                     try {
                         pieceImageView = this.initializeView.createImageView(
                                 String.format("/pictures/%s.png", cell.getOccupiedPiece().getPieceImageName()));
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -101,15 +104,6 @@ public class InitializeManager {
                         // Sad case: Check if the current clicked piece belongs to current player
                         // Sad case: Check if current clicked is the last piece, if not then remove all previous rectangle
                     });
-
-                    //Calculate the coordinate X and Y from the position in the cell
-                    
-                    int cellSize = 50; // a cell size of 50 pixels
-                    int cellX = cell.getPosition()[0] * cellSize; // Calculate the X coordinate (row)
-                    int cellY = cell.getPosition()[1] * cellSize; // Calculate the Y coordinate (col)
-
-                    pieceImageView.setX(cellX);
-                    pieceImageView.setY(cellY);
 
                     cell.drawPieceImageView(pieceImageView);
                     this.pane.getChildren().add(cell.getImageView());

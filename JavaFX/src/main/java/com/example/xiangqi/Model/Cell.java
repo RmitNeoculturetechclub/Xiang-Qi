@@ -1,5 +1,6 @@
 package com.example.xiangqi.Model;
 
+import com.example.xiangqi.Enums.Constant.CellConstant;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -56,9 +57,12 @@ public class Cell {
     public void drawRectangle(Cell clickedCell){}
 
     public void drawPieceImageView(ImageView pieceImageView){
-        
-        pieceImageView.setX(50);
-        pieceImageView.setY(508.0);
+
+        int cellX = this.position[0] * CellConstant.CELL_SIZE; // Calculate the X coordinate (row)
+        int cellY = this.position[1] * CellConstant.CELL_SIZE; // Calculate the Y coordinate (col)
+
+        pieceImageView.setX(cellX);
+        pieceImageView.setY(cellY);
         this.imageView = pieceImageView;
     }
 
