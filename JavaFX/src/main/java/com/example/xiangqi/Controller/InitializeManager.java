@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +36,9 @@ public class InitializeManager {
 
     public Scene init() throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(InitializeManager.class.getResource("/com/example/xiangqi/Board.fxml"));
-        pane = (AnchorPane) fxmlLoader.getNamespace().get("board");
+        URL url = InitializeManager.class.getResource("/com/example/xiangqi/Board.fxml");
+        assert url != null;
+        pane = FXMLLoader.load(url);
 
         this.initializeBoard();
         this.initializePieceImageView();
@@ -52,24 +54,27 @@ public class InitializeManager {
     }
 
     private void initializeBoard() {
-        for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++){
-            for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++){
+        for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
+            for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++) {
                 Cell cell = new Cell(row, col);
                 String pieceName = InitPieceSetup.XiangQiBoard[row][col];
-
-                if(!pieceName.equals("")){
-                    /*
-                    Extract piece name to player and type
-                    Todo for Lucia: extract the player and piece name from the pieceName and place to the initializer
-                     */
-                    Piece piece = new Piece("id", "", "");
+                System.out.println("PieceName:" + pieceName);
+    
+                if (!pieceName.equals("")) {
+                    // Extract player and piece type from the pieceName
+                    String[] nameParts = pieceName.split("_");
+                    String pieceType = nameParts[0];
+                    String player = nameParts[1];
+    
+                    // Initialize Piece with extracted values
+                    Piece piece = new Piece("", player, pieceType); // id is not defined yet
                     cell.setPiece(piece);
                 }
-
+    
                 board[row][col] = cell;
             }
         }
-    }
+    }    
 
     private void initializePieceImageView() {
         for (Cell[] cells : this.board) {
@@ -80,6 +85,7 @@ public class InitializeManager {
                     try {
                         pieceImageView = this.initializeView.createImageView(
                                 String.format("/pictures/%s.png", cell.getOccupiedPiece().getPieceImageName()));
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -99,9 +105,6 @@ public class InitializeManager {
                         // Sad case: Check if current clicked is the last piece, if not then remove all previous rectangle
                     });
 
-                    /*
-                    Todo for Lucia: Calculate the coordinate X and Y from the position in the cell.
-                     */
                     cell.drawPieceImageView(pieceImageView);
                     this.pane.getChildren().add(cell.getImageView());
                 }
