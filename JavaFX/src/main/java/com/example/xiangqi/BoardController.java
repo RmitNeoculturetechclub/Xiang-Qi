@@ -54,7 +54,7 @@ public class BoardController {
 		rec.setId("move");
 		rec.setX(0);
 		rec.setY(458);
-		rec.setFill(Color.YELLOW);
+		//rec.setFill(Color.YELLOW);
 		rec.setOpacity(0.5);
 		rec.setWidth(50);
 		rec.setHeight(50);
@@ -84,17 +84,38 @@ public class BoardController {
 
 	public void soldierMove(MouseEvent mouseEvent) {
 		ImageView tmp = (ImageView) mouseEvent.getSource();
-
 		String currentPiece = tmp.getId();
-		System.out.println("Value of tmp: " + tmp);
+
 		// Check if the clicked piece is a soldier
 		if (currentPiece.matches("soldier_[br]\\d+")) {
+			System.out.println("IT IS A SOLDIER");
 			// Get the X and Y coordinates of the soldier
 			double soldierX = tmp.getX();
 			double soldierY = tmp.getY();
+			System.out.println("x, y" + soldierX + soldierY);
+
+			// Reset all rectangles
+			clearRectangles();
+
+			// Check if the soldier has crossed the river
+			boolean crossedRiver = (currentPiece.startsWith("soldier_b") && soldierY <= 250)
+					|| (currentPiece.startsWith("soldier_r") && soldierY > 250);
 
 			// Create rectangles for possible soldier moves
-			createRectangle(soldierX, soldierY + 50); // move forward
+			if (crossedRiver) {
+				System.out.println("CROSSED");
+				createRectangle(soldierX, soldierY + 50); // move forward
+				createRectangle(soldierX - 50, soldierY); // move left
+				createRectangle(soldierX + 50, soldierY); // move right
+				createRectangle(soldierX, soldierY - 50); // move backward
+			} else {
+				System.out.println("NOT CROSSED");
+				if (currentPiece.startsWith("soldier_b")) {
+					createRectangle(soldierX, soldierY + 50); // move forward
+				} else {
+					createRectangle(soldierX, soldierY - 50); // move forward
+				}
+			}
 
 			// Set onMouseClicked event handler for the soldier
 			tmp.setOnMouseClicked(e -> {
@@ -110,8 +131,10 @@ public class BoardController {
 		} else {
 			// Reset all rectangles if the clicked piece is not a soldier
 			clearRectangles();
+			System.out.println("NOT A SOLDIER");
 		}
 	}
+
 
 
 	private void clearRectangles() {
