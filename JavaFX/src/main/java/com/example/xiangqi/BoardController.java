@@ -1,5 +1,7 @@
 package com.example.xiangqi;
 
+import com.example.xiangqi.Model.Cell;
+import com.example.xiangqi.Model.Piece;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -10,6 +12,8 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.example.xiangqi.Enums.Constant.InitPieceSetup.XiangQiBoard;
 
 public class BoardController {
 	public ImageView general_r;
@@ -49,25 +53,6 @@ public class BoardController {
 	public String current_clicked_piece;
 
 	public void chariotMove (MouseEvent mouseEvent) {
-		ImageView tmp = (ImageView) mouseEvent.getSource();
-		Rectangle rec = new Rectangle();
-		rec.setId("move");
-		rec.setX(0);
-		rec.setY(458);
-		//rec.setFill(Color.YELLOW);
-		rec.setOpacity(0.5);
-		rec.setWidth(50);
-		rec.setHeight(50);
-		board.getChildren().add(rec);
-		rec.setOnMouseClicked((e) -> {
-			tmp.relocate(rec.getX(), rec.getY());
-			for (Node node : board.getChildren()) {
-				if (Objects.equals(node.getId(), rec.getId())) {
-					board.getChildren().remove(node);
-					break;
-				}
-			}
-		});
 	}
 
 	public void generalMove (MouseEvent mouseEvent) {
@@ -80,6 +65,29 @@ public class BoardController {
 	}
 
 	public void canonMove (MouseEvent mouseEvent) {
+		ImageView tmp = (ImageView) mouseEvent.getSource();
+//		int[] currentPos = {(int) (tmp.getLayoutX() / 50), (int) ((508 - tmp.getLayoutY()) / 50)};
+		Piece canon = new Piece("0", "White", "Canon");
+		List <int[]> possiblePositions = canon.getAllPossibleMoves(this.getBoard(tmp));
+		// Remove the previous canon moves.
+		board.getChildren().removeIf(node -> node instanceof Rectangle);
+
+		// Create the canon moves.
+		for (int[] possiblePosition : possiblePositions) {
+			Rectangle rec = new Rectangle();
+			rec.setX(possiblePosition[0] * 50);
+			rec.setY(508 - 50 * possiblePosition[1]);
+			rec.setFill(Color.YELLOW);
+			rec.setOpacity(0.5);
+			rec.setWidth(50);
+			rec.setHeight(50);
+			board.getChildren().add(rec);
+			rec.setOnMouseClicked(e -> {
+				tmp.relocate(rec.getX(), rec.getY());
+				// Remove the previous canon moves.
+				board.getChildren().removeIf(node -> node instanceof Rectangle);
+			});
+		}
 	}
 
 	public void soldierMove(MouseEvent mouseEvent) {
@@ -178,5 +186,23 @@ public class BoardController {
 	public void setPosition (double x, double y, ImageView piece) {
 		piece.setX(x);
 		piece.setY(y);
+	}
+
+	// Return the current board
+	public Cell[][] getBoard (ImageView images) {
+		Cell[][] Cell = new Cell[10][9];
+		// Loop through the board and set the piece to the cell
+		for (int i = 0; i < XiangQiBoard.length; i++) {
+			for (int j = 0; j < XiangQiBoard[i].length; j++) {
+				// if the current cell is not empty, set the piece to the cell
+				if (! XiangQiBoard[i][j].isEmpty()) {
+					Piece piece = new Piece(i + j + " ", "White", XiangQiBoard[i][j]);
+					Cell[i][j] = new Cell(i, j);
+					Cell[i][j].setPiece(piece);
+					Cell[i][j].setImageView(images);
+				}
+			}
+		}
+		return Cell;
 	}
 }
