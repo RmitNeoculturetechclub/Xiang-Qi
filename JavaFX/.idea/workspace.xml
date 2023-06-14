@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="45162f05-90ce-48fd-b2b9-e967d2862612" name="Changes" comment="" />
+    <list default="true" id="45162f05-90ce-48fd-b2b9-e967d2862612" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Advisor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Chariot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Elephant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/General.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Horse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Rock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Soldier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Canon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Canon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/xiangqi/Model/Piece.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,7 +57,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "features__oop",
+    "git-widget-placeholder": "Rebasing feature__oop",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/huuqu/Essentials/Academic/RMIT/NCT/XiangQi/UML.drawio",
     "node.js.detected.package.eslint": "true",

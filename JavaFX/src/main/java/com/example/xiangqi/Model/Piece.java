@@ -97,8 +97,9 @@ public class Piece {
 					}
 				}
 
+				Canon canon = (Canon) this;
 				// Assign the possible moves to the list
-				example = Canon.checkValidMoves(currentPos);
+				example = canon.getAllPossibleMoves(currentPos);
 				break;
 			}
 			default -> {
