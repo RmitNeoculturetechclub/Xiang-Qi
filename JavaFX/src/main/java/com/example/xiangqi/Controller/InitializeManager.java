@@ -53,6 +53,8 @@ public class InitializeManager {
     }
 
     private void initializeBoard() {
+        board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
+
         for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
             for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++) {
                 Cell cell = new Cell(row, col);
@@ -67,9 +69,13 @@ public class InitializeManager {
 
                     System.out.println("pieceType:" + pieceType );
                     System.out.println("player:" + player );
+
+                    // Generate a unique pieceId based on the row and column indices
+                    String pieceId = generatePieceId(row, col);
+
     
                     // Initialize Piece with extracted values
-                    Piece piece = new Piece("", player, pieceType); // id is not defined yet
+                    Piece piece = new Piece(pieceId, player, pieceType); // id is not defined yet
                     cell.setPiece(piece);
                 }
     
@@ -78,6 +84,10 @@ public class InitializeManager {
         }
     }    
 
+    private String generatePieceId(int row, int col) {
+        // Generate a unique pieceId based on the row and column indices
+        return "Piece_" + row + "_" + col;
+    }
     private void initializePieceImageView() {
         for (Cell[] cells : this.board) {
             for (Cell cell : cells) {
