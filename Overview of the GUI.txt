@@ -1,0 +1,10 @@
+Overview of the GUI:
+- Each piece will be an individual inmageView with distinct ID
+- Each square has the dimension of 50x50px
+
+Intention:
+	- Click on an image of a piece -> call funtion show all moves (multiply by the dimension of the square to get the coordinate)
+	- Add rectangles with opacity of 0.5 with yellow color -> highlight the moves based on the dimension above
+	- if the square is visible and user click on it, set the current coordinate of the image to the new one and hide all rectangles.
+	- Else if the square is visible and user does not click on it -> do nothing
+	- Else (click on another piece): show new available moves and delete all rectangles.
