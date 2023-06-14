@@ -17,8 +17,8 @@ public class Piece {
         this.id = id;
         // Todo: Change the string to player and piece name
         // Piece name is init in the InitializeManager
-        this.player = Player.valueOf("Black");
-        this.pieceName = PieceName.valueOf("Soldier");
+        this.player = Player.valueOf(player);
+        this.pieceName = PieceName.valueOf(pieceName);
     }
 
     public Piece() {
