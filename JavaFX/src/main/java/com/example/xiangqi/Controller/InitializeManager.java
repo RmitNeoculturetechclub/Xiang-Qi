@@ -35,8 +35,9 @@ public class InitializeManager {
 
     public Scene init() throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(InitializeManager.class.getResource("/com/example/xiangqi/Board.fxml"));
-        pane = (AnchorPane) fxmlLoader.getNamespace().get("board");
+        URL url = InitializeManager.class.getResource("/com/example/xiangqi/Board.fxml");
+        assert url != null;
+        pane = FXMLLoader.load(url);
 
         this.initializeBoard();
         this.initializePieceImageView();
@@ -56,13 +57,16 @@ public class InitializeManager {
             for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++) {
                 Cell cell = new Cell(row, col);
                 String pieceName = InitPieceSetup.XiangQiBoard[row][col];
-                System.out.println("PieceName:" + pieceName);
+                
     
                 if (!pieceName.equals("")) {
                     // Extract player and piece type from the pieceName
                     String[] nameParts = pieceName.split("_");
                     String pieceType = nameParts[0];
                     String player = nameParts[1];
+
+                    System.out.println("pieceType:" + pieceType );
+                    System.out.println("player:" + player );
     
                     // Initialize Piece with extracted values
                     Piece piece = new Piece("", player, pieceType); // id is not defined yet
@@ -108,8 +112,11 @@ public class InitializeManager {
                     int cellX = cell.getPosition()[0] * cellSize; // Calculate the X coordinate (row)
                     int cellY = cell.getPosition()[1] * cellSize; // Calculate the Y coordinate (col)
 
+                    System.out.println("cellX:" + cellX );
+                    System.out.println("celly:" + cellY );
                     pieceImageView.setX(cellX);
                     pieceImageView.setY(cellY);
+
 
                     cell.drawPieceImageView(pieceImageView);
                     this.pane.getChildren().add(cell.getImageView());
