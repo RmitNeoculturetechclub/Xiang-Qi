@@ -8,8 +8,9 @@ public class InitPieceSetup {
         {"Soldier_Black", "", "Soldier_Black", "", "Soldier_Black", "", "Soldier_Black", "", "Soldier_Black"},
         {"", "", "", "", "", "", "", "", ""},
         {"", "", "", "", "", "", "", "", ""},
-        {"", "Canon_Red", "", "", "", "", "", "Canon_Red", ""},
         {"Soldier_Red", "", "Soldier_Red", "", "Soldier_Red", "", "Soldier_Red", "", "Soldier_Red"},
+        {"", "Canon_Red", "", "", "", "", "", "Canon_Red", ""},
+        {"", "", "", "", "", "", "", "", ""},
         {"Chariot_Red", "Horse_Red", "Elephant_Red", "Advisor_Red", "General_Red", "Advisor_Red", "Elephant_Red", "Horse_Red", "Chariot_Red"}
     };
 }

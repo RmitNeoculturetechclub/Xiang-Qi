@@ -117,6 +117,7 @@ public class InitializeManager {
 
                     System.out.println("cellX:" + cellX );
                     System.out.println("celly:" + cellY );
+                    
                     pieceImageView.setX(cellX);
                     pieceImageView.setY(cellY);
 

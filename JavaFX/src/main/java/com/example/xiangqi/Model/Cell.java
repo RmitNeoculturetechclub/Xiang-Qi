@@ -57,8 +57,8 @@ public class Cell {
 
     public void drawPieceImageView(ImageView pieceImageView){
         
-        int cellX = (8 - this.position[1]) * CellConstant.CELL_SIZE; // Calculate the X coordinate (row)
-        int cellY = this.position[0] * CellConstant.CELL_SIZE; // Calculate the Y coordinate (col)
+        int cellX = (8 - this.position[1]) * 50; // Calculate the X coordinate (row)
+        int cellY = (1 + this.position[0]) * 50; // Calculate the Y coordinate (col)
 
         pieceImageView.setX(cellX);
         pieceImageView.setY(cellY);
