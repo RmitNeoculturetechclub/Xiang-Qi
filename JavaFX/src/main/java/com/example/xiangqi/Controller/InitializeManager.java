@@ -75,7 +75,7 @@ public class InitializeManager {
                     Piece piece = new Piece("", player, pieceType); // id is not defined yet
                     cell.setPiece(piece);
                 }
-    
+                
                 board[row][col] = cell;
             }
         }
