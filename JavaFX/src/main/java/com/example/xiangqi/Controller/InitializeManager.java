@@ -54,7 +54,6 @@ public class InitializeManager {
 
     private void initializeBoard() {
         board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
-
         for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
             for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++) {
                 Cell cell = new Cell(row, col);
@@ -66,10 +65,6 @@ public class InitializeManager {
                     String[] nameParts = pieceName.split("_");
                     String pieceType = nameParts[0];
                     String player = nameParts[1];
-
-                    System.out.println("pieceType:" + pieceType );
-                    System.out.println("player:" + player );
-
     
                     // Initialize Piece with extracted values
                     Piece piece = new Piece("", player, pieceType); // id is not defined yet
@@ -115,9 +110,6 @@ public class InitializeManager {
                     int cellX = cell.getPosition()[0] * cellSize; // Calculate the X coordinate (row)
                     int cellY = cell.getPosition()[1] * cellSize; // Calculate the Y coordinate (col)
 
-                    System.out.println("cellX:" + cellX );
-                    System.out.println("celly:" + cellY );
-                    
                     pieceImageView.setX(cellX);
                     pieceImageView.setY(cellY);
 

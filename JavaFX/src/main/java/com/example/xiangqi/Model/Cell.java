@@ -1,5 +1,4 @@
 package com.example.xiangqi.Model;
-import com.example.xiangqi.Enums.Constant.CellConstant;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
