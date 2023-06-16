@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -85,6 +86,7 @@ public class InitializeManager {
                     try {
                         pieceImageView = this.initializeView.createImageView(
                                 String.format("/pictures/%s.png", cell.getOccupiedPiece().getPieceImageName()));
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -104,6 +106,7 @@ public class InitializeManager {
                         // Sad case: Check if current clicked is the last piece, if not then remove all previous rectangle
                     });
 
+
                     //Calculate the coordinate X and Y from the position in the cell
                     
                     int cellSize = 50; // a cell size of 50 pixels
@@ -112,7 +115,6 @@ public class InitializeManager {
 
                     pieceImageView.setX(cellX);
                     pieceImageView.setY(cellY);
-
 
                     cell.drawPieceImageView(pieceImageView);
                     this.pane.getChildren().add(cell.getImageView());
