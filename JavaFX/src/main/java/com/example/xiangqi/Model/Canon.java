@@ -7,7 +7,15 @@ import java.util.Objects;
 import static com.example.xiangqi.Enums.Constant.InitPieceSetup.XiangQiBoard;
 
 public class Canon extends Piece {
-	public static List <int[]> checkValidMoves (int[] currentPosition) {
+	static int canonCounter = 4;
+	public Canon (String id, String player, String pieceName) {
+		super(id, player, pieceName);
+	}
+
+	public Canon () {
+	}
+
+	public List <int[]> getAllPossibleMoves (int[] currentPosition) {
 
 		List <int[]> possiblePositions = new ArrayList <>();
 
@@ -26,7 +34,7 @@ public class Canon extends Piece {
 		return possiblePositions;
 	}
 
-	private static void checkValidMovesInDirection (int[] currentPosition, int dx, int dy, List <int[]> possiblePositions) {
+	private void checkValidMovesInDirection (int[] currentPosition, int dx, int dy, List <int[]> possiblePositions) {
 		int isBlocked = 0;
 		int x = currentPosition[0] + dx;
 		int y = currentPosition[1] + dy;
