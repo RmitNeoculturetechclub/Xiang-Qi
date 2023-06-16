@@ -15,7 +15,7 @@ public class Canon extends Piece {
 	public Canon () {
 	}
 
-	public List <int[]> getAllPossibleMoves (int[] currentPosition) {
+	public static List <int[]> getAllPossibleMoves (int[] currentPosition) {
 
 		List <int[]> possiblePositions = new ArrayList <>();
 
@@ -34,7 +34,7 @@ public class Canon extends Piece {
 		return possiblePositions;
 	}
 
-	private void checkValidMovesInDirection (int[] currentPosition, int dx, int dy, List <int[]> possiblePositions) {
+	private static void checkValidMovesInDirection (int[] currentPosition, int dx, int dy, List <int[]> possiblePositions) {
 		int isBlocked = 0;
 		int x = currentPosition[0] + dx;
 		int y = currentPosition[1] + dy;

@@ -22,7 +22,9 @@ public class Cell {
         this.position = new int[]{row, col};
     }
 
-
+    public int[] getPosition() {
+        return position;
+    }
 
     public Cell(ImageView imageView, Piece piece) {
         this.imageView = imageView;
@@ -66,10 +68,6 @@ public class Cell {
 
     public Piece getPiece () {
         return piece;
-    }
-
-    public int[] getPosition () {
-        return position;
     }
 
     public void setPosition (int[] position) {
