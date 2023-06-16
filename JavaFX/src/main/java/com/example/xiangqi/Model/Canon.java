@@ -7,6 +7,7 @@ import java.util.Objects;
 import static com.example.xiangqi.Enums.Constant.InitPieceSetup.XiangQiBoard;
 
 public class Canon extends Piece {
+	static int canonCounter = 4;
 	public Canon (String id, String player, String pieceName) {
 		super(id, player, pieceName);
 	}

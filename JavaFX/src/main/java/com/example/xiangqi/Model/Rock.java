@@ -3,6 +3,7 @@ package com.example.xiangqi.Model;
 import java.util.List;
 
 public class Rock extends Piece{
+	static int rockCounter = 4;
 	public Rock (String id, String player, String pieceName) {
 		super(id, player, pieceName);
 	}
