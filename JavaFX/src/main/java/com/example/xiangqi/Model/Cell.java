@@ -56,13 +56,30 @@ public class Cell {
     public void drawRectangle(Cell clickedCell){}
 
     public void drawPieceImageView(ImageView pieceImageView){
+
         
         int cellX = (8 - this.position[1]) * 50; // Calculate the X coordinate (row)
         int cellY = (1 + this.position[0]) * 50; // Calculate the Y coordinate (col)
 
+        int cellX = this.position[0] * CellConstant.CELL_SIZE; // Calculate the X coordinate (row)
+        int cellY = this.position[1] * CellConstant.CELL_SIZE; // Calculate the Y coordinate (col)
+
+
         pieceImageView.setX(cellX);
         pieceImageView.setY(cellY);
         this.imageView = pieceImageView;
+    }
+
+    public Piece getPiece () {
+        return piece;
+    }
+
+    public int[] getPosition () {
+        return position;
+    }
+
+    public void setPosition (int[] position) {
+        this.position = position;
     }
 
     public void getAllPossibleCells(Cell[][] GlobalBoard){
