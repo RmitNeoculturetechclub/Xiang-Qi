@@ -43,7 +43,7 @@ public class Cell {
         return piece;
     }
 
-    public Piece getPiece () {
+    public Piece getPiece() {
         return piece;
     }
     public ImageView getImageView() {

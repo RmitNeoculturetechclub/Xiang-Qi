@@ -1,5 +1,6 @@
 package com.example.xiangqi;
 
+import com.example.xiangqi.Model.Canon;
 import com.example.xiangqi.Model.Cell;
 import com.example.xiangqi.Model.Piece;
 import javafx.scene.Node;
@@ -67,7 +68,7 @@ public class BoardController {
 	public void canonMove (MouseEvent mouseEvent) {
 		ImageView tmp = (ImageView) mouseEvent.getSource();
 //		int[] currentPos = {(int) (tmp.getLayoutX() / 50), (int) ((508 - tmp.getLayoutY()) / 50)};
-		Piece canon = new Piece("0", "White", "Canon");
+		Piece canon = new Canon("0", "White", "Canon");
 		List <int[]> possiblePositions = canon.getAllPossibleMoves(this.getBoard(tmp));
 		// Remove the previous canon moves.
 		board.getChildren().removeIf(node -> node instanceof Rectangle);
