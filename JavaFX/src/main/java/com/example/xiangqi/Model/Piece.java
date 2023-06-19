@@ -16,8 +16,6 @@ public class Piece {
     public Piece(String id, String player, String pieceName) {
         this.isAlive = true;
         this.id = id;
-        // Todo: Change the string to player and piece name
-        // Piece name is init in the InitializeManager
         this.player = Player.valueOf(player);
         this.pieceName = PieceName.valueOf(pieceName);
     }

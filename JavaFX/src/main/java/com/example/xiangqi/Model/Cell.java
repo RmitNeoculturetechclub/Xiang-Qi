@@ -1,6 +1,8 @@
 package com.example.xiangqi.Model;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
+import com.example.xiangqi.Enums.Constant.CellConstant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,27 +51,26 @@ public class Cell {
      * Apply position to set X and Y
      * Note, if the y is more than 7, then set the height with +- constant number
      * Rectangle on clicked then
-     * Todo: 4. For each cell create draw function to draw rectangle on listen mouse clicked.
+     * Todo: For each cell create draw function to draw rectangle on listen mouse clicked.
      *          If there is a cell and player enemy then remove image view, and set piece isAlive to False, set Piece to the currentClickedPiece
      */
-    public void drawRectangle(Cell clickedCell){}
+    public void drawRectangle(Cell clickedCell){
+        // Apply position to set X and Y
+        int x = clickedCell.position[0];
+        int y = clickedCell.position[1];
+
+        
+
+    }
 
     public void drawPieceImageView(ImageView pieceImageView){
- 
-        int cellX = (8 - this.position[1]) * 50; // Calculate the X coordinate (row)
-        int cellY = (1 + this.position[0]) * 50; // Calculate the Y coordinate (col)
+        
+        int cellX = (CellConstant.TOTAL_COL - this.position[1]) * CellConstant.CELL_SIZE; // Calculate the X coordinate (row)
+        int cellY = (CellConstant.ROW_STARTING_INDEX + this.position[0]) * CellConstant.CELL_SIZE; // Calculate the Y coordinate (col)
 
         pieceImageView.setX(cellX);
         pieceImageView.setY(cellY);
         this.imageView = pieceImageView;
-    }
-
-    public Piece getPiece () {
-        return piece;
-    }
-
-    public void setPosition (int[] position) {
-        this.position = position;
     }
 
     public void getAllPossibleCells(Cell[][] GlobalBoard){
