@@ -43,6 +43,9 @@ public class Cell {
         return piece;
     }
 
+    public Piece getPiece () {
+        return piece;
+    }
     public ImageView getImageView() {
         return imageView;
     }

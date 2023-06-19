@@ -26,6 +26,10 @@ public class Piece {
 
     public void pieceMovement(){}
 
+	public PieceName getPieceName () {
+		return pieceName;
+	}
+
     public String getPieceImageName() {
         return pieceName.name() + '_' + player.name();
     }
