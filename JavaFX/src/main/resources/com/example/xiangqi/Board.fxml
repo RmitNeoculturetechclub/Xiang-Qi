@@ -7,5 +7,4 @@
     <ImageView fitHeight="609.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Xiangqi_board.png" />
     </ImageView>
-
 </AnchorPane>

@@ -7,64 +7,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Piece {
-	private boolean isAlive;
-	private String id;
-	private PieceName pieceName;
-	private Player player;
 
-	public boolean isAlive () {
-		return isAlive;
-	}
+    private boolean isAlive;
+    private String id;
+    private PieceName pieceName;
+    private Player player;
 
-	public void setAlive (boolean alive) {
-		isAlive = alive;
-	}
+    public Piece(String id, String player, String pieceName) {
+        this.isAlive = true;
+        this.id = id;
+        this.player = Player.valueOf(player);
+        this.pieceName = PieceName.valueOf(pieceName);
+    }
 
-	public String getId () {
-		return id;
-	}
+    public Piece() {
+        this.isAlive = true;
+    }
 
-	public void setId (String id) {
-		this.id = id;
-	}
+    public void pieceMovement(){}
 
 	public PieceName getPieceName () {
 		return pieceName;
 	}
 
-	public void setPieceName (PieceName pieceName) {
-		this.pieceName = pieceName;
-	}
+    public String getPieceImageName() {
+        return pieceName.name() + '_' + player.name();
+    }
 
-	public Player getPlayer () {
-		return player;
-	}
+    public List<int[]> getAllPossibleMoves(Cell[][] GlobalBoard){
 
-	public void setPlayer (Player player) {
-		this.player = player;
-	}
-
-	public Piece (String id, String player, String pieceName) {
-		this.isAlive = true;
-		this.id = id;
-		// Todo: Change the string to player and piece name
-		// Piece name is init in the InitializeManager
-		this.player = Player.valueOf("Black");
-		this.pieceName = PieceName.valueOf("Soldier");
-	}
-
-	public Piece () {
-		this.isAlive = true;
-	}
-
-	public void pieceMovement () {
-	}
-
-	public String getPieceImageName () {
-		return pieceName.name() + '_' + player.name();
-	}
-
-	public List <int[]> getAllPossibleMoves (Cell[][] GlobalBoard) {
         /*
         Change the list name
         Change the new int to find all possible positions

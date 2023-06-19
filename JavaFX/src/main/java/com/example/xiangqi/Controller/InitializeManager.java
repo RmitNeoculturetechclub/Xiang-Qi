@@ -16,7 +16,6 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +29,6 @@ public class InitializeManager {
 
     public InitializeManager() throws IOException {
         initializeView = new InitializeView();
-        board = new Cell[8][9];
     }
 
 
@@ -54,11 +52,12 @@ public class InitializeManager {
     }
 
     private void initializeBoard() {
+        board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
         for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
             for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++) {
                 Cell cell = new Cell(row, col);
                 String pieceName = InitPieceSetup.XiangQiBoard[row][col];
-                System.out.println("PieceName:" + pieceName);
+                
     
                 if (!pieceName.equals("")) {
                     // Extract player and piece type from the pieceName
@@ -70,7 +69,7 @@ public class InitializeManager {
                     Piece piece = new Piece("", player, pieceType); // id is not defined yet
                     cell.setPiece(piece);
                 }
-    
+                
                 board[row][col] = cell;
             }
         }
@@ -85,7 +84,6 @@ public class InitializeManager {
                     try {
                         pieceImageView = this.initializeView.createImageView(
                                 String.format("/pictures/%s.png", cell.getOccupiedPiece().getPieceImageName()));
-
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
