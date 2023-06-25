@@ -52,12 +52,12 @@ public class Cell {
     return imageView;
   }
 
-  public boolean isEnemy() {
-    if (this.piece.player != this.getPiece().player) {
-      return true; // if it's enemy
+  public boolean isEnemy(Piece piece) {
+    if (this.piece.player != piece.player) {
+        return true; // if it's an enemy
     }
     return false; // if it's the same side
-  }
+}
 
   public void removeImageView() {
     this.imageView = null;
@@ -78,11 +78,10 @@ public class Cell {
         clickedCell.position[1] += CellConstant.CELL_SIZE;
     }
 
-    // If there is an enemy on the cell
-    if (clickedCell.getPiece().isAlive() && clickedCell.getPiece().isEnemy()) {
+    if (clickedCell.getPiece().isAlive() && isEnemy(clickedCell.getPiece())) {
       clickedCell.removeImageView(); // remove the image view
       clickedCell.getPiece().setAlive(); //set isAlive to False
-      clickedCell.setPiece(); //set Piece to the currentClickedPiece
+      clickedCell.setPiece(); //set Piece to this object (this.piece)
     }
   }
 
