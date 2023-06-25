@@ -10,14 +10,12 @@ public class Piece {
 
     private boolean isAlive;
     private String id;
-    protected PieceName pieceName;
     private Player player;
 
-    public Piece(String id, String player, String pieceName) {
+    public Piece(String id, String player) {
         this.isAlive = true;
         this.id = id;
         this.player = Player.valueOf(player);
-        this.pieceName = PieceName.valueOf(pieceName);
     }
 
     public Piece() {
@@ -26,15 +24,12 @@ public class Piece {
 
     public void pieceMovement(){}
 
-	public PieceName getPieceName () {
-		return pieceName;
-	}
 
     public String getPieceImageName() {
-        return pieceName.name() + '_' + player.name();
+        return "Soldier_" + getPlayerName();
     }
 
-    public List<int[]> getAllPossibleMoves(Cell[][] board){
+    public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board){
 
         /*
         Change the list name
@@ -42,29 +37,6 @@ public class Piece {
         Check the condition to find suitable move, and eliminate the occupied piece
          */
 		List <int[]> example = new ArrayList <>();
-		switch (this.pieceName) {
-			case Soldier -> {
-                /*
-                Soldier movement here
-                 */
-				break;
-			}
-
-			case Canon -> {
-				// Check if the piece is alive
-				if (! this.isAlive) {
-					break;
-				}
-
-				Canon canon = (Canon) this;
-				// Assign the possible moves to the list
-				example = canon.getAllPossibleMoves(board);
-				break;
-			}
-			default -> {
-				break;
-			}
-		}
 		return example;
 	}
 

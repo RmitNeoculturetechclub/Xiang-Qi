@@ -6,50 +6,40 @@ import java.util.List;
 public class Canon extends Piece {
 	static int canonCounter = 0;
 
-	public Canon(String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public Canon(String id, String player) {
+		super(id, player);
 	}
 
 	public Canon() {
 	}
 
-	public List<int[]> getAllPossibleMoves(Cell[][] GlobalBoard) {
-		// get current position of the pieces (checking their names)
-		int[] currentPosition = new int[2];
-		for (int i = 0; i < GlobalBoard.length; i++) {
-			for (int j = 0; j < GlobalBoard[i].length; j++) {
-				if (GlobalBoard[i][j].getPiece().getPieceName() == this.getPieceName()) {
-					currentPosition[0] = i;
-					currentPosition[1] = j;
-				}
+	public List<int[]> getAllPossibleMoves(int[] currentPosition,Cell[][] board) {
 
-			}
-		}
 		List<int[]> possiblePositions = new ArrayList<>();
 
 		// Check for valid moves horizontally to the left
-		checkValidMovesInDirection(currentPosition, -1, 0, possiblePositions, GlobalBoard);
+		checkValidMovesInDirection(currentPosition, -1, 0, possiblePositions, board);
 
 		// Check for valid moves horizontally to the right
-		checkValidMovesInDirection(currentPosition, 1, 0, possiblePositions, GlobalBoard);
+		checkValidMovesInDirection(currentPosition, 1, 0, possiblePositions, board);
 
 		// Check for valid moves below vertically
-		checkValidMovesInDirection(currentPosition, 0, -1, possiblePositions, GlobalBoard);
+		checkValidMovesInDirection(currentPosition, 0, -1, possiblePositions, board);
 
 		// Check for valid moves above vertically
-		checkValidMovesInDirection(currentPosition, 0, 1, possiblePositions, GlobalBoard);
+		checkValidMovesInDirection(currentPosition, 0, 1, possiblePositions, board);
 
 		return possiblePositions;
 	}
 
 	private void checkValidMovesInDirection(int[] currentPosition, int dx, int dy, List<int[]> possiblePositions,
-			Cell[][] GlobalBoard) {
+			Cell[][] board) {
 		int isBlocked = 0;
 		int x = currentPosition[0] + dx;
 		int y = currentPosition[1] + dy;
 
 		while (x >= 0 && x <= 8 && y >= 0 && y <= 9) {
-			if (GlobalBoard[x][y].getPiece() != null) {
+			if (board[x][y].getPiece() != null) {
 				isBlocked++;
 			} else {
 				if (isBlocked == 0) {
@@ -58,7 +48,7 @@ public class Canon extends Piece {
 			}
 
 			if (isBlocked == 2) {
-				if (GlobalBoard[x][y].getPiece().getPlayerName() != this.getPlayerName()) {
+				if (board[x][y].getPiece().getPlayerName() != this.getPlayerName()) {
 					possiblePositions.add(new int[] { x, y });
 				}
 				break;
@@ -76,4 +66,8 @@ public class Canon extends Piece {
 	public int getNumPiece() {
 		return Canon.canonCounter;
 	}
+
+	public String getPieceImageName() {
+        return "Canon_" + getPlayerName();
+    }
 }

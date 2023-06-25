@@ -21,6 +21,7 @@ public class InitializeView {
     }
 
     public static Image createImage(String resourceName) {
+        System.out.println(resourceName);
         URL _url = InitializeManager.class.getResource(resourceName);
         assert _url != null;
         return new Image(_url.toExternalForm());

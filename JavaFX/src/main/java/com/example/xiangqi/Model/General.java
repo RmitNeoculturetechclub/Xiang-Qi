@@ -6,17 +6,17 @@ public class General extends Piece {
 	static int generalCounter = 0;
 	Boolean isCheck = false;
 	Boolean isCheckMate = false;
-	public General (String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public General (String id, String player) {
+		super(id, player);
 	}
 
 	public General () {
 	}
 
 	@Override
-	public List <int[]> getAllPossibleMoves (Cell[][] GlobalBoard) {
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board){
 		//TODO: Implement this method
-		return super.getAllPossibleMoves(GlobalBoard);
+		return super.getAllPossibleMoves(currentPosition, board);
 	}
 
 	public void setNumPieces (int numPieces) {
@@ -26,4 +26,8 @@ public class General extends Piece {
 	public int getNumPiece() {
 		return General.generalCounter;
 	}
+
+	public String getPieceImageName() {
+        return "General_" + getPlayerName();
+    }
 }

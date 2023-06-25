@@ -4,17 +4,17 @@ import java.util.List;
 
 public class Chariot extends Piece{
 	static int chariotCounter = 0;
-	public Chariot (String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public Chariot (String id, String player) {
+		super(id, player);
 	}
 
 	public Chariot () {
 	}
 
 	@Override
-	public List <int[]> getAllPossibleMoves (Cell[][] GlobalBoard) {
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board){
 		//TODO: Implement this method
-		return super.getAllPossibleMoves(GlobalBoard);
+		return super.getAllPossibleMoves(currentPosition, board);
 	}
 
 	public void setNumPieces (int numPieces) {
@@ -24,4 +24,8 @@ public class Chariot extends Piece{
 	public int getNumPiece() {
 		return Chariot.chariotCounter;
 	}
+
+	public String getPieceImageName() {
+        return "Chariot_" + getPlayerName();
+    }
 }

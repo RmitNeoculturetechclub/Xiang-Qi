@@ -4,17 +4,17 @@ import java.util.List;
 
 public class Advisor extends Piece{
 	static int advisorCounter = 0;
-	public Advisor (String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public Advisor (String id, String player) {
+		super(id, player);
 	}
 
 	public Advisor () {
 	}
 
 	@Override
-	public List <int[]> getAllPossibleMoves (Cell[][] GlobalBoard) {
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board){
 		//TODO: Implement this method
-		return super.getAllPossibleMoves(GlobalBoard);
+		return super.getAllPossibleMoves(currentPosition, board);
 	}
 
 	public void setNumPieces (int numPieces) {
@@ -27,4 +27,8 @@ public class Advisor extends Piece{
 	public int getNumPiece() {
 		return Advisor.advisorCounter;
 	}
+
+	public String getPieceImageName() {
+        return "Advisor_" + getPlayerName();
+    }
 }
