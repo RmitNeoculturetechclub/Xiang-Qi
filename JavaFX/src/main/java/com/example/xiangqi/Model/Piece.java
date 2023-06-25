@@ -10,7 +10,7 @@ public class Piece {
 
     private boolean isAlive;
     private String id;
-    private PieceName pieceName;
+    protected PieceName pieceName;
     private Player player;
 
     public Piece(String id, String player, String pieceName) {
@@ -56,21 +56,9 @@ public class Piece {
 					break;
 				}
 
-				//get current position of the pieces (checking their names)
-				int[] currentPos = new int[2];
-				for (int i = 0; i < GlobalBoard.length; i++) {
-					for (int j = 0; j < GlobalBoard[i].length; j++) {
-						if (GlobalBoard[i][j].getPiece().getPieceName() == this.pieceName) {
-							currentPos[0] = i;
-							currentPos[1] = j;
-						}
-
-					}
-				}
-
 				Canon canon = (Canon) this;
 				// Assign the possible moves to the list
-				example = canon.getAllPossibleMoves(currentPos);
+				example = canon.getAllPossibleMoves(GlobalBoard);
 				break;
 			}
 			default -> {

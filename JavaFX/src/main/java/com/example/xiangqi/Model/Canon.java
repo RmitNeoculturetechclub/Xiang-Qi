@@ -16,8 +16,18 @@ public class Canon extends Piece {
 	public Canon() {
 	}
 
-	public List<int[]> getAllPossibleMoves(int[] currentPosition) {
+	public List<int[]> getAllPossibleMoves(Cell[][] GlobalBoard) {
+		// get current position of the pieces (checking their names)
+		int[] currentPosition = new int[2];
+		for (int i = 0; i < GlobalBoard.length; i++) {
+			for (int j = 0; j < GlobalBoard[i].length; j++) {
+				if (GlobalBoard[i][j].getPiece().getPieceName() == this.getPieceName()) {
+					currentPosition[0] = i;
+					currentPosition[1] = j;
+				}
 
+			}
+		}
 		List<int[]> possiblePositions = new ArrayList<>();
 
 		// Check for valid moves horizontally to the left
