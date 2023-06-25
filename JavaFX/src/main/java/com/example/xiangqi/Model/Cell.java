@@ -63,9 +63,6 @@ public class Cell {
     this.imageView = null;
   }
 
-  public void setAlive() {
-    this.isAlive = !this.isAlive;
-  }
 
   public void drawRectangle(Cell clickedCell) {
     // clickedCell => the user's current position, this object => the next position (from possible moves)
@@ -85,7 +82,7 @@ public class Cell {
     // if they are the opposite side (enemy)
     if (isEnemy(clickedCell.getPiece())) {
       clickedCell.removeImageView(); // remove the image view
-      clickedCell.getPiece().setAlive(); //set isAlive to False
+      clickedCell.getPiece().setAlive(false); //set isAlive to False
       // Set the piece of clickedCell to the cell of the current object
       clickedCell.setPiece(this.getPiece());
     }
