@@ -2,9 +2,6 @@ package com.example.xiangqi.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import static com.example.xiangqi.Enums.Constant.InitPieceSetup.XiangQiBoard;
 
 public class Canon extends Piece {
 	static int canonCounter = 0;
@@ -31,27 +28,28 @@ public class Canon extends Piece {
 		List<int[]> possiblePositions = new ArrayList<>();
 
 		// Check for valid moves horizontally to the left
-		checkValidMovesInDirection(currentPosition, -1, 0, possiblePositions);
+		checkValidMovesInDirection(currentPosition, -1, 0, possiblePositions, GlobalBoard);
 
 		// Check for valid moves horizontally to the right
-		checkValidMovesInDirection(currentPosition, 1, 0, possiblePositions);
+		checkValidMovesInDirection(currentPosition, 1, 0, possiblePositions, GlobalBoard);
 
 		// Check for valid moves below vertically
-		checkValidMovesInDirection(currentPosition, 0, -1, possiblePositions);
+		checkValidMovesInDirection(currentPosition, 0, -1, possiblePositions, GlobalBoard);
 
 		// Check for valid moves above vertically
-		checkValidMovesInDirection(currentPosition, 0, 1, possiblePositions);
+		checkValidMovesInDirection(currentPosition, 0, 1, possiblePositions, GlobalBoard);
 
 		return possiblePositions;
 	}
 
-	private void checkValidMovesInDirection(int[] currentPosition, int dx, int dy, List<int[]> possiblePositions) {
+	private void checkValidMovesInDirection(int[] currentPosition, int dx, int dy, List<int[]> possiblePositions,
+			Cell[][] GlobalBoard) {
 		int isBlocked = 0;
 		int x = currentPosition[0] + dx;
 		int y = currentPosition[1] + dy;
 
 		while (x >= 0 && x <= 8 && y >= 0 && y <= 9) {
-			if (!Objects.equals(XiangQiBoard[y][x], "")) {
+			if (GlobalBoard[x][y].getPiece() != null) {
 				isBlocked++;
 			} else {
 				if (isBlocked == 0) {
@@ -60,7 +58,9 @@ public class Canon extends Piece {
 			}
 
 			if (isBlocked == 2) {
-				possiblePositions.add(new int[] { x, y });
+				if (GlobalBoard[x][y].getPiece().getPlayerName() != this.getPlayerName()) {
+					possiblePositions.add(new int[] { x, y });
+				}
 				break;
 			}
 

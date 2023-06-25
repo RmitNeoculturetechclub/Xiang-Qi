@@ -75,4 +75,8 @@ public class Piece {
 	public void setId (String id) {
 		this.id = id;
 	}
+
+	public String getPlayerName() {
+		return player.name();
+	}
 }
