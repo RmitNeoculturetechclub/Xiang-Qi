@@ -1,10 +1,10 @@
 package com.example.xiangqi.Model;
 
-import com.example.xiangqi.Enums.Model.PieceName;
-import com.example.xiangqi.Enums.Model.Player;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.xiangqi.Enums.Model.PieceName;
+import com.example.xiangqi.Enums.Model.Player;
 
 public class Piece {
 
@@ -34,7 +34,7 @@ public class Piece {
         return pieceName.name() + '_' + player.name();
     }
 
-    public List<int[]> getAllPossibleMoves(Cell[][] GlobalBoard){
+    public List<int[]> getAllPossibleMoves(Cell[][] board){
 
         /*
         Change the list name
@@ -58,7 +58,7 @@ public class Piece {
 
 				Canon canon = (Canon) this;
 				// Assign the possible moves to the list
-				example = canon.getAllPossibleMoves(GlobalBoard);
+				example = canon.getAllPossibleMoves(board);
 				break;
 			}
 			default -> {
