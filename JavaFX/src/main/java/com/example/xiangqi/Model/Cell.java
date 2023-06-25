@@ -54,10 +54,10 @@ public class Cell {
 
   public boolean isEnemy(Piece piece) {
     if (this.piece.player != piece.player) {
-        return true; // if it's an enemy
+      return true; // if it's an enemy
     }
     return false; // if it's the same side
-}
+  }
 
   public void removeImageView() {
     this.imageView = null;
@@ -65,23 +65,29 @@ public class Cell {
 
   public void setAlive() {
     this.isAlive = !this.isAlive;
-}
+  }
 
   public void drawRectangle(Cell clickedCell) {
+    // clickedCell => the user's current position, this object => the next position (from possible moves)
+
     // Apply position to set X and Y
     int x = clickedCell.position[0];
     int y = clickedCell.position[1];
-    
+
     // if y is more than 7
     if (y > 7) {
-        // Set the height with +- constant number
-        clickedCell.position[1] += CellConstant.CELL_SIZE;
+      // Set the height with +- constant number
+      clickedCell.position[1] += CellConstant.CELL_SIZE;
     }
+    
+    // TODO: draw a rectangle
 
-    if (clickedCell.getPiece().isAlive() && isEnemy(clickedCell.getPiece())) {
+    // if they are the opposite side (enemy)
+    if (isEnemy(clickedCell.getPiece())) {
       clickedCell.removeImageView(); // remove the image view
       clickedCell.getPiece().setAlive(); //set isAlive to False
-      clickedCell.setPiece(); //set Piece to this object (this.piece)
+      // Set the piece of clickedCell to the cell of the current object
+      clickedCell.setPiece(this.getPiece());
     }
   }
 
