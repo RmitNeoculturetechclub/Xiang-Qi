@@ -1,4 +1,4 @@
-package com.example.xiangqi.Global.Model;
+package com.example.xiangqi.Enums.Model;
 
 public enum PieceName {
     Soldier,

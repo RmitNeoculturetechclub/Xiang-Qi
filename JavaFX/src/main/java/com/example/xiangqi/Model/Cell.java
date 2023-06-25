@@ -2,10 +2,10 @@ package com.example.xiangqi.Model;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import com.example.xiangqi.Global.Constant.CellConstant;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.xiangqi.Enums.Constant.CellConstant;
 
 public class Cell {
     private ImageView imageView;

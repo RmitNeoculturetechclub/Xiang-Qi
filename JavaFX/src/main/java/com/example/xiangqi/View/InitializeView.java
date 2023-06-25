@@ -1,7 +1,8 @@
 package com.example.xiangqi.View;
 
 import com.example.xiangqi.Controller.InitializeManager;
-import com.example.xiangqi.Global.Constant.CellConstant;
+import com.example.xiangqi.Enums.Constant.CellConstant;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

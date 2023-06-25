@@ -1,10 +1,10 @@
 package com.example.xiangqi.Model;
 
-import com.example.xiangqi.Global.Model.PieceName;
-import com.example.xiangqi.Global.Model.Player;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.xiangqi.Enums.Model.PieceName;
+import com.example.xiangqi.Enums.Model.Player;
 
 public class Piece {
 

@@ -10,11 +10,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import static com.example.xiangqi.Enums.Constant.InitPieceSetup.XiangQiBoard;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static com.example.xiangqi.Global.Constant.InitPieceSetup.XiangQiBoard;
 
 public class BoardController {
 	public ImageView general_r;

@@ -1,6 +1,6 @@
 package com.example.xiangqi.Controller;
 
-import com.example.xiangqi.Global.Constant.InitPieceSetup;
+import com.example.xiangqi.Enums.Constant.InitPieceSetup;
 import com.example.xiangqi.Model.Cell;
 import com.example.xiangqi.Model.Piece;
 import com.example.xiangqi.View.InitializeView;
