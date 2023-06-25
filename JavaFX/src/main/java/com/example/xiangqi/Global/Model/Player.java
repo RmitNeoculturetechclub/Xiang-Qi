@@ -1,4 +1,4 @@
-package com.example.xiangqi.Enums.Model;
+package com.example.xiangqi.Global.Model;
 
 public enum Player {
     Red,

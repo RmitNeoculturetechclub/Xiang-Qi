@@ -1,4 +1,4 @@
-package com.example.xiangqi.Enums.Constant;
+package com.example.xiangqi.Global.Constant;
 
 public class CellConstant {
     public static int CELL_SIZE = 50;

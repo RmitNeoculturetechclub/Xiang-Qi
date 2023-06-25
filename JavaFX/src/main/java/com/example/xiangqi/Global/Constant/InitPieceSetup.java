@@ -1,4 +1,4 @@
-package com.example.xiangqi.Enums.Constant;
+package com.example.xiangqi.Global.Constant;
 
 public class InitPieceSetup {
     public static String[][] XiangQiBoard = {

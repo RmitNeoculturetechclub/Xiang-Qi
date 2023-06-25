@@ -1,7 +1,7 @@
 package com.example.xiangqi.Model;
 
-import com.example.xiangqi.Enums.Model.PieceName;
-import com.example.xiangqi.Enums.Model.Player;
+import com.example.xiangqi.Global.Model.PieceName;
+import com.example.xiangqi.Global.Model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class Piece {
         return pieceName.name() + '_' + player.name();
     }
 
-    public List<int[]> getAllPossibleMoves(Cell[][] GlobalBoard){
+    public List<int[]> getAllPossibleMoves(Cell[][] board){
 
         /*
         Change the list name
@@ -58,9 +58,9 @@ public class Piece {
 
 				//get current position of the pieces (checking their names)
 				int[] currentPos = new int[2];
-				for (int i = 0; i < GlobalBoard.length; i++) {
-					for (int j = 0; j < GlobalBoard[i].length; j++) {
-						if (GlobalBoard[i][j].getPiece().getPieceName() == this.pieceName) {
+				for (int i = 0; i < board.length; i++) {
+					for (int j = 0; j < board[i].length; j++) {
+						if (board[i][j].getPiece().getPieceName() == this.pieceName) {
 							currentPos[0] = i;
 							currentPos[1] = j;
 						}
