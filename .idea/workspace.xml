@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="206af6d2-5907-4f1d-a327-f2a10312d2fd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Xiang-Qi.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="206af6d2-5907-4f1d-a327-f2a10312d2fd" name="Changes" comment="create get valid advisor moves">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaFX/src/main/java/com/example/xiangqi/Model/Advisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaFX/src/main/java/com/example/xiangqi/Model/Advisor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaFX/src/main/java/com/example/xiangqi/Model/Canon.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaFX/src/main/java/com/example/xiangqi/Model/Canon.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +94,14 @@
       <workItem from="1686157938115" duration="539000" />
       <workItem from="1686158498201" duration="75000" />
     </task>
+    <task id="LOCAL-00001" summary="create get valid advisor moves">
+      <created>1687621811536</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1687621811536</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,5 +129,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="create get valid advisor moves" />
+    <option name="LAST_COMMIT_MESSAGE" value="create get valid advisor moves" />
   </component>
 </project>
