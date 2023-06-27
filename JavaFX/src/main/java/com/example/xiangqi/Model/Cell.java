@@ -54,7 +54,7 @@ public class Cell {
         Change the new int to find all possible positions
          */
 
-//        List<int[]> possiblePositions = this.piece.getAllPossibleMoves(board);
+        List<int[]> possiblePositions = this.piece.getAllPossibleMoves(position, board);
 
         List<int[]> example = new ArrayList<>();
         example.add(new int[]{1, 2});
@@ -65,4 +65,5 @@ public class Cell {
 
         return example;
     }
+    
 }
