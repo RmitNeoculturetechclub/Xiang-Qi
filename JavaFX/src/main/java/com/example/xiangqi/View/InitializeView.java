@@ -59,9 +59,13 @@ public class InitializeView {
     public Rectangle createRectanglePossibleCell(int positionX, int positionY) {
         Rectangle rec = new Rectangle();
 
+        System.out.println("X, Y" + positionX + positionY);
+
         // Apply position to set X and Y
         rec.setX(positionX * CellConstant.CELL_SIZE);
         rec.setY(positionY * CellConstant.CELL_SIZE);
+
+        System.out.println("getX, getY" + rec.getX() + rec.getY());
 
         // Set size
         rec.setWidth(CellConstant.CELL_SIZE);
@@ -71,6 +75,8 @@ public class InitializeView {
         if (positionY > 7) {
             rec.setY(rec.getY() + CellConstant.CELL_SIZE);
         }
+
+        System.out.println("if 7Y:" + rec.getY());
 
         // Set other properties
         rec.setFill(Color.BLUE);
