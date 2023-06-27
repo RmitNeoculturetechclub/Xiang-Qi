@@ -1,11 +1,11 @@
 package com.example.xiangqi.Model;
-
-import com.example.xiangqi.Enums.Constant.CellConstant;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import com.example.xiangqi.Enums.Constant.CellConstant;
 
 public class Cell {
     private ImageView imageView;
@@ -22,15 +22,6 @@ public class Cell {
         this.position = new int[]{row, col};
     }
 
-    public int[] getPosition() {
-        return position;
-    }
-
-    public Cell(ImageView imageView, Piece piece) {
-        this.imageView = imageView;
-        this.piece = piece;
-    }
-
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
     }
@@ -39,56 +30,40 @@ public class Cell {
         this.piece = piece;
     }
 
-    public Piece getOccupiedPiece() {
+    public Piece getPiece() {
         return piece;
     }
-
     public ImageView getImageView() {
         return imageView;
     }
 
-    /**
-     * Apply position to set X and Y
-     * Note, if the y is more than 7, then set the height with +- constant number
-     * Rectangle on clicked then
-     * Todo: 4. For each cell create draw function to draw rectangle on listen mouse clicked.
-     *          If there is a cell and player enemy then remove image view, and set piece isAlive to False, set Piece to the currentClickedPiece
-     */
-    public void drawRectangle(Cell clickedCell){}
-
     public void drawPieceImageView(ImageView pieceImageView){
-
-        int cellX = this.position[0] * CellConstant.CELL_SIZE; // Calculate the X coordinate (row)
-        int cellY = this.position[1] * CellConstant.CELL_SIZE; // Calculate the Y coordinate (col)
+        
+        int cellX = (CellConstant.TOTAL_COL - this.position[1]) * CellConstant.CELL_SIZE; // Calculate the X coordinate (row)
+        int cellY = (CellConstant.ROW_STARTING_INDEX + this.position[0]) * CellConstant.CELL_SIZE; // Calculate the Y coordinate (col)
 
         pieceImageView.setX(cellX);
         pieceImageView.setY(cellY);
-        this.imageView = pieceImageView;
+
+        this.setImageView(pieceImageView);
     }
 
-    public Piece getPiece () {
-        return piece;
-    }
-
-    public void setPosition (int[] position) {
-        this.position = position;
-    }
-
-    public void getAllPossibleCells(Cell[][] GlobalBoard){
+    public List<int[]> getAllPossibleCells(Cell[][] board){
         /*
         Change the list name
         Change the new int to find all possible positions
          */
-        List<int[]> possiblePositions = this.piece.getAllPossibleMoves(GlobalBoard);
 
-        for (int[] positions : possiblePositions){
-            // Get cell
-            int row = positions[0];
-            int col = positions[1];
-            Cell cell = GlobalBoard[row][col];
+        List<int[]> possiblePositions = this.piece.getAllPossibleMoves(position, board);
 
-            // draw rectangle
-            cell.drawRectangle(this);
-        }
+        List<int[]> example = new ArrayList<>();
+        example.add(new int[]{1, 2});
+        example.add(new int[]{5, 5});
+        example.add(new int[]{6, 6});
+        example.add(new int[]{7, 7});
+        example.add(new int[]{4, 7});
+
+        return example;
     }
+    
 }
