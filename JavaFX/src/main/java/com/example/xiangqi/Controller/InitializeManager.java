@@ -126,8 +126,6 @@ public class InitializeManager {
                         imageViewSetOnMouseClicked(newCell);
                     });
 
-                    // imageViewSetOnMouseClicked(board[positionY][positionX]);
-
                     this.pane.getChildren().add(rectanglePossible);
                     this.displayRectangles.add(rectanglePossible);
                 }

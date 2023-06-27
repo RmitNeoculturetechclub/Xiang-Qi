@@ -76,6 +76,7 @@ public class InitializeView {
         rec.setFill(Color.BLUE);
         rec.setStroke(Color.BLUE);
         rec.setStrokeWidth(2);
+        rec.setOpacity(0.5); // Set transparency to 50%
 
         return rec;
     }
