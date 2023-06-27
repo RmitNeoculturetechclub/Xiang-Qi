@@ -12,9 +12,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
 
+// managing the graphical representation of the XiangQi game board and its pieces
 public class InitializeView {
 
     public InitializeView() {
@@ -26,11 +28,13 @@ public class InitializeView {
         return new Image(_url.toExternalForm());
     }
 
+    // create an Image object based on the specified image link
     public ImageView createPieceView(String imageLink) throws IOException {
+
         Image image = createImage(imageLink);
 
-        //creating ImageView for adding image
-        ImageView imageView=new ImageView();
+        // creating ImageView for adding image
+        ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
@@ -44,18 +48,36 @@ public class InitializeView {
         return imageView;
     }
 
-
-    /**
-     * Apply position to set X and Y
-     * Note, if the y is more than 7, then set the height with +- constant number
+    /*
      * Rectangle on clicked then
-     * Todo: For each cell create draw function to draw rectangle on listen mouse clicked.
-     *          If there is a cell and player enemy then remove image view, and set piece isAlive to False, set Piece to the currentClickedPiece
+     * Todo: For each cell create draw function to draw rectangle on listen mouse
+     * clicked.
      */
-    public Rectangle createRectanglePossibleCell(int positionX, int positionY){
+
+    // draw rectangle with position X and Y
+    // create a rectangle for representing a possible cell that a piece can move to
+    public Rectangle createRectanglePossibleCell(int positionX, int positionY) {
         Rectangle rec = new Rectangle();
-        // draw rectangle with position X and Y
+
+        // Apply position to set X and Y
+        rec.setX(positionX * CellConstant.CELL_SIZE);
+        rec.setY(positionY * CellConstant.CELL_SIZE);
+
+        // Set size
+        rec.setWidth(CellConstant.CELL_SIZE);
+        rec.setHeight(CellConstant.CELL_SIZE);
+
+        // Adjust y if it is more than 7
+        if (positionY > 7) {
+            rec.setY(rec.getY() + CellConstant.CELL_SIZE);
+        }
+
+        // Set other properties
+        rec.setFill(Color.BLUE);
+        rec.setStroke(Color.BLUE);
+        rec.setStrokeWidth(2);
 
         return rec;
     }
+
 }
