@@ -123,7 +123,7 @@ public class InitializeManager {
                         pane.getChildren().remove(cell.getImageView());
 
                         // Set the image view for the new cell
-                        imageViewSetOnMouseClicked(newCell);
+                        // imageViewSetOnMouseClicked(newCell);
                     });
 
                     imageViewSetOnMouseClicked(board[positionY][positionX]);
