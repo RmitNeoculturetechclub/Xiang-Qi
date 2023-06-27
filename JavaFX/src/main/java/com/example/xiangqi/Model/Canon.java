@@ -13,7 +13,7 @@ public class Canon extends Piece {
 	public Canon() {
 	}
 
-	public List<int[]> getAllPossibleMoves(int[] currentPosition,Cell[][] board) {
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
 
 		List<int[]> possiblePositions = new ArrayList<>();
 
