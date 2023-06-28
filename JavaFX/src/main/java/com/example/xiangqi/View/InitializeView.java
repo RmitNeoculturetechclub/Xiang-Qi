@@ -61,8 +61,8 @@ public class InitializeView {
         System.out.println("X, Y" + positionX + positionY);
 
         // Apply position to set X and Y
-        rec.setX(positionX * CellConstant.CELL_SIZE);
-        rec.setY((1 + positionY) * CellConstant.CELL_SIZE);
+        rec.setX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE);
+        rec.setY((CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE);
 
         // Set size
         rec.setWidth(CellConstant.CELL_SIZE);
