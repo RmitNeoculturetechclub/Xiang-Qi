@@ -2,61 +2,61 @@ package com.example.xiangqi.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.example.xiangqi.Enums.Model.PieceName;
 import com.example.xiangqi.Enums.Model.Player;
 
 public class Piece {
 
-    private boolean isAlive;
-    private String id;
-    private PieceName pieceName;
-    private Player player;
+	private boolean isAlive;
+	private String id;
+	private Player player;
+	private PieceName pieceName;
 
-    public Piece(String id, String player, String pieceName) {
-        this.isAlive = true;
-        this.id = id;
-        this.player = Player.valueOf(player);
-        this.pieceName = PieceName.valueOf(pieceName);
-    }
+	public Piece(String id, String player, String pieceName) {
+		this.isAlive = true;
+		this.id = id;
+		this.player = Player.valueOf(player);
+		this.pieceName = PieceName.valueOf(pieceName);
+	}
 
-    public Piece() {
-        this.isAlive = true;
-    }
+	public Piece() {
+		this.isAlive = true;
+	}
 
-    public void pieceMovement(){}
+	public void pieceMovement() {
+	}
 
-	public PieceName getPieceName () {
+	public PieceName getPieceName() {
 		return pieceName;
 	}
 
-    public String getPieceImageName() {
-        return pieceName.name() + '_' + player.name();
-    }
+	public String getPieceImageName() {
+		return "Soldier_" + getPlayerName();
+	}
 
-    public List<int[]> getAllPossibleMoves(Cell[][] board){
+	public List<int[]> getAllPossibleMoves(Cell[][] board) {
 
-        /*
-        Change the list name
-        Change the new int to find all possible positions
-        Check the condition to find suitable move, and eliminate the occupied piece
-         */
-		List <int[]> example = new ArrayList <>();
+		/*
+		 * Change the list name
+		 * Change the new int to find all possible positions
+		 * Check the condition to find suitable move, and eliminate the occupied piece
+		 */
+		List<int[]> example = new ArrayList<>();
 		switch (this.pieceName) {
 			case Soldier -> {
-                /*
-                Soldier movement here
-                 */
+				/*
+				 * Soldier movement here
+				 */
 				break;
 			}
 
 			case Canon -> {
 				// Check if the piece is alive
-				if (! this.isAlive) {
+				if (!this.isAlive) {
 					break;
 				}
 
-				//get current position of the pieces (checking their names)
+				// get current position of the pieces (checking their names)
 				int[] currentPos = new int[2];
 				for (int i = 0; i < board.length; i++) {
 					for (int j = 0; j < board[i].length; j++) {
@@ -70,7 +70,7 @@ public class Piece {
 
 				Canon canon = (Canon) this;
 				// Assign the possible moves to the list
-				example = canon.getAllPossibleMoves(currentPos);
+				example = canon.getAllPossibleMoves(currentPos, board);
 				break;
 			}
 			default -> {
@@ -78,5 +78,17 @@ public class Piece {
 			}
 		}
 		return example;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getPlayerName() {
+		return player.name();
 	}
 }

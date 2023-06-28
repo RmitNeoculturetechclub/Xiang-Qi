@@ -23,14 +23,13 @@ public class InitializeView {
     }
 
     public static Image createImage(String resourceName) {
+        System.out.println(resourceName);
         URL _url = InitializeManager.class.getResource(resourceName);
         assert _url != null;
         return new Image(_url.toExternalForm());
     }
 
-    // create an Image object based on the specified image link
     public ImageView createPieceView(String imageLink) throws IOException {
-
         Image image = createImage(imageLink);
 
         // creating ImageView for adding image
