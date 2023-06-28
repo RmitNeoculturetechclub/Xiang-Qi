@@ -13,7 +13,7 @@ public class Advisor extends Piece {
 	public Advisor() {
 	}
 
-	// @Override
+	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
 		List<int[]> possiblePositions = new ArrayList<>();
 

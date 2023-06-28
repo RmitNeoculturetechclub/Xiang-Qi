@@ -12,12 +12,11 @@ public class Elephant extends Piece {
 	public Elephant() {
 	}
 
-	// @Override
-	// public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board)
-	// {
-	// // TODO: Implement this method
-	// return super.getAllPossibleMoves(currentPosition, board);
-	// }
+	@Override
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
+		// TODO: Implement this method
+		return super.getAllPossibleMoves(currentPosition, board);
+	}
 
 	public void setNumPieces(int numPieces) {
 		Elephant.elephantCounter += numPieces;

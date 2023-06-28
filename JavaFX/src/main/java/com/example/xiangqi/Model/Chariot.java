@@ -12,12 +12,11 @@ public class Chariot extends Piece {
 	public Chariot() {
 	}
 
-	// @Override
-	// public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board)
-	// {
-	// // TODO: Implement this method
-	// return super.getAllPossibleMoves(currentPosition, board);
-	// }
+	@Override
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
+		// TODO: Implement this method
+		return super.getAllPossibleMoves(currentPosition, board);
+	}
 
 	public void setNumPieces(int numPieces) {
 		Chariot.chariotCounter += numPieces;

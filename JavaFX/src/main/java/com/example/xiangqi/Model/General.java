@@ -14,12 +14,11 @@ public class General extends Piece {
 	public General() {
 	}
 
-	// @Override
-	// public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][]
-	// board){
-	// //TODO: Implement this method
-	// return super.getAllPossibleMoves(currentPosition, board);
-	// }
+	@Override
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
+		// TODO: Implement this method
+		return super.getAllPossibleMoves(currentPosition, board);
+	}
 
 	public void setNumPieces(int numPieces) {
 		General.generalCounter += numPieces;

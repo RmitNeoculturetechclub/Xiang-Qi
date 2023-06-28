@@ -1,8 +1,16 @@
 package com.example.xiangqi.Controller;
 
 import com.example.xiangqi.Enums.Constant.InitPieceSetup;
+import com.example.xiangqi.Handler.IdGeneration;
+import com.example.xiangqi.Model.Advisor;
+import com.example.xiangqi.Model.Canon;
 import com.example.xiangqi.Model.Cell;
+import com.example.xiangqi.Model.Chariot;
+import com.example.xiangqi.Model.Elephant;
+import com.example.xiangqi.Model.General;
+import com.example.xiangqi.Model.Horse;
 import com.example.xiangqi.Model.Piece;
+import com.example.xiangqi.Model.Soldier;
 import com.example.xiangqi.View.InitializeView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -67,9 +75,43 @@ public class InitializeManager {
                     String pieceType = nameParts[0];
                     String player = nameParts[1];
 
-                    // Initialize Piece with extracted values
-                    Piece piece = new Piece("", player);
-                    cell.setPiece(piece);
+                    if (pieceType.equals("General")) {
+                        General general = new General("", player);
+                        general.setNumPieces(1);
+                        general.setId(IdGeneration.generate(general.getId(), general.getNumPiece()));
+                        cell.setPiece(general);
+                    } else if (pieceType.equals("Chariot")) {
+                        Chariot chariot = new Chariot("", player);
+                        chariot.setNumPieces(1);
+                        chariot.setId(IdGeneration.generate(chariot.getId(), chariot.getNumPiece()));
+                        cell.setPiece(chariot);
+                    } else if (pieceType.equals("Horse")) {
+                        Horse horse = new Horse("", player);
+                        horse.setNumPieces(1);
+                        horse.setId(IdGeneration.generate(horse.getId(), horse.getNumPiece()));
+                        cell.setPiece(horse);
+                    } else if (pieceType.equals("Elephant")) {
+                        Elephant elephant = new Elephant("", player);
+                        elephant.setNumPieces(1);
+                        elephant.setId(IdGeneration.generate(elephant.getId(), elephant.getNumPiece()));
+                        cell.setPiece(elephant);
+                    } else if (pieceType.equals("Advisor")) {
+                        Advisor advisor = new Advisor("", player);
+                        advisor.setNumPieces(1);
+                        advisor.setId(IdGeneration.generate(advisor.getId(), advisor.getNumPiece()));
+                        cell.setPiece(advisor);
+                    } else if (pieceType.equals("Soldier")) {
+                        Soldier soldier = new Soldier("", player);
+                        soldier.setNumPieces(1);
+                        soldier.setId(IdGeneration.generate(soldier.getId(), soldier.getNumPiece()));
+                        cell.setPiece(soldier);
+                    } else if (pieceType.equals("Canon")) {
+                        Canon canon = new Canon("", player);
+                        canon.setNumPieces(1);
+                        canon.setId(IdGeneration.generate(canon.getId(), canon.getNumPiece()));
+                        cell.setPiece(canon);
+                    }
+
                     imageViewSetOnMouseClicked(cell);
                 }
 
