@@ -14,6 +14,7 @@ public class Canon extends Piece {
 	public Canon () {
 	}
 
+	// Get all possible moves for the Cannon piece
 	public List <int[]> getAllPossibleMoves (int[] currentPosition, Cell[][] board) {
 
 		List <int[]> possiblePositions = new ArrayList <>();
@@ -33,6 +34,7 @@ public class Canon extends Piece {
 		return possiblePositions;
 	}
 
+	// Helper method to check for valid moves in a given direction
 	private void checkValidMovesInDirection (int[] currentPosition, int dx, int dy, List <int[]> possiblePositions,
 											 Cell[][] board) {
 		int isBlocked = 0;
@@ -48,6 +50,7 @@ public class Canon extends Piece {
 				}
 			}
 
+			// Check if the piece at the destination is an opponent's piece
 			if (isBlocked == 2) {
 				if (! Objects.equals(board[x][y].getPiece().getPlayerName(), this.getPlayerName())) {
 					possiblePositions.add(new int[] {x, y});
