@@ -68,7 +68,7 @@ public class InitializeManager {
                     String player = nameParts[1];
 
                     // Initialize Piece with extracted values
-                    Piece piece = new Piece("", player, pieceType);
+                    Piece piece = new Piece("", player);
                     cell.setPiece(piece);
                     imageViewSetOnMouseClicked(cell);
                 }
