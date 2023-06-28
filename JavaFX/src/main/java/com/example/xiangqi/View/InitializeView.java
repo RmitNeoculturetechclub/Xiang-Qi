@@ -62,20 +62,11 @@ public class InitializeView {
 
         // Apply position to set X and Y
         rec.setX(positionX * CellConstant.CELL_SIZE);
-        rec.setY(positionY * CellConstant.CELL_SIZE);
-
-        System.out.println("getX, getY" + rec.getX() + rec.getY());
+        rec.setY((1 + positionY) * CellConstant.CELL_SIZE);
 
         // Set size
         rec.setWidth(CellConstant.CELL_SIZE);
         rec.setHeight(CellConstant.CELL_SIZE);
-
-        // Adjust y if it is more than 7
-        if (positionY > 7) {
-            rec.setY(rec.getY() + CellConstant.CELL_SIZE);
-        }
-
-        System.out.println("if 7Y:" + rec.getY());
 
         // Set other properties
         rec.setFill(Color.BLUE);
