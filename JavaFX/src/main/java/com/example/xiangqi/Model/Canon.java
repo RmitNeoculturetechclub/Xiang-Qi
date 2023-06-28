@@ -40,7 +40,7 @@ public class Canon extends Piece {
 		int x = currentPosition[0] + dx;
 		int y = currentPosition[1] + dy;
 
-		while (x >= 0 && x <= 8 && y >= 0 && y <= 9) {
+		while (x >= 0 && x <= 8 && y >= 0 && y <= 8) {
 			if (board[x][y].getPiece() != null) {
 				isBlocked++;
 			} else {
