@@ -7,8 +7,8 @@ public class General extends Piece {
 	Boolean isCheck = false;
 	Boolean isCheckMate = false;
 
-	public General(String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public General(String id, String player) {
+		super(id, player);
 	}
 
 	public General() {

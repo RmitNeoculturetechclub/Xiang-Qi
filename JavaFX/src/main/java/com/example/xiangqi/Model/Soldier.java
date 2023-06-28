@@ -5,8 +5,8 @@ import java.util.List;
 public class Soldier extends Piece {
 	static int soldierCounter = 0;
 
-	public Soldier(String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public Soldier(String id, String player) {
+		super(id, player);
 	}
 
 	public Soldier() {

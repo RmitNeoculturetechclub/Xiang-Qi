@@ -7,8 +7,8 @@ import com.example.xiangqi.Enums.Model.PieceName;
 public class Horse extends Piece {
 	static int horseCounter = 0;
 
-	public Horse(String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public Horse(String id, String player) {
+		super(id, player);
 	}
 
 	public Horse() {

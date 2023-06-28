@@ -58,13 +58,17 @@ public class Cell {
         this.setImageView(pieceImageView);
     }
 
+    public int[] getPosition() {
+        return position;
+    }
+
     public List<int[]> getAllPossibleCells(Cell[][] board) {
         /*
          * Change the list name
          * Change the new int to find all possible positions
          */
 
-        // List<int[]> possiblePositions = this.piece.getAllPossibleMoves(board);
+        List<int[]> possiblePositions = this.piece.getAllPossibleMoves(getPosition(), board);
 
         List<int[]> example = new ArrayList<>();
         example.add(new int[] { 1, 2 });
@@ -73,7 +77,7 @@ public class Cell {
         example.add(new int[] { 7, 7 });
         example.add(new int[] { 4, 7 });
 
-        return example;
+        return possiblePositions;
     }
 
 }

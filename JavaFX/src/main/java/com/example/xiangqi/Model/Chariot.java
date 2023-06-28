@@ -5,8 +5,8 @@ import java.util.List;
 public class Chariot extends Piece {
 	static int chariotCounter = 0;
 
-	public Chariot(String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public Chariot(String id, String player) {
+		super(id, player);
 	}
 
 	public Chariot() {

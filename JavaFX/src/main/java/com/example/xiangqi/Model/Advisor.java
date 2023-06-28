@@ -6,14 +6,14 @@ import java.util.List;
 public class Advisor extends Piece {
 	static int advisorCounter = 0;
 
-	public Advisor(String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public Advisor(String id, String player) {
+		super(id, player);
 	}
 
 	public Advisor() {
 	}
 
-	//@Override
+	// @Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
 		List<int[]> possiblePositions = new ArrayList<>();
 

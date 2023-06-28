@@ -8,8 +8,8 @@ import java.util.List;
 public class Canon extends Piece {
 	static int canonCounter = 0;
 
-	public Canon(String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public Canon(String id, String player) {
+		super(id, player);
 	}
 
 	public Canon() {

@@ -5,8 +5,8 @@ import java.util.List;
 public class Elephant extends Piece {
 	static int elephantCounter = 0;
 
-	public Elephant(String id, String player, String pieceName) {
-		super(id, player, pieceName);
+	public Elephant(String id, String player) {
+		super(id, player);
 	}
 
 	public Elephant() {
