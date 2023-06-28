@@ -47,14 +47,6 @@ public class InitializeView {
         return imageView;
     }
 
-    /*
-     * Rectangle on clicked then
-     * Todo: For each cell create draw function to draw rectangle on listen mouse
-     * clicked.
-     */
-
-    // draw rectangle with position X and Y
-    // create a rectangle for representing a possible cell that a piece can move to
     public Rectangle createRectanglePossibleCell(int positionX, int positionY) {
         Rectangle rec = new Rectangle();
 
@@ -69,10 +61,10 @@ public class InitializeView {
         rec.setHeight(CellConstant.CELL_SIZE);
 
         // Set other properties
-        rec.setFill(Color.BLUE);
+        rec.setFill(Color.BLUE); // dif side dif col?
         rec.setStroke(Color.BLUE);
         rec.setStrokeWidth(2);
-        rec.setOpacity(0.5); // Set transparency to 50%
+        rec.setOpacity(0.5);
 
         return rec;
     }
