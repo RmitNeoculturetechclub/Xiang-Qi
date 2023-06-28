@@ -1,4 +1,5 @@
 package com.example.xiangqi.Model;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -19,7 +20,7 @@ public class Cell {
     public Cell(int row, int col) {
         this.imageView = null;
         this.piece = null;
-        this.position = new int[]{row, col};
+        this.position = new int[] { row, col };
     }
 
     public void setImageView(ImageView imageView) {
@@ -33,14 +34,23 @@ public class Cell {
     public Piece getPiece() {
         return piece;
     }
+
     public ImageView getImageView() {
         return imageView;
     }
 
-    public void drawPieceImageView(ImageView pieceImageView){
-        
-        int cellX = (CellConstant.TOTAL_COL - this.position[1]) * CellConstant.CELL_SIZE; // Calculate the X coordinate (row)
-        int cellY = (CellConstant.ROW_STARTING_INDEX + this.position[0]) * CellConstant.CELL_SIZE; // Calculate the Y coordinate (col)
+    public void removeImageView() {
+        if (this.imageView != null) {
+            this.imageView.setImage(null);
+        }
+    }
+
+    public void drawPieceImageView(ImageView pieceImageView) {
+
+        int cellX = (CellConstant.TOTAL_COL - this.position[1]) * CellConstant.CELL_SIZE; // Calculate the X coordinate
+                                                                                          // (row)
+        int cellY = (CellConstant.ROW_STARTING_INDEX + this.position[0]) * CellConstant.CELL_SIZE; // Calculate the Y
+                                                                                                   // coordinate (col)
 
         pieceImageView.setX(cellX);
         pieceImageView.setY(cellY);
@@ -48,22 +58,26 @@ public class Cell {
         this.setImageView(pieceImageView);
     }
 
-    public List<int[]> getAllPossibleCells(Cell[][] board){
+    public int[] getPosition() {
+        return position;
+    }
+
+    public List<int[]> getAllPossibleCells(Cell[][] board) {
         /*
-        Change the list name
-        Change the new int to find all possible positions
+         * Change the list name
+         * Change the new int to find all possible positions
          */
 
-        List<int[]> possiblePositions = this.piece.getAllPossibleMoves(position, board);
+        List<int[]> possiblePositions = this.piece.getAllPossibleMoves(getPosition(), board);
 
         List<int[]> example = new ArrayList<>();
-        example.add(new int[]{1, 2});
-        example.add(new int[]{5, 5});
-        example.add(new int[]{6, 6});
-        example.add(new int[]{7, 7});
-        example.add(new int[]{4, 7});
+        example.add(new int[] { 1, 2 });
+        example.add(new int[] { 5, 5 });
+        example.add(new int[] { 6, 6 });
+        example.add(new int[] { 7, 7 });
+        example.add(new int[] { 4, 7 });
 
-        return example;
+        return possiblePositions;
     }
-    
+
 }

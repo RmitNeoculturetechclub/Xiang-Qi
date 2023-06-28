@@ -1,5 +1,7 @@
 package com.example.xiangqi.Model;
 
+import static com.example.xiangqi.Enums.Constant.InitPieceSetup.XiangQiBoard;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class Canon extends Piece {
 		int x = currentPosition[0] + dx;
 		int y = currentPosition[1] + dy;
 
-		while (x >= 0 && x <= 8 && y >= 0 && y <= 9) {
+		while (x >= 0 && x <= 8 && y >= 0 && y <= 8) {
 			if (board[x][y].getPiece() != null) {
 				isBlocked++;
 			} else {
@@ -68,6 +70,6 @@ public class Canon extends Piece {
 	}
 
 	public String getPieceImageName() {
-        return "Canon_" + getPlayerName();
-    }
+		return "Canon_" + getPlayerName();
+	}
 }

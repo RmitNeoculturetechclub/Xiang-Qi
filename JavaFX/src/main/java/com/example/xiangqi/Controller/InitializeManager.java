@@ -1,9 +1,17 @@
 package com.example.xiangqi.Controller;
 
 import com.example.xiangqi.Enums.Constant.InitPieceSetup;
-import com.example.xiangqi.Model.*;
+import com.example.xiangqi.Handler.IdGeneration;
+import com.example.xiangqi.Model.Advisor;
+import com.example.xiangqi.Model.Canon;
+import com.example.xiangqi.Model.Cell;
+import com.example.xiangqi.Model.Chariot;
+import com.example.xiangqi.Model.Elephant;
+import com.example.xiangqi.Model.General;
+import com.example.xiangqi.Model.Horse;
+import com.example.xiangqi.Model.Piece;
+import com.example.xiangqi.Model.Soldier;
 import com.example.xiangqi.View.InitializeView;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
@@ -14,17 +22,19 @@ import javafx.scene.shape.Rectangle;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import com.example.xiangqi.Handler.IdGeneration;
 
 public class InitializeManager {
     private InitializeView initializeView;
-    @FXML
     private Cell[][] board;
     private AnchorPane pane;
     private Piece currentClickedPiece;
+    private ImageView imageView;
+    private Piece piece;
 
     private ArrayList<Rectangle> displayRectangles;
+
     public InitializeManager() throws IOException {
         initializeView = new InitializeView();
     }
@@ -42,8 +52,14 @@ public class InitializeManager {
 
         hBox.getChildren().add(pane);
         // adding scroll pane to the scene
-        // this is bad practice to leave the scene in this. To be placed in the Game Manager
+        // this is bad practice to leave the scene in this. To be placed in the Game
+        // Manager
         return new Scene(hBox);
+    }
+
+    public InitializeManager(ImageView imageView, Piece piece) {
+        this.imageView = imageView;
+        this.piece = piece;
     }
 
     private void initializeBoard() {
@@ -104,7 +120,7 @@ public class InitializeManager {
         }
     }
 
-    private void imageViewSetOnMouseClicked(Cell cell){
+    private void imageViewSetOnMouseClicked(Cell cell) { // The method is called when a piece's image view is clicked.
         ImageView pieceImageView;
 
         try {
@@ -118,30 +134,53 @@ public class InitializeManager {
             // Remove all rectangle
             this.pane.getChildren().removeAll(this.displayRectangles);
 
-            if (currentClickedPiece != cell.getPiece()){
+            if (currentClickedPiece != cell.getPiece()) { // if the clicked piece is the current piece, then remove all
+                                                          // the rectangles
                 currentClickedPiece = cell.getPiece();
                 List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
-                for (int[] positions : possibleCells){
+                for (int[] positions : possibleCells) {
                     // Get cell
                     int positionX = positions[1];
                     int positionY = positions[0];
                     Rectangle rectanglePossible = this.initializeView.createRectanglePossibleCell(positionX, positionY);
 
-                    // Todo for Lucia: set on mouse clicked on rectangle to remove the imageView and reallocate the newImageView for new cell
-                    // Todo for Lucia: to reallocate -> use the function imageViewSetOnMouseClicked with newCell
+                    /*
+                     * Todo: set on mouse clicked on rectangle to remove the imageView
+                     * To reallocate, use the function imageViewSetOnMouseClicked with the newCell
+                     */
+
+                    rectanglePossible.setOnMouseClicked(event -> {
+
+                        // Remove the current piece from the current cell
+                        cell.removeImageView();
+
+                        // Get the new cell based on the clicked rectangle's position
+                        Cell newCell = board[positionY][positionX];
+
+                        // Set the current clicked piece to the new cell
+                        newCell.setPiece(currentClickedPiece);
+
+                        // Remove the current image view from the current cell
+                        pane.getChildren().remove(cell.getImageView());
+
+                        // Set the image view for the new cell
+                        imageViewSetOnMouseClicked(newCell);
+                    });
 
                     this.pane.getChildren().add(rectanglePossible);
                     this.displayRectangles.add(rectanglePossible);
                 }
             }
-            else{
+
+            else { // otherwise, still create another rectangles
                 this.currentClickedPiece = null;
             }
 
             // Happy case first, click once
             // Sad case: Check if the current clicked piece belongs to current player
-            // Sad case: Check if current clicked is the last piece, if not then remove all previous rectangle
+            // Sad case: Check if current clicked is the last piece, if not then remove all
+            // previous rectangle
         });
 
         cell.drawPieceImageView(pieceImageView);

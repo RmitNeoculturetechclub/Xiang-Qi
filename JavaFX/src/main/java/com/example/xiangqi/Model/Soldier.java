@@ -13,7 +13,7 @@ public class Soldier extends Piece {
 	}
 
 	@Override
-	public List<int[]> getAllPossibleMoves(int[] currentPosition,Cell[][] board) {
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
 		// TODO: Implement this method
 		return super.getAllPossibleMoves(currentPosition, board);
 	}
@@ -27,6 +27,6 @@ public class Soldier extends Piece {
 	}
 
 	public String getPieceImageName() {
-        return "Soldier_" + getPlayerName();
-    }
+		return "Soldier_" + getPlayerName();
+	}
 }

@@ -2,22 +2,25 @@ package com.example.xiangqi.Model;
 
 import java.util.List;
 
-public class Horse extends Piece{
+import com.example.xiangqi.Enums.Model.PieceName;
+
+public class Horse extends Piece {
 	static int horseCounter = 0;
-	public Horse (String id, String player) {
+
+	public Horse(String id, String player) {
 		super(id, player);
 	}
 
-	public Horse () {
+	public Horse() {
 	}
 
 	@Override
-	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board){
-		//TODO: Implement this method
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
+		// TODO: Implement this method
 		return super.getAllPossibleMoves(currentPosition, board);
 	}
 
-	public void setNumPieces (int numPieces) {
+	public void setNumPieces(int numPieces) {
 		Horse.horseCounter += numPieces;
 	}
 
@@ -26,6 +29,6 @@ public class Horse extends Piece{
 	}
 
 	public String getPieceImageName() {
-        return "Horse_" + getPlayerName();
-    }
+		return "Horse_" + getPlayerName();
+	}
 }

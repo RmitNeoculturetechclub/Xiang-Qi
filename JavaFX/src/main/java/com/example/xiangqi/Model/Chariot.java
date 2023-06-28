@@ -2,22 +2,23 @@ package com.example.xiangqi.Model;
 
 import java.util.List;
 
-public class Chariot extends Piece{
+public class Chariot extends Piece {
 	static int chariotCounter = 0;
-	public Chariot (String id, String player) {
+
+	public Chariot(String id, String player) {
 		super(id, player);
 	}
 
-	public Chariot () {
+	public Chariot() {
 	}
 
 	@Override
-	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board){
-		//TODO: Implement this method
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
+		// TODO: Implement this method
 		return super.getAllPossibleMoves(currentPosition, board);
 	}
 
-	public void setNumPieces (int numPieces) {
+	public void setNumPieces(int numPieces) {
 		Chariot.chariotCounter += numPieces;
 	}
 
@@ -26,6 +27,6 @@ public class Chariot extends Piece{
 	}
 
 	public String getPieceImageName() {
-        return "Chariot_" + getPlayerName();
-    }
+		return "Chariot_" + getPlayerName();
+	}
 }

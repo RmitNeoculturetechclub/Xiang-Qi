@@ -6,20 +6,21 @@ public class General extends Piece {
 	static int generalCounter = 0;
 	Boolean isCheck = false;
 	Boolean isCheckMate = false;
-	public General (String id, String player) {
+
+	public General(String id, String player) {
 		super(id, player);
 	}
 
-	public General () {
+	public General() {
 	}
 
 	@Override
-	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board){
-		//TODO: Implement this method
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
+		// TODO: Implement this method
 		return super.getAllPossibleMoves(currentPosition, board);
 	}
 
-	public void setNumPieces (int numPieces) {
+	public void setNumPieces(int numPieces) {
 		General.generalCounter += numPieces;
 	}
 
@@ -28,6 +29,6 @@ public class General extends Piece {
 	}
 
 	public String getPieceImageName() {
-        return "General_" + getPlayerName();
-    }
+		return "General_" + getPlayerName();
+	}
 }
