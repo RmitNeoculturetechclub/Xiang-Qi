@@ -170,6 +170,10 @@ public class InitializeManager {
                         // Set the image view for the new cell
                         imageViewSetOnMouseClicked(newCell);
 
+                        // remove all the rectangles
+                        pane.getChildren().removeAll(displayRectangles);
+                        displayRectangles.clear();
+
                     });
 
                     this.pane.getChildren().add(rectanglePossible);
