@@ -129,6 +129,17 @@ public class InitializeManager {
 
     }
 
+    private boolean isLastExistingPiece(Cell cell) {
+        for (Cell[] row : board) {
+            for (Cell c : row) {
+                if (c.getPiece() != null && c != cell) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private void imageViewSetOnMouseClicked(Cell cell) { // The method is called when a piece's image view is clicked.
         ImageView pieceImageView;
 
@@ -140,84 +151,93 @@ public class InitializeManager {
         }
 
         pieceImageView.setOnMouseClicked(e -> {
-
-            // check the currentplayer
-            if (cell.getPiece() != null && cell.getPiece().getPlayerName().equals(currentPlayer)) {
-
-                // Remove all rectangle
-                // this.pane.getChildren().removeAll(this.displayRectangles);
-
-                if (currentClickedPiece != cell.getPiece()) {
-                    System.out.println("currentClickedPiece: " + currentClickedPiece + ", cell: " + cell.getPiece());
-                    // remove all the rectangles before adding more
-                    pane.getChildren().removeAll(displayRectangles);
-                    displayRectangles.clear();
-                    currentClickedPiece = cell.getPiece();
-
-                    List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
-
-                    for (int[] positions : possibleCells) {
-                        // Get cell
-                        int positionX = positions[1];
-                        int positionY = positions[0];
-                        Rectangle rectanglePossible = this.initializeView.createRectanglePossibleCell(positionX,
-                                positionY);
-
-                        rectanglePossible.setOnMouseClicked(event -> {
-                            System.out.println(
-                                    "currentClickedPiece: " + currentClickedPiece + ",   cell: " + cell.getPiece());
-
-                            // change the currentPlayer
-                            if (currentPlayer == "Red") {
-                                currentPlayer = "Black";
-                            } else {
-                                currentPlayer = "Red";
-                            }
-
-                            // TODO: Transfer to new cell
-                            // cell.removeImageView();
-
-                            // Get the new cell based on the clicked rectangle's position
-                            Cell newCell = board[positionY][positionX];
-
-                            // Set the current clicked piece to the new cell
-                            newCell.setPiece(currentClickedPiece);
-
-                            // Remove the current image view from the current cell
-                            pane.getChildren().remove(cell.getImageView());
-
-                            // TODO: remove all the rectangles and global clicked piece
-
-                            // remove the old image view from the newCell
-                            // newCell.removeImageView();
-
-                            // remove all the rectangles
-                            pane.getChildren().removeAll(displayRectangles);
-                            displayRectangles.clear();
-                            this.currentClickedPiece = null;
-
-                            // Set the image view for the new cell
-                            imageViewSetOnMouseClicked(newCell);
-
-                        });
-
-                        this.pane.getChildren().add(rectanglePossible);
-                        this.displayRectangles.add(rectanglePossible);
-                    }
-                }
-
-                else {
-                    this.currentClickedPiece = null;
-
-                    // remove all the rectangles
-                    pane.getChildren().removeAll(displayRectangles);
-                    displayRectangles.clear();
-                }
+            // Check if the current one is the last existing piece
+            if (isLastExistingPiece(cell)) {
+                DisplayPlayer winnerDisplay = new DisplayPlayer();
+                winnerDisplay.displayWinner(cell.getPiece().getPlayerName());
 
             } else {
-                // if it's not the current player
-                DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
-                currentPlayerDisplay.displayText(currentPlayer);
+
+                // check the currentplayer
+                if (cell.getPiece() != null && cell.getPiece().getPlayerName().equals(currentPlayer)) {
+
+                    // Remove all rectangle
+                    // this.pane.getChildren().removeAll(this.displayRectangles);
+
+                    if (currentClickedPiece != cell.getPiece()) {
+                        System.out
+                                .println("currentClickedPiece: " + currentClickedPiece + ", cell: " + cell.getPiece());
+                        // remove all the rectangles before adding more
+                        pane.getChildren().removeAll(displayRectangles);
+                        displayRectangles.clear();
+                        currentClickedPiece = cell.getPiece();
+
+                        List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
+
+                        for (int[] positions : possibleCells) {
+                            // Get cell
+                            int positionX = positions[1];
+                            int positionY = positions[0];
+                            Rectangle rectanglePossible = this.initializeView.createRectanglePossibleCell(positionX,
+                                    positionY);
+
+                            rectanglePossible.setOnMouseClicked(event -> {
+                                System.out.println(
+                                        "currentClickedPiece: " + currentClickedPiece + ",   cell: " + cell.getPiece());
+
+                                // change the currentPlayer
+                                if (currentPlayer == "Red") {
+                                    currentPlayer = "Black";
+                                } else {
+                                    currentPlayer = "Red";
+                                }
+
+                                // TODO: Transfer to new cell
+                                // cell.removeImageView();
+
+                                // Get the new cell based on the clicked rectangle's position
+                                Cell newCell = board[positionY][positionX];
+
+                                // Set the current clicked piece to the new cell
+                                newCell.setPiece(currentClickedPiece);
+
+                                // Remove the current image view from the current cell
+                                pane.getChildren().remove(cell.getImageView());
+
+                                // TODO: remove all the rectangles and global clicked piece
+
+                                // remove the old image view from the newCell
+                                // newCell.removeImageView();
+
+                                // remove all the rectangles
+                                pane.getChildren().removeAll(displayRectangles);
+                                displayRectangles.clear();
+                                this.currentClickedPiece = null;
+
+                                // Set the image view for the new cell
+                                imageViewSetOnMouseClicked(newCell);
+
+                            });
+
+                            this.pane.getChildren().add(rectanglePossible);
+                            this.displayRectangles.add(rectanglePossible);
+                        }
+                    }
+
+                    else {
+                        this.currentClickedPiece = null;
+
+                        // remove all the rectangles
+                        pane.getChildren().removeAll(displayRectangles);
+                        displayRectangles.clear();
+                    }
+
+                } else {
+                    // if it's not the current player
+                    DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
+                    currentPlayerDisplay.displayPlayer(currentPlayer);
+
+                }
 
             }
 

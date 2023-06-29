@@ -21,7 +21,7 @@ public class Game extends Application {
 
 		// display the current player state on the UI view
 		DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
-		currentPlayerDisplay.displayText("Red");
+		currentPlayerDisplay.displayPlayer("Red");
 
 	}
 
