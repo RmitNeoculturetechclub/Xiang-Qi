@@ -135,6 +135,10 @@ public class InitializeManager {
             // this.pane.getChildren().removeAll(this.displayRectangles);
 
             if (currentClickedPiece != cell.getPiece()) {
+                // remove all the rectangles before adding more
+                pane.getChildren().removeAll(displayRectangles);
+                displayRectangles.clear();
+
                 System.out.println("currentClickedPiece: " + currentClickedPiece + ", cell: " + cell.getPiece());
                 currentClickedPiece = cell.getPiece();
                 List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
@@ -146,29 +150,25 @@ public class InitializeManager {
                     Rectangle rectanglePossible = this.initializeView.createRectanglePossibleCell(positionX, positionY);
 
                     rectanglePossible.setOnMouseClicked(event -> {
-
-                        // Remove the current piece from the current cell
-                        cell.removeImageView();
-
+                        /**
+                         * Transfer to new cell
+                         */
                         // Get the new cell based on the clicked rectangle's position
                         Cell newCell = board[positionY][positionX];
-
                         // Set the current clicked piece to the new cell
                         newCell.setPiece(currentClickedPiece);
 
-                        // Remove the current image view from the current cell
-                        pane.getChildren().remove(cell.getImageView());
+                        // Remove old image views from current cell and new cell
+                        pane.getChildren().removeAll(cell.getImageView(), newCell.getImageView());
+                        cell.removeFromCell();
 
-                        // remove the old image view from the newCell
-                        newCell.removeImageView();
+                        // remove all the rectangles and global clicked piece
+                        pane.getChildren().removeAll(displayRectangles);
+                        displayRectangles.clear();
+                        this.currentClickedPiece = null;
 
                         // Set the image view for the new cell
                         imageViewSetOnMouseClicked(newCell);
-
-                        // remove all the rectangles
-                        pane.getChildren().removeAll(displayRectangles);
-                        displayRectangles.clear();
-
                     });
 
                     this.pane.getChildren().add(rectanglePossible);

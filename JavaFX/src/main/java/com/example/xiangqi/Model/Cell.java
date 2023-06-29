@@ -39,10 +39,9 @@ public class Cell {
         return imageView;
     }
 
-    public void removeImageView() {
-        if (this.imageView != null) {
-            this.imageView.setImage(null);
-        }
+    public void removeFromCell() {
+        this.imageView = null;
+        this.piece = null;
     }
 
     public void drawPieceImageView(ImageView pieceImageView) {
