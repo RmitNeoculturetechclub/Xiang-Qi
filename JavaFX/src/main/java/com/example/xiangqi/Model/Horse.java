@@ -18,11 +18,13 @@ public class Horse extends Piece {
 	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
 		List<int[]> possiblePositions = new ArrayList<>();
+		int x = currentPosition[0];
+		int y = currentPosition[1];
 		int[][] directions = { { -2, -1 }, { -2, 1 }, { -1, -2 }, { -1, 2 }, { 1, -2 }, { 1, 2 }, { 2, -1 }, { 2, 1 } };
 
 		for (int[] direction : directions) {
-			int newRow = currentPosition[0] + direction[0];
-			int newColumn = currentPosition[1] + direction[1];
+			int newRow = x + direction[0];
+			int newColumn = y + direction[1];
 			if (isValidMove(newRow, newColumn, board)) {
 				possiblePositions.add(new int[] { newRow, newColumn });
 			}

@@ -56,7 +56,7 @@ public class Soldier extends Piece {
 			return false;
 		}
 
-		return true;
+		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 		// Check if the position is empty
 		// return board[x][y].getPiece() == null;
 	}
