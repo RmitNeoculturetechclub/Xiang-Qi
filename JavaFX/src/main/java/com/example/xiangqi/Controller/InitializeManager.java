@@ -132,10 +132,14 @@ public class InitializeManager {
 
         pieceImageView.setOnMouseClicked(e -> {
             // Remove all rectangle
-            this.pane.getChildren().removeAll(this.displayRectangles);
+            // this.pane.getChildren().removeAll(this.displayRectangles);
 
-            if (currentClickedPiece != cell.getPiece()) { // if the clicked piece is the current piece, then remove all
-                                                          // the rectangles
+            if (currentClickedPiece != cell.getPiece()) {
+                // remove all the rectangles before adding more
+                pane.getChildren().removeAll(displayRectangles);
+                displayRectangles.clear();
+
+                System.out.println("currentClickedPiece: " + currentClickedPiece + ", cell: " + cell.getPiece());
                 currentClickedPiece = cell.getPiece();
                 List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
@@ -145,24 +149,23 @@ public class InitializeManager {
                     int positionY = positions[0];
                     Rectangle rectanglePossible = this.initializeView.createRectanglePossibleCell(positionX, positionY);
 
-                    /*
-                     * Todo: set on mouse clicked on rectangle to remove the imageView
-                     * To reallocate, use the function imageViewSetOnMouseClicked with the newCell
-                     */
-
                     rectanglePossible.setOnMouseClicked(event -> {
-
-                        // Remove the current piece from the current cell
-                        cell.removeImageView();
-
+                        /**
+                         * Transfer to new cell
+                         */
                         // Get the new cell based on the clicked rectangle's position
                         Cell newCell = board[positionY][positionX];
-
                         // Set the current clicked piece to the new cell
                         newCell.setPiece(currentClickedPiece);
 
-                        // Remove the current image view from the current cell
-                        pane.getChildren().remove(cell.getImageView());
+                        // Remove old image views from current cell and new cell
+                        pane.getChildren().removeAll(cell.getImageView(), newCell.getImageView());
+                        cell.removeFromCell();
+
+                        // remove all the rectangles and global clicked piece
+                        pane.getChildren().removeAll(displayRectangles);
+                        displayRectangles.clear();
+                        this.currentClickedPiece = null;
 
                         // Set the image view for the new cell
                         imageViewSetOnMouseClicked(newCell);
@@ -173,14 +176,18 @@ public class InitializeManager {
                 }
             }
 
-            else { // otherwise, still create another rectangles
+            else {
                 this.currentClickedPiece = null;
+
+                // remove all the rectangles
+                pane.getChildren().removeAll(displayRectangles);
+                displayRectangles.clear();
             }
 
-            // Happy case first, click once
-            // Sad case: Check if the current clicked piece belongs to current player
-            // Sad case: Check if current clicked is the last piece, if not then remove all
-            // previous rectangle
+            // Happy case first: click once.
+            // Sad case: Check if the currently clicked piece belongs to the current player.
+            // Sad case: Check if the currently clicked piece is the last existing piece; if
+            // not, then remove all previous rectangles.
         });
 
         cell.drawPieceImageView(pieceImageView);
