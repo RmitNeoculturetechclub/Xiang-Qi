@@ -132,10 +132,10 @@ public class InitializeManager {
 
         pieceImageView.setOnMouseClicked(e -> {
             // Remove all rectangle
-            this.pane.getChildren().removeAll(this.displayRectangles);
+            // this.pane.getChildren().removeAll(this.displayRectangles);
 
-            if (currentClickedPiece != cell.getPiece()) { // if the clicked piece is the current piece, then remove all
-                                                          // the rectangles
+            if (currentClickedPiece != cell.getPiece()) {
+
                 currentClickedPiece = cell.getPiece();
                 List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
@@ -144,11 +144,6 @@ public class InitializeManager {
                     int positionX = positions[1];
                     int positionY = positions[0];
                     Rectangle rectanglePossible = this.initializeView.createRectanglePossibleCell(positionX, positionY);
-
-                    /*
-                     * Todo: set on mouse clicked on rectangle to remove the imageView
-                     * To reallocate, use the function imageViewSetOnMouseClicked with the newCell
-                     */
 
                     rectanglePossible.setOnMouseClicked(event -> {
 
@@ -181,7 +176,7 @@ public class InitializeManager {
                 }
             }
 
-            else { // otherwise, still create another rectangles
+            else {
                 this.currentClickedPiece = null;
             }
 

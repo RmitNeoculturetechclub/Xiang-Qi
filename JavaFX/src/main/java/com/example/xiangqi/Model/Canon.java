@@ -21,6 +21,7 @@ public class Canon extends Piece {
 
 		// Check for valid moves up vertically
 		checkValidMovesInDirection(currentPosition, -1, 0, possiblePositions, board);
+
 		// Check for valid moves down vertically
 		checkValidMovesInDirection(currentPosition, 1, 0, possiblePositions, board);
 
