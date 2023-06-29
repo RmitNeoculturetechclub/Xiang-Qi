@@ -164,8 +164,12 @@ public class InitializeManager {
                         // Remove the current image view from the current cell
                         pane.getChildren().remove(cell.getImageView());
 
+                        // remove the old image view from the newCell
+                        newCell.removeImageView();
+
                         // Set the image view for the new cell
                         imageViewSetOnMouseClicked(newCell);
+
                     });
 
                     this.pane.getChildren().add(rectanglePossible);
