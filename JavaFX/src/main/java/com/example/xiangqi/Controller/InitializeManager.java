@@ -32,11 +32,13 @@ public class InitializeManager {
     private Piece currentClickedPiece;
     private ImageView imageView;
     private Piece piece;
+    private String currentPlayer;
 
     private ArrayList<Rectangle> displayRectangles;
 
     public InitializeManager() throws IOException {
         initializeView = new InitializeView();
+        currentPlayer = "Red";
     }
 
     public Scene init() throws IOException {
@@ -64,6 +66,7 @@ public class InitializeManager {
 
     private void initializeBoard() {
         board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
+
         for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
             for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++) {
                 Cell cell = new Cell(row, col);
@@ -131,57 +134,76 @@ public class InitializeManager {
         }
 
         pieceImageView.setOnMouseClicked(e -> {
-            // Remove all rectangle
-            // this.pane.getChildren().removeAll(this.displayRectangles);
 
-            if (currentClickedPiece != cell.getPiece()) {
-                System.out.println("currentClickedPiece: " + currentClickedPiece + ", cell: " + cell.getPiece());
-                currentClickedPiece = cell.getPiece();
-                List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
+            // TODO: check the currentplayer here
+            if (cell.getPiece() != null && cell.getPiece().getPlayerName().equals(currentPlayer)) {
 
-                for (int[] positions : possibleCells) {
-                    // Get cell
-                    int positionX = positions[1];
-                    int positionY = positions[0];
-                    Rectangle rectanglePossible = this.initializeView.createRectanglePossibleCell(positionX, positionY);
+                // Remove all rectangle
+                // this.pane.getChildren().removeAll(this.displayRectangles);
 
-                    rectanglePossible.setOnMouseClicked(event -> {
+                if (currentClickedPiece != cell.getPiece()) {
+                    System.out.println("currentClickedPiece: " + currentClickedPiece + ", cell: " + cell.getPiece());
+                    currentClickedPiece = cell.getPiece();
 
-                        // Remove the current piece from the current cell
-                        cell.removeImageView();
+                    List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
-                        // Get the new cell based on the clicked rectangle's position
-                        Cell newCell = board[positionY][positionX];
+                    for (int[] positions : possibleCells) {
+                        // Get cell
+                        int positionX = positions[1];
+                        int positionY = positions[0];
+                        Rectangle rectanglePossible = this.initializeView.createRectanglePossibleCell(positionX,
+                                positionY);
 
-                        // Set the current clicked piece to the new cell
-                        newCell.setPiece(currentClickedPiece);
+                        rectanglePossible.setOnMouseClicked(event -> {
+                            System.out.println(
+                                    "currentClickedPiece: " + currentClickedPiece + ",   cell: " + cell.getPiece());
 
-                        // Remove the current image view from the current cell
-                        pane.getChildren().remove(cell.getImageView());
+                            // TODO: change the currentPlayer
+                            if (currentPlayer == "Red") {
+                                currentPlayer = "Black";
+                            } else {
+                                currentPlayer = "Red";
+                            }
 
-                        // remove the old image view from the newCell
-                        newCell.removeImageView();
+                            // Remove the current piece from the current cell
+                            cell.removeImageView();
 
-                        // Set the image view for the new cell
-                        imageViewSetOnMouseClicked(newCell);
+                            // Get the new cell based on the clicked rectangle's position
+                            Cell newCell = board[positionY][positionX];
 
-                        // remove all the rectangles
-                        pane.getChildren().removeAll(displayRectangles);
-                        displayRectangles.clear();
+                            // Set the current clicked piece to the new cell
+                            newCell.setPiece(currentClickedPiece);
 
-                    });
+                            // Remove the current image view from the current cell
+                            pane.getChildren().remove(cell.getImageView());
 
-                    this.pane.getChildren().add(rectanglePossible);
-                    this.displayRectangles.add(rectanglePossible);
+                            // remove the old image view from the newCell
+                            newCell.removeImageView();
+
+                            // Set the image view for the new cell
+                            imageViewSetOnMouseClicked(newCell);
+
+                            // remove all the rectangles
+                            pane.getChildren().removeAll(displayRectangles);
+                            displayRectangles.clear();
+
+                        });
+
+                        this.pane.getChildren().add(rectanglePossible);
+                        this.displayRectangles.add(rectanglePossible);
+                    }
                 }
-            }
 
-            else {
-                this.currentClickedPiece = null;
+                else {
+                    this.currentClickedPiece = null;
 
-                // remove all the rectangles
-                pane.getChildren().removeAll(displayRectangles);
-                displayRectangles.clear();
+                    // remove all the rectangles
+                    pane.getChildren().removeAll(displayRectangles);
+                    displayRectangles.clear();
+                }
+
+            } else { // if it's not the current player
+                     // TODO: display the current player state on the UI
             }
 
             // Happy case first: click once.
