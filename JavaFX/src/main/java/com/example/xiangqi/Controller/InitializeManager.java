@@ -178,6 +178,10 @@ public class InitializeManager {
 
             else {
                 this.currentClickedPiece = null;
+
+                // remove all the rectangles
+                pane.getChildren().removeAll(displayRectangles);
+                displayRectangles.clear();
             }
 
             // Happy case first, click once
