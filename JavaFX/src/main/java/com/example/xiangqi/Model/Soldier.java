@@ -56,8 +56,9 @@ public class Soldier extends Piece {
 			return false;
 		}
 
+		return true;
 		// Check if the position is empty
-		return board[x][y].getPiece() == null;
+		// return board[x][y].getPiece() == null;
 	}
 
 	public void setNumPieces(int numPieces) {
