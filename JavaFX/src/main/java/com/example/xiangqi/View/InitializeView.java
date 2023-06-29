@@ -23,7 +23,6 @@ public class InitializeView {
     }
 
     public static Image createImage(String resourceName) {
-        System.out.println(resourceName);
         URL _url = InitializeManager.class.getResource(resourceName);
         assert _url != null;
         return new Image(_url.toExternalForm());
@@ -49,8 +48,6 @@ public class InitializeView {
 
     public Rectangle createRectanglePossibleCell(int positionX, int positionY) {
         Rectangle rec = new Rectangle();
-
-        System.out.println("X, Y" + positionX + positionY);
 
         // Apply position to set X and Y
         rec.setX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE);
