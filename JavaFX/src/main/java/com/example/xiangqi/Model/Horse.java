@@ -35,7 +35,7 @@ public class Horse extends Piece {
 		int numRows = board.length;
 		int numColumns = board[0].length;
 
-		return row >= 0 && row < numRows && column >= 0 && column < numColumns && board[row][column].getPiece() == null;
+		return row >= 0 && row < numRows && column >= 0 && column < numColumns;
 	}
 
 	public void setNumPieces(int numPieces) {

@@ -135,7 +135,7 @@ public class InitializeManager {
             // this.pane.getChildren().removeAll(this.displayRectangles);
 
             if (currentClickedPiece != cell.getPiece()) {
-
+                System.out.println("currentClickedPiece: " + currentClickedPiece + ", cell: " + cell.getPiece());
                 currentClickedPiece = cell.getPiece();
                 List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
@@ -184,10 +184,10 @@ public class InitializeManager {
                 displayRectangles.clear();
             }
 
-            // Happy case first, click once
-            // Sad case: Check if the current clicked piece belongs to current player
-            // Sad case: Check if current clicked is the last piece, if not then remove all
-            // previous rectangle
+            // Happy case first: click once.
+            // Sad case: Check if the currently clicked piece belongs to the current player.
+            // Sad case: Check if the currently clicked piece is the last existing piece; if
+            // not, then remove all previous rectangles.
         });
 
         cell.drawPieceImageView(pieceImageView);
