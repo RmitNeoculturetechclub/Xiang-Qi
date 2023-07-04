@@ -20,16 +20,26 @@ public class Horse extends Piece {
 		List<int[]> possiblePositions = new ArrayList<>();
 		int x = currentPosition[0];
 		int y = currentPosition[1];
-		int[][] directions = { { -2, -1 }, { -2, 1 }, { -1, -2 }, { -1, 2 }, { 1, -2 }, { 1, 2 }, { 2, -1 }, { 2, 1 } };
 
-		for (int[] direction : directions) {
-			int newRow = x + direction[0];
-			int newColumn = y + direction[1];
-			if (isValidMove(newRow, newColumn, board)) {
-				possiblePositions.add(new int[] { newRow, newColumn });
+		int[][] firstDirections = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+		int[][] secondDirections = { { -1, -1 }, { -1, 1 }, { 1, 1 }, { 1, -1 } };
+
+		for (int[] firstDirection : firstDirections) {
+			int firstRow = x + firstDirection[0];
+			int firstColumn = y + firstDirection[1];
+
+			if (isValidMove(firstRow, firstColumn, board)) {
+				for (int[] secondDirection : secondDirections) {
+					int secondRow = firstRow + secondDirection[0];
+					int secondColumn = firstColumn + secondDirection[1];
+
+					if (isValidMove(secondRow, secondColumn, board)) {
+						possiblePositions.add(new int[] { secondRow, secondColumn });
+					}
+				}
 			}
-		}
 
+		}
 		return possiblePositions;
 	}
 
