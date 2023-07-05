@@ -144,6 +144,7 @@ public class InitializeManager {
         }
 
         pieceImageView.setOnMouseClicked(e -> {
+            // TODO: test after finishing the movement of all types of pieces
             if (isLastExistingPiece(cell)) {
                 DisplayPlayer winnerDisplay = new DisplayPlayer();
                 winnerDisplay.displayWinner(cell.getPiece().getPlayerName());
@@ -168,13 +169,24 @@ public class InitializeManager {
                                 currentPlayer = "Red";
                             }
 
+                            // Get the new cell based on the clicked rectangle's position
                             Cell newCell = board[positionY][positionX];
+
+                            // remove images on both cells
                             pane.getChildren().remove(newCell.getImageView());
                             pane.getChildren().remove(cell.getImageView());
+
+                            // Set the current clicked piece to the new cell
                             newCell.setPiece(currentClickedPiece);
+
+                            // remove all the rectangles
                             pane.getChildren().removeAll(displayCircles);
                             displayCircles.clear();
+
+                            // reset the global clicked piece
                             this.currentClickedPiece = null;
+
+                            // Set the image view (current piece) on the new cell
                             imageViewSetOnMouseClicked(newCell);
                         });
 
