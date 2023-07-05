@@ -81,7 +81,7 @@ public class InitializeView {
         // Set other properties
         circle.setFill(Color.BLUE); // dif side dif col?
         circle.setStroke(Color.BLUE);
-        circle.setStrokeWidth(2);
+        circle.setStrokeWidth(0.4);
         circle.setOpacity(0.5);
 
         return circle;
