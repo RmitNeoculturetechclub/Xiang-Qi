@@ -186,6 +186,9 @@ public class InitializeManager {
                             // reset the global clicked piece
                             this.currentClickedPiece = null;
 
+                            // Clear the old piece from the old cell
+                            cell.setPiece(null);
+
                             // Set the image view (current piece) on the new cell
                             imageViewSetOnMouseClicked(newCell);
                         });
