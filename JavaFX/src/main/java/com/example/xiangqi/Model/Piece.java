@@ -30,7 +30,6 @@ public class Piece {
 	}
 
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
-
 		/*
 		 * Change the list name
 		 * Change the new int to find all possible positions
@@ -51,4 +50,5 @@ public class Piece {
 	public String getPlayerName() {
 		return player.name();
 	}
+
 }

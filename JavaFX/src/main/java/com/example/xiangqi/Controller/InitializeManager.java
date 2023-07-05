@@ -140,6 +140,17 @@ public class InitializeManager {
         return true;
     }
 
+    // public void transferToNewCell(Cell newCell) {
+    // // Remove the current piece from the current cell
+    // this.removeImageView();
+
+    // // Set the new cell for the piece
+    // this.cell = newCell;
+
+    // // Add the piece to the new cell
+    // newCell.setPiece(this);
+    // }
+
     private void imageViewSetOnMouseClicked(Cell cell) { // The method is called when a piece's image view is clicked.
         ImageView pieceImageView;
 
@@ -192,29 +203,24 @@ public class InitializeManager {
                                     currentPlayer = "Red";
                                 }
 
-                                // TODO: Transfer to new cell
-                                // cell.removeImageView();
-
                                 // Get the new cell based on the clicked rectangle's position
                                 Cell newCell = board[positionY][positionX];
+
+                                // remove images on both cells
+                                pane.getChildren().remove(newCell.getImageView());
+                                pane.getChildren().remove(cell.getImageView());
 
                                 // Set the current clicked piece to the new cell
                                 newCell.setPiece(currentClickedPiece);
 
-                                // Remove the current image view from the current cell
-                                pane.getChildren().remove(cell.getImageView());
-
-                                // TODO: remove all the rectangles and global clicked piece
-
-                                // remove the old image view from the newCell
-                                // newCell.removeImageView();
-
                                 // remove all the rectangles
                                 pane.getChildren().removeAll(displayRectangles);
                                 displayRectangles.clear();
+
+                                // reset the global clicked piece
                                 this.currentClickedPiece = null;
 
-                                // Set the image view for the new cell
+                                // Set the image view (current piece) on the new cell
                                 imageViewSetOnMouseClicked(newCell);
 
                             });
