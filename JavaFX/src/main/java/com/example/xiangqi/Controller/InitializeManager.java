@@ -157,7 +157,8 @@ public class InitializeManager {
                     for (int[] positions : possibleCells) {
                         int positionX = positions[1];
                         int positionY = positions[0];
-                        Circle circlePossible = this.initializeView.createCirclePossibleCell(positionX, positionY);
+                        Circle circlePossible = this.initializeView.createCirclePossibleCell(positionX, positionY,
+                                currentPlayer);
 
                         circlePossible.setOnMouseClicked(event -> {
                             if (currentPlayer == "Red") {
