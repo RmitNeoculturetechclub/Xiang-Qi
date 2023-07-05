@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 
 import java.io.Console;
 import java.io.IOException;
@@ -64,6 +65,26 @@ public class InitializeView {
         rec.setOpacity(0.5);
 
         return rec;
+    }
+
+    public Circle createCirclePossibleCell(int positionX, int positionY) {
+        Circle circle = new Circle();
+
+        // Apply position to set center coordinates
+        circle.setCenterX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+        circle.setCenterY(
+                (CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+
+        // Set radius
+        circle.setRadius(CellConstant.CELL_SIZE / 2);
+
+        // Set other properties
+        circle.setFill(Color.BLUE); // dif side dif col?
+        circle.setStroke(Color.BLUE);
+        circle.setStrokeWidth(2);
+        circle.setOpacity(0.5);
+
+        return circle;
     }
 
 }
