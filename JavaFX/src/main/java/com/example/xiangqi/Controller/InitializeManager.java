@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 
 import com.example.xiangqi.View.DisplayPlayer;
