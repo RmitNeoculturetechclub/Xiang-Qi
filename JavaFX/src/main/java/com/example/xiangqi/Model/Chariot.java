@@ -45,13 +45,8 @@ public class Chariot extends Piece {
 		}
 	}
 
-	// public String getPieceImageName() {
-	// return "Chariot_" + getPlayerName();
-	// }
-
-	public String getPieceName() {
-		String className = this.getClass().getSimpleName();
-		String[] array = className.split("_");
-		return array[0];
+	public String getPieceImageName() {
+		String PieceName = this.getPieceName();
+		return PieceName + "_" + getPlayerName();
 	}
 }

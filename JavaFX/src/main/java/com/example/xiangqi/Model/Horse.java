@@ -50,13 +50,8 @@ public class Horse extends Piece {
 		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
 
-	// public String getPieceImageName() {
-	// return "Horse_" + getPlayerName();
-	// }
-
-	public String getPieceName() {
-		String className = this.getClass().getSimpleName();
-		String[] array = className.split("_");
-		return array[0];
+	public String getPieceImageName() {
+		String PieceName = this.getPieceName();
+		return PieceName + "_" + getPlayerName();
 	}
 }

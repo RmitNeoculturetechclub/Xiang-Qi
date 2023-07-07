@@ -52,13 +52,8 @@ public class Soldier extends Piece {
 		// return board[x][y].getPiece() == null;
 	}
 
-	// public String getPieceImageName() {
-	// return "Soldier_" + getPlayerName();
-	// }
-
-	public String getPieceName() {
-		String className = this.getClass().getSimpleName();
-		String[] array = className.split("_");
-		return array[0];
+	public String getPieceImageName() {
+		String PieceName = this.getPieceName();
+		return PieceName + "_" + getPlayerName();
 	}
 }

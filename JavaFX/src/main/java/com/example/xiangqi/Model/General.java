@@ -77,7 +77,8 @@ public class General extends Piece {
 	}
 
 	public String getPieceImageName() {
-		return "General_" + getPlayerName();
+		String PieceName = this.getPieceName();
+		return PieceName + "_" + getPlayerName();
 	}
 
 	public String getPieceName() {
