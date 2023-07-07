@@ -21,22 +21,40 @@ public class General extends Piece {
 		int x = currentPosition[0];
 		int y = currentPosition[1];
 		String currentPlayer = getPlayerName();
-		System.out.println("currentPlayer: " + currentPlayer);
 
+		int[][] FacingDirections = { { 0, 1 }, { 0, -1 } };
 		int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 
-		for (int[] direction : directions) {
-			int row = x + direction[0];
-			int col = y + direction[1];
+		// when facing
+		if (isFacing()) {
+			for (int[] direction : FacingDirections) {
+				int row = x + direction[0];
+				int col = y + direction[1];
 
-			if (isValidMove(row, col, board, currentPlayer)) {
-				possiblePositions.add(new int[] { row, col });
+				if (isValidMove(row, col, board, currentPlayer)) {
+					possiblePositions.add(new int[] { row, col });
+				}
 			}
+
+		} else {
+
+			// when not facing
+			for (int[] direction : directions) {
+				int row = x + direction[0];
+				int col = y + direction[1];
+
+				if (isValidMove(row, col, board, currentPlayer)) {
+					possiblePositions.add(new int[] { row, col });
+				}
+			}
+
 		}
 
-		System.out.println("possiblePositions: " + possiblePositions);
-
 		return possiblePositions;
+	}
+
+	private boolean isFacing() {
+		return true;
 	}
 
 	private boolean isValidMove(int x, int y, Cell[][] board, String currentPlayer) {
