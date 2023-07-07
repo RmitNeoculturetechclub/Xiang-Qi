@@ -34,11 +34,13 @@ public class Horse extends Piece {
 		return possiblePositions;
 	}
 
-	private boolean isValidMove(int row, int column, Cell[][] board) {
-		int numRows = board.length;
-		int numColumns = board[0].length;
+	private boolean isValidMove(int x, int y, Cell[][] board) {
+		// Check if the position is within the board bounds
+		if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
+			return false;
+		}
 
-		return row >= 0 && row < numRows && column >= 0 && column < numColumns;
+		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
 
 	public String getPieceImageName() {
