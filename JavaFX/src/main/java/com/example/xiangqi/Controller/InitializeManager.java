@@ -17,15 +17,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 
 import com.example.xiangqi.View.DisplayPlayer;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class InitializeManager {
@@ -62,7 +61,7 @@ public class InitializeManager {
         this.piece = piece;
     }
 
-    private void initializeBoard() {
+    private void initializeBoard(){
         board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
 
         for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
@@ -70,50 +69,26 @@ public class InitializeManager {
                 Cell cell = new Cell(row, col);
                 String pieceName = InitPieceSetup.XiangQiBoard[row][col];
 
+
+
                 if (!pieceName.equals("")) {
                     // Extract player and piece type from the pieceName
                     String[] nameParts = pieceName.split("_");
                     String pieceType = nameParts[0];
                     String player = nameParts[1];
 
-                    if (pieceType.equals("General")) {
-                        General general = new General("", player);
-                        general.setNumPieces(1);
-                        general.setId(IdGeneration.generate(general.getId(), general.getNumPiece()));
-                        cell.setPiece(general);
-                    } else if (pieceType.equals("Chariot")) {
-                        Chariot chariot = new Chariot("", player);
-                        chariot.setNumPieces(1);
-                        chariot.setId(IdGeneration.generate(chariot.getId(), chariot.getNumPiece()));
-                        cell.setPiece(chariot);
-                    } else if (pieceType.equals("Horse")) {
-                        Horse horse = new Horse("", player);
-                        horse.setNumPieces(1);
-                        horse.setId(IdGeneration.generate(horse.getId(), horse.getNumPiece()));
-                        cell.setPiece(horse);
-                    } else if (pieceType.equals("Elephant")) {
-                        Elephant elephant = new Elephant("", player);
-                        elephant.setNumPieces(1);
-                        elephant.setId(IdGeneration.generate(elephant.getId(), elephant.getNumPiece()));
-                        cell.setPiece(elephant);
-                    } else if (pieceType.equals("Advisor")) {
-                        Advisor advisor = new Advisor("", player);
-                        advisor.setNumPieces(1);
-                        advisor.setId(IdGeneration.generate(advisor.getId(), advisor.getNumPiece()));
-                        cell.setPiece(advisor);
-                    } else if (pieceType.equals("Soldier")) {
-                        Soldier soldier = new Soldier("", player);
-                        soldier.setNumPieces(1);
-                        soldier.setId(IdGeneration.generate(soldier.getId(), soldier.getNumPiece()));
-                        cell.setPiece(soldier);
-                    } else if (pieceType.equals("Canon")) {
-                        Canon canon = new Canon("", player);
-                        canon.setNumPieces(1);
-                        canon.setId(IdGeneration.generate(canon.getId(), canon.getNumPiece()));
-                        cell.setPiece(canon);
-                    }
+                    try{
+                        // Initialize Dynamic Class name
+                        Class<?> class1 = Class.forName("com.example.xiangqi.Model."+pieceType);
+                        Piece object1 = (Piece) class1.getDeclaredConstructor().newInstance();
+                        object1.setPlayer(player);
+                        cell.setPiece(object1);
 
-                    imageViewSetOnMouseClicked(cell);
+                        imageViewSetOnMouseClicked(cell);
+                    }catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException |
+                            InvocationTargetException | InstantiationException exception){
+                        System.out.println("Exception: " + exception);
+                    }
                 }
 
                 board[row][col] = cell;

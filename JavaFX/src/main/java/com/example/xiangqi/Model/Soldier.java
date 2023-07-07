@@ -4,15 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Soldier extends Piece {
-	static int soldierCounter = 0;
-
-	public Soldier(String id, String player) {
-		super(id, player);
-	}
-
-	public Soldier() {
-	}
-
 	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
 		List<int[]> possiblePositions = new ArrayList<>();
@@ -59,14 +50,6 @@ public class Soldier extends Piece {
 		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 		// Check if the position is empty
 		// return board[x][y].getPiece() == null;
-	}
-
-	public void setNumPieces(int numPieces) {
-		Soldier.soldierCounter += numPieces;
-	}
-
-	public int getNumPiece() {
-		return Soldier.soldierCounter;
 	}
 
 	public String getPieceImageName() {

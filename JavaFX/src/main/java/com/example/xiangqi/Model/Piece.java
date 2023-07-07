@@ -12,17 +12,12 @@ public class Piece {
 	private String id;
 	private Player player;
 
-	public Piece(String id, String player) {
-		this.isAlive = true;
-		this.id = id;
-		this.player = Player.valueOf(player);
-	}
-
 	public Piece() {
 		this.isAlive = true;
 	}
 
-	public void pieceMovement() {
+	public void setPlayer(String player) {
+		this.player = Player.valueOf(player);
 	}
 
 	public String getPieceImageName() {
@@ -37,14 +32,6 @@ public class Piece {
 		 */
 		List<int[]> example = new ArrayList<>();
 		return example;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getPlayerName() {
