@@ -21,8 +21,7 @@ public class Piece {
 	}
 
 	public String getPieceImageName() {
-		String PieceName = this.getPieceName();
-		return PieceName + "_" + getPlayerName();
+		return getPieceName() + "_" + getPlayerName();
 	}
 
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
