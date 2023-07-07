@@ -169,9 +169,9 @@ public class InitializeManager {
                         this.pane.getChildren().add(circlePossible);
                         this.displayCircles.add(circlePossible);
                     }
-                } else {
-                    DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
-                    currentPlayerDisplay.displayPlayer(currentPlayer);
+                } else { // if the user clicks on the opposite side of the current player
+                    // DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
+                    // currentPlayerDisplay.displayPlayer(currentPlayer);
                 }
             }
         });
