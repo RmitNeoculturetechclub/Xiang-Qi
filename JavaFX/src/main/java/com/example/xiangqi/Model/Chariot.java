@@ -16,51 +16,41 @@ public class Chariot extends Piece {
 	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
 		List<int[]> possiblePositions = new ArrayList<>();
-		int x = currentPosition[0];
-		int y = currentPosition[1];
 
-		// Check for possible moves horizontally to the right
-		for (int i = x + 1; i < 9; i++) {
-			if (!isValidMove(i, y, board)) {
-				break;
-			}
-			possiblePositions.add(new int[] { i, y });
-		}
+		// Check for valid moves up vertically
+		checkValidMovesInDirection(currentPosition, -1, 0, possiblePositions, board);
 
-		// Check for possible moves horizontally to the left
-		for (int i = x - 1; i >= 0; i--) {
-			if (!isValidMove(i, y, board)) {
-				break;
-			}
-			possiblePositions.add(new int[] { i, y });
-		}
+		// Check for valid moves down vertically
+		checkValidMovesInDirection(currentPosition, 1, 0, possiblePositions, board);
 
-		// Check for possible moves vertically upwards
-		for (int j = y - 1; j >= 0; j--) {
-			if (!isValidMove(x, j, board)) {
-				break;
-			}
-			possiblePositions.add(new int[] { x, j });
-		}
+		// Check for valid moves horizontally to the right
+		checkValidMovesInDirection(currentPosition, 0, -1, possiblePositions, board);
 
-		// Check for possible moves vertically downwards
-		for (int j = y + 1; j < 10; j++) {
-			if (!isValidMove(x, j, board)) {
-				break;
-			}
-			possiblePositions.add(new int[] { x, j });
-		}
+		// Check for valid moves horizontally to the left
+		checkValidMovesInDirection(currentPosition, 0, 1, possiblePositions, board);
 
 		return possiblePositions;
 	}
 
-	private boolean isValidMove(int x, int y, Cell[][] board) {
-		// Check if the position is within the board bounds
-		if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
-			return false;
-		}
+	// Helper method to check for valid moves in a given direction
+	private void checkValidMovesInDirection(int[] currentPosition, int dx, int dy, List<int[]> possiblePositions,
+			Cell[][] board) {
+		int isBlocked = 0;
+		int x = currentPosition[0] + dx;
+		int y = currentPosition[1] + dy;
 
-		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
+		while (x >= 0 && x <= 9 && y >= 0 && y <= 8) {
+			if (board[x][y].getPiece() != null) {
+				isBlocked++;
+			} else {
+				if (isBlocked == 0) {
+					possiblePositions.add(new int[] { x, y });
+				}
+			}
+
+			x += dx;
+			y += dy;
+		}
 	}
 
 	public void setNumPieces(int numPieces) {
