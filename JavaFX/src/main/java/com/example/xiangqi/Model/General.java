@@ -14,55 +14,62 @@ public class General extends Piece {
 		int y = currentPosition[1];
 		String currentPlayer = getPlayerName();
 
-		int[][] facingDirections = { { 1, 0 }, { -1, 0 } };
 		int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 
-		if (isFacing(x, y, board)) {
-			for (int[] direction : facingDirections) {
-				int row = x + direction[0];
-				int col = y + direction[1];
+		for (int[] direction : directions) {
+			int row = x + direction[0];
+			int col = y + direction[1];
 
-				if (isValidMove(row, col, board, currentPlayer)) {
-					possiblePositions.add(new int[] { row, col });
-				}
-			}
-		} else {
-			for (int[] direction : directions) {
-				int row = x + direction[0];
-				int col = y + direction[1];
-
-				if (isValidMove(row, col, board, currentPlayer)) {
-					possiblePositions.add(new int[] { row, col });
-				}
+			if (isValidMove(row, col, board, currentPlayer) && isFacing(row, col, board, x) == false) {
+				possiblePositions.add(new int[] { row, col });
 			}
 		}
 
 		return possiblePositions;
 	}
 
-	private boolean isFacing(int x, int y, Cell[][] board) {
-		System.out.println("x, y: " + x + y);
+	// check if it's facing the enemy general directly
+	private boolean isFacing(int x, int y, Cell[][] board, int currentX) {
+		boolean isBlocked = false;
+		boolean hasEnemyGeneral = false;
+		int enemyGeneralX = -1;
+
+		// Find the position of the enemy general in the same column
 		for (int i = 0; i < 10; i++) {
-			if (i == x) {
-				System.out.println("same i");
+			if (i == currentX) {
 				continue;
 			}
-			System.out.println("y, i " + y + " " + i);
-			if (board[i][y].getPiece() != null) {
-				System.out.println("Not Null");
-				if (board[i][y].getPiece().getPieceName().equals("General")) {
-					System.out.println("isFacing true");
-					return true;
-				}
+			if (board[i][y].getPiece() != null && board[i][y].getPiece().getPieceName().equals("General")) {
+
+				hasEnemyGeneral = true;
+				enemyGeneralX = i;
+				break;
+
 			}
 		}
-		System.out.println("isFacing false");
-		return false;
+
+		if (hasEnemyGeneral == false) {
+			return false;
+		} else {
+			// Check for another piece between the two generals
+			int start = Math.min(x, enemyGeneralX) + 1;
+			int end = Math.max(x, enemyGeneralX);
+
+			for (int i = start; i < end; i++) {
+				if (board[i][y].getPiece() != null) {
+					isBlocked = true;
+
+					break;
+				}
+			}
+
+			return !isBlocked;
+		}
 	}
 
 	private boolean isValidMove(int x, int y, Cell[][] board, String currentPlayer) {
 		// Check if the position is within the palace
-		System.out.println(x + " " + y);
+		// System.out.println(x + " " + y);
 		if (currentPlayer == "Black") {
 			if (!(x >= 0 && x <= 2 && y >= 3 && y <= 5)) {
 				return false;
