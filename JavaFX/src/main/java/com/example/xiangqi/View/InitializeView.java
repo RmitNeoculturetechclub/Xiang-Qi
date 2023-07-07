@@ -1,16 +1,22 @@
 package com.example.xiangqi.View;
 
 import com.example.xiangqi.Controller.InitializeManager;
+import com.example.xiangqi.Enums.Constant.CellConstant;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
+import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
 
+// managing the graphical representation of the XiangQi game board and its pieces
 public class InitializeView {
 
     public InitializeView() {
@@ -22,13 +28,11 @@ public class InitializeView {
         return new Image(_url.toExternalForm());
     }
 
-    public ImageView createImageView(String imageLink) throws IOException {
-
-
+    public ImageView createPieceView(String imageLink) throws IOException {
         Image image = createImage(imageLink);
 
-        //creating ImageView for adding image
-        ImageView imageView=new ImageView();
+        // creating ImageView for adding image
+        ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
@@ -41,4 +45,25 @@ public class InitializeView {
 
         return imageView;
     }
+
+    public Rectangle createRectanglePossibleCell(int positionX, int positionY) {
+        Rectangle rec = new Rectangle();
+
+        // Apply position to set X and Y
+        rec.setX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE);
+        rec.setY((CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE);
+
+        // Set size
+        rec.setWidth(CellConstant.CELL_SIZE);
+        rec.setHeight(CellConstant.CELL_SIZE);
+
+        // Set other properties
+        rec.setFill(Color.BLUE); // dif side dif col?
+        rec.setStroke(Color.BLUE);
+        rec.setStrokeWidth(2);
+        rec.setOpacity(0.5);
+
+        return rec;
+    }
+
 }

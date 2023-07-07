@@ -1,19 +1,54 @@
 package com.example.xiangqi.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Horse extends Piece{
-	static int horseCounter = 4;
-	public Horse (String id, String player, String pieceName) {
-		super(id, player, pieceName);
+import com.example.xiangqi.Enums.Model.PieceName;
+
+public class Horse extends Piece {
+	static int horseCounter = 0;
+
+	public Horse(String id, String player) {
+		super(id, player);
 	}
 
-	public Horse () {
+	public Horse() {
 	}
 
 	@Override
-	public List <int[]> getAllPossibleMoves (Cell[][] GlobalBoard) {
-		//TODO: Implement this method
-		return super.getAllPossibleMoves(GlobalBoard);
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
+		List<int[]> possiblePositions = new ArrayList<>();
+		int x = currentPosition[0];
+		int y = currentPosition[1];
+		int[][] directions = { { -2, -1 }, { -2, 1 }, { -1, -2 }, { -1, 2 }, { 1, -2 }, { 1, 2 }, { 2, -1 }, { 2, 1 } };
+
+		for (int[] direction : directions) {
+			int newRow = x + direction[0];
+			int newColumn = y + direction[1];
+			if (isValidMove(newRow, newColumn, board)) {
+				possiblePositions.add(new int[] { newRow, newColumn });
+			}
+		}
+
+		return possiblePositions;
+	}
+
+	private boolean isValidMove(int row, int column, Cell[][] board) {
+		int numRows = board.length;
+		int numColumns = board[0].length;
+
+		return row >= 0 && row < numRows && column >= 0 && column < numColumns;
+	}
+
+	public void setNumPieces(int numPieces) {
+		Horse.horseCounter += numPieces;
+	}
+
+	public int getNumPiece() {
+		return Horse.horseCounter;
+	}
+
+	public String getPieceImageName() {
+		return "Horse_" + getPlayerName();
 	}
 }

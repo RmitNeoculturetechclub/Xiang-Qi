@@ -15,7 +15,7 @@ public class Game extends Application {
 		Scene scene = initializeManager.init();
 		stage.setTitle("XiangQi");
 		stage.setScene(scene);
-		stage.show();
+		stage.show(); 
 	}
 
 	public static void main (String[] args) {
