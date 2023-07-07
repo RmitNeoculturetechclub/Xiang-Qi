@@ -51,4 +51,11 @@ public class Piece {
 		return player.name();
 	}
 
+	public String getPieceName() {
+		String className = this.getClass().getSimpleName();
+		String[] array = className.split("_");
+		// System.out.println(array[0]);
+		return array[0];
+	}
+
 }

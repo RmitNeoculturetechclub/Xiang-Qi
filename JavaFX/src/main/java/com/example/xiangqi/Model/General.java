@@ -22,12 +22,11 @@ public class General extends Piece {
 		int y = currentPosition[1];
 		String currentPlayer = getPlayerName();
 
-		int[][] FacingDirections = { { 0, 1 }, { 0, -1 } };
+		int[][] facingDirections = { { 1, 0 }, { -1, 0 } };
 		int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 
-		// when facing
-		if (isFacing()) {
-			for (int[] direction : FacingDirections) {
+		if (isFacing(x, y, board)) {
+			for (int[] direction : facingDirections) {
 				int row = x + direction[0];
 				int col = y + direction[1];
 
@@ -35,10 +34,7 @@ public class General extends Piece {
 					possiblePositions.add(new int[] { row, col });
 				}
 			}
-
 		} else {
-
-			// when not facing
 			for (int[] direction : directions) {
 				int row = x + direction[0];
 				int col = y + direction[1];
@@ -47,14 +43,29 @@ public class General extends Piece {
 					possiblePositions.add(new int[] { row, col });
 				}
 			}
-
 		}
 
 		return possiblePositions;
 	}
 
-	private boolean isFacing() {
-		return true;
+	private boolean isFacing(int x, int y, Cell[][] board) {
+		System.out.println("x, y: " + x + y);
+		for (int i = 0; i < 10; i++) {
+			if (i == x) {
+				System.out.println("same i");
+				continue;
+			}
+			System.out.println("y, i " + y + " " + i);
+			if (board[i][y].getPiece() != null) { // TODO: getPiece -> allnull
+				// && board[y][i].getPiece().getPieceName().equals("General")
+				System.out.println(board[i][y].getPiece().getPieceName());
+				System.out.println("isFacing true");
+
+				return true;
+			}
+		}
+		System.out.println("isFacing false");
+		return false;
 	}
 
 	private boolean isValidMove(int x, int y, Cell[][] board, String currentPlayer) {
@@ -84,4 +95,11 @@ public class General extends Piece {
 	public String getPieceImageName() {
 		return "General_" + getPlayerName();
 	}
+
+	public String getPieceName() {
+		String className = this.getClass().getSimpleName();
+		String[] array = className.split("_");
+		return array[0];
+	}
+
 }
