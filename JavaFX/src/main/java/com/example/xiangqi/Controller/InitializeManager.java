@@ -17,12 +17,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
+
+import com.example.xiangqi.View.DisplayPlayer;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class InitializeManager {
@@ -32,28 +34,25 @@ public class InitializeManager {
     private Piece currentClickedPiece;
     private ImageView imageView;
     private Piece piece;
+    private String currentPlayer;
 
-    private ArrayList<Rectangle> displayRectangles;
+    private ArrayList<Circle> displayCircles;
 
     public InitializeManager() throws IOException {
         initializeView = new InitializeView();
+        currentPlayer = "Red";
     }
 
     public Scene init() throws IOException {
-
         URL url = InitializeManager.class.getResource("/com/example/xiangqi/Board.fxml");
         assert url != null;
         pane = FXMLLoader.load(url);
-        displayRectangles = new ArrayList<>();
+        displayCircles = new ArrayList<>();
 
         this.initializeBoard();
 
         HBox hBox = new HBox();
-
         hBox.getChildren().add(pane);
-        // adding scroll pane to the scene
-        // this is bad practice to leave the scene in this. To be placed in the Game
-        // Manager
         return new Scene(hBox);
     }
 
@@ -62,12 +61,15 @@ public class InitializeManager {
         this.piece = piece;
     }
 
-    private void initializeBoard() {
+    private void initializeBoard(){
         board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
+
         for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
             for (int col = 0; col < InitPieceSetup.XiangQiBoard[row].length; col++) {
                 Cell cell = new Cell(row, col);
                 String pieceName = InitPieceSetup.XiangQiBoard[row][col];
+
+
 
                 if (!pieceName.equals("")) {
                     // Extract player and piece type from the pieceName
@@ -75,52 +77,38 @@ public class InitializeManager {
                     String pieceType = nameParts[0];
                     String player = nameParts[1];
 
-                    if (pieceType.equals("General")) {
-                        General general = new General("", player);
-                        general.setNumPieces(1);
-                        general.setId(IdGeneration.generate(general.getId(), general.getNumPiece()));
-                        cell.setPiece(general);
-                    } else if (pieceType.equals("Chariot")) {
-                        Chariot chariot = new Chariot("", player);
-                        chariot.setNumPieces(1);
-                        chariot.setId(IdGeneration.generate(chariot.getId(), chariot.getNumPiece()));
-                        cell.setPiece(chariot);
-                    } else if (pieceType.equals("Horse")) {
-                        Horse horse = new Horse("", player);
-                        horse.setNumPieces(1);
-                        horse.setId(IdGeneration.generate(horse.getId(), horse.getNumPiece()));
-                        cell.setPiece(horse);
-                    } else if (pieceType.equals("Elephant")) {
-                        Elephant elephant = new Elephant("", player);
-                        elephant.setNumPieces(1);
-                        elephant.setId(IdGeneration.generate(elephant.getId(), elephant.getNumPiece()));
-                        cell.setPiece(elephant);
-                    } else if (pieceType.equals("Advisor")) {
-                        Advisor advisor = new Advisor("", player);
-                        advisor.setNumPieces(1);
-                        advisor.setId(IdGeneration.generate(advisor.getId(), advisor.getNumPiece()));
-                        cell.setPiece(advisor);
-                    } else if (pieceType.equals("Soldier")) {
-                        Soldier soldier = new Soldier("", player);
-                        soldier.setNumPieces(1);
-                        soldier.setId(IdGeneration.generate(soldier.getId(), soldier.getNumPiece()));
-                        cell.setPiece(soldier);
-                    } else if (pieceType.equals("Canon")) {
-                        Canon canon = new Canon("", player);
-                        canon.setNumPieces(1);
-                        canon.setId(IdGeneration.generate(canon.getId(), canon.getNumPiece()));
-                        cell.setPiece(canon);
-                    }
+                    try{
+                        // Initialize Dynamic Class name
+                        Class<?> class1 = Class.forName("com.example.xiangqi.Model."+pieceType);
+                        Piece object1 = (Piece) class1.getDeclaredConstructor().newInstance();
+                        object1.setPlayer(player);
+                        cell.setPiece(object1);
 
-                    imageViewSetOnMouseClicked(cell);
+                        imageViewSetOnMouseClicked(cell);
+                    }catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException |
+                            InvocationTargetException | InstantiationException exception){
+                        System.out.println("Exception: " + exception);
+                    }
                 }
 
                 board[row][col] = cell;
             }
         }
+
     }
 
-    private void imageViewSetOnMouseClicked(Cell cell) { // The method is called when a piece's image view is clicked.
+    private boolean isLastExistingPiece(Cell cell) {
+        for (Cell[] row : board) {
+            for (Cell c : row) {
+                if (c.getPiece() != null && c != cell) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void imageViewSetOnMouseClicked(Cell cell) {
         ImageView pieceImageView;
 
         try {
@@ -131,67 +119,66 @@ public class InitializeManager {
         }
 
         pieceImageView.setOnMouseClicked(e -> {
-            // Remove all rectangle
-            // this.pane.getChildren().removeAll(this.displayRectangles);
+            // TODO: test after finishing the movement of all types of pieces
+            if (isLastExistingPiece(cell)) {
+                DisplayPlayer winnerDisplay = new DisplayPlayer();
+                winnerDisplay.displayWinner(cell.getPiece().getPlayerName());
+            } else {
+                if (cell.getPiece() != null && cell.getPiece().getPlayerName().equals(currentPlayer)) {
+                    pane.getChildren().removeAll(displayCircles);
+                    displayCircles.clear();
+                    currentClickedPiece = cell.getPiece();
 
-            if (currentClickedPiece != cell.getPiece()) {
-                System.out.println("currentClickedPiece: " + currentClickedPiece + ", cell: " + cell.getPiece());
-                currentClickedPiece = cell.getPiece();
-                List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
+                    List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
-                for (int[] positions : possibleCells) {
-                    // Get cell
-                    int positionX = positions[1];
-                    int positionY = positions[0];
-                    Rectangle rectanglePossible = this.initializeView.createRectanglePossibleCell(positionX, positionY);
+                    for (int[] positions : possibleCells) {
+                        int positionX = positions[1];
+                        int positionY = positions[0];
+                        Circle circlePossible = this.initializeView.createCirclePossibleCell(positionX, positionY,
+                                currentPlayer);
 
-                    rectanglePossible.setOnMouseClicked(event -> {
+                        circlePossible.setOnMouseClicked(event -> {
+                            if (currentPlayer == "Red") {
+                                currentPlayer = "Black";
+                            } else {
+                                currentPlayer = "Red";
+                            }
 
-                        // Remove the current piece from the current cell
-                        cell.removeImageView();
+                            // Get the new cell based on the clicked rectangle's position
+                            Cell newCell = board[positionY][positionX];
 
-                        // Get the new cell based on the clicked rectangle's position
-                        Cell newCell = board[positionY][positionX];
+                            // remove images on both cells
+                            pane.getChildren().remove(newCell.getImageView());
+                            pane.getChildren().remove(cell.getImageView());
 
-                        // Set the current clicked piece to the new cell
-                        newCell.setPiece(currentClickedPiece);
+                            // Set the current clicked piece to the new cell
+                            newCell.setPiece(currentClickedPiece);
 
-                        // Remove the current image view from the current cell
-                        pane.getChildren().remove(cell.getImageView());
+                            // remove all the rectangles
+                            pane.getChildren().removeAll(displayCircles);
+                            displayCircles.clear();
 
-                        // remove the old image view from the newCell
-                        newCell.removeImageView();
+                            // reset the global clicked piece
+                            this.currentClickedPiece = null;
 
-                        // Set the image view for the new cell
-                        imageViewSetOnMouseClicked(newCell);
+                            // Clear the old piece from the old cell
+                            cell.setPiece(null);
 
-                        // remove all the rectangles
-                        pane.getChildren().removeAll(displayRectangles);
-                        displayRectangles.clear();
+                            // Set the image view (current piece) on the new cell
+                            imageViewSetOnMouseClicked(newCell);
+                        });
 
-                    });
-
-                    this.pane.getChildren().add(rectanglePossible);
-                    this.displayRectangles.add(rectanglePossible);
+                        this.pane.getChildren().add(circlePossible);
+                        this.displayCircles.add(circlePossible);
+                    }
+                } else {
+                    DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
+                    currentPlayerDisplay.displayPlayer(currentPlayer);
                 }
             }
-
-            else {
-                this.currentClickedPiece = null;
-
-                // remove all the rectangles
-                pane.getChildren().removeAll(displayRectangles);
-                displayRectangles.clear();
-            }
-
-            // Happy case first: click once.
-            // Sad case: Check if the currently clicked piece belongs to the current player.
-            // Sad case: Check if the currently clicked piece is the last existing piece; if
-            // not, then remove all previous rectangles.
         });
 
         cell.drawPieceImageView(pieceImageView);
         this.pane.getChildren().add(cell.getImageView());
     }
-
 }

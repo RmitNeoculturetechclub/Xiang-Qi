@@ -6,15 +6,6 @@ import java.util.List;
 import com.example.xiangqi.Enums.Model.PieceName;
 
 public class Horse extends Piece {
-	static int horseCounter = 0;
-
-	public Horse(String id, String player) {
-		super(id, player);
-	}
-
-	public Horse() {
-	}
-
 	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
 		List<int[]> possiblePositions = new ArrayList<>();
@@ -50,14 +41,6 @@ public class Horse extends Piece {
 		return row >= 0 && row < numRows && column >= 0 && column < numColumns
 				&& (board[row][column].getPiece() == null
 						|| board[row][column].getPiece().getPlayerName() != this.getPlayerName());
-	}
-
-	public void setNumPieces(int numPieces) {
-		Horse.horseCounter += numPieces;
-	}
-
-	public int getNumPiece() {
-		return Horse.horseCounter;
 	}
 
 	public String getPieceImageName() {
