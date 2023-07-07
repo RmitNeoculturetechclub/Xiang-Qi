@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 
 import java.io.Console;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class InitializeView {
         return imageView;
     }
 
-    public Rectangle createRectanglePossibleCell(int positionX, int positionY) {
+    public Rectangle createRectanglePossibleCell(int positionX, int positionY, String currentPlayer) {
         Rectangle rec = new Rectangle();
 
         // Apply position to set X and Y
@@ -58,12 +59,44 @@ public class InitializeView {
         rec.setHeight(CellConstant.CELL_SIZE);
 
         // Set other properties
-        rec.setFill(Color.BLUE); // dif side dif col?
-        rec.setStroke(Color.BLUE);
+        if (currentPlayer == "Red") {
+            rec.setFill(Color.RED);
+            rec.setStroke(Color.RED);
+        } else {
+            rec.setFill(Color.BLACK);
+            rec.setStroke(Color.BLACK);
+        }
+
         rec.setStrokeWidth(2);
         rec.setOpacity(0.5);
 
         return rec;
+    }
+
+    public Circle createCirclePossibleCell(int positionX, int positionY, String currentPlayer) {
+        Circle circle = new Circle();
+
+        // Apply position to set center coordinates
+        circle.setCenterX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+        circle.setCenterY(
+                (CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+
+        // Set radius
+        circle.setRadius(CellConstant.CELL_SIZE / 2);
+
+        // Set other properties
+        if (currentPlayer == "Red") {
+            circle.setFill(Color.RED);
+            circle.setStroke(Color.RED);
+        } else {
+            circle.setFill(Color.BLACK);
+            circle.setStroke(Color.BLACK);
+        }
+
+        circle.setStrokeWidth(0.4);
+        circle.setOpacity(0.5);
+
+        return circle;
     }
 
 }
