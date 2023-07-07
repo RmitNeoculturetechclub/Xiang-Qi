@@ -69,13 +69,12 @@ public class General extends Piece {
 
 	private boolean isValidMove(int x, int y, Cell[][] board, String currentPlayer) {
 		// Check if the position is within the palace
-		// System.out.println(x + " " + y);
 		if (currentPlayer == "Black") {
 			if (!(x >= 0 && x <= 2 && y >= 3 && y <= 5)) {
 				return false;
 			}
 		} else {
-			if (!(x >= 6 && x <= 8 && y >= 3 && y <= 5)) {
+			if (!(x >= 7 && x <= 9 && y >= 3 && y <= 5)) {
 				return false;
 			}
 		}
