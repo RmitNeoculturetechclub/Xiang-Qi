@@ -61,7 +61,7 @@ public class InitializeManager {
         this.piece = piece;
     }
 
-    private void initializeBoard(){
+    private void initializeBoard() {
         board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
 
         for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
@@ -69,24 +69,22 @@ public class InitializeManager {
                 Cell cell = new Cell(row, col);
                 String pieceName = InitPieceSetup.XiangQiBoard[row][col];
 
-
-
                 if (!pieceName.equals("")) {
                     // Extract player and piece type from the pieceName
                     String[] nameParts = pieceName.split("_");
                     String pieceType = nameParts[0];
                     String player = nameParts[1];
 
-                    try{
+                    try {
                         // Initialize Dynamic Class name
-                        Class<?> class1 = Class.forName("com.example.xiangqi.Model."+pieceType);
+                        Class<?> class1 = Class.forName("com.example.xiangqi.Model." + pieceType);
                         Piece object1 = (Piece) class1.getDeclaredConstructor().newInstance();
                         object1.setPlayer(player);
                         cell.setPiece(object1);
 
                         imageViewSetOnMouseClicked(cell);
-                    }catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException |
-                            InvocationTargetException | InstantiationException exception){
+                    } catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException
+                            | InvocationTargetException | InstantiationException exception) {
                         System.out.println("Exception: " + exception);
                     }
                 }

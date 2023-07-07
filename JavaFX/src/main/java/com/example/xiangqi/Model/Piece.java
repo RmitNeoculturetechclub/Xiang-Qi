@@ -21,7 +21,8 @@ public class Piece {
 	}
 
 	public String getPieceImageName() {
-		return "Soldier_" + getPlayerName();
+		String PieceName = this.getPieceName();
+		return PieceName + "_" + getPlayerName();
 	}
 
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
@@ -41,7 +42,6 @@ public class Piece {
 	public String getPieceName() {
 		String className = this.getClass().getSimpleName();
 		String[] array = className.split("_");
-		// System.out.println(array[0]);
 		return array[0];
 	}
 

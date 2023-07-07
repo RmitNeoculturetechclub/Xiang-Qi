@@ -29,7 +29,13 @@ public class Advisor extends Piece {
 		return possibleMoves;
 	}
 
-	public String getPieceImageName() {
-		return "Advisor_" + getPlayerName();
+	// public String getPieceImageName() {
+	// return "Advisor_" + getPlayerName();
+	// }
+
+	public String getPieceName() {
+		String className = this.getClass().getSimpleName();
+		String[] array = className.split("_");
+		return array[0];
 	}
 }

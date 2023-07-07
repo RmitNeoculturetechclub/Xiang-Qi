@@ -10,7 +10,13 @@ public class Elephant extends Piece {
 		return super.getAllPossibleMoves(currentPosition, board);
 	}
 
-	public String getPieceImageName() {
-		return "Elephant_" + getPlayerName();
+	// public String getPieceImageName() {
+	// return "Elephant_" + getPlayerName();
+	// }
+
+	public String getPieceName() {
+		String className = this.getClass().getSimpleName();
+		String[] array = className.split("_");
+		return array[0];
 	}
 }
