@@ -21,6 +21,8 @@ public class General extends Piece {
 		int x = currentPosition[0];
 		int y = currentPosition[1];
 		String currentPlayer = getPlayerName();
+		System.out.println("currentPlayer: " + currentPlayer);
+
 		int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 
 		for (int[] direction : directions) {
@@ -32,17 +34,20 @@ public class General extends Piece {
 			}
 		}
 
+		System.out.println("possiblePositions: " + possiblePositions);
+
 		return possiblePositions;
 	}
 
 	private boolean isValidMove(int x, int y, Cell[][] board, String currentPlayer) {
 		// Check if the position is within the palace
+		System.out.println(x + " " + y);
 		if (currentPlayer == "Black") {
-			if (!(x >= 3 && x <= 5 && y >= 0 && y <= 2)) {
+			if (!(x >= 0 && x <= 2 && y >= 3 && y <= 5)) {
 				return false;
 			}
 		} else {
-			if (!(x >= 3 && x <= 5 && y >= 7 && y <= 9)) {
+			if (!(x >= 6 && x <= 8 && y >= 3 && y <= 5)) {
 				return false;
 			}
 		}
