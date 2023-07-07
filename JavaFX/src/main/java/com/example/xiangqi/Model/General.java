@@ -56,12 +56,12 @@ public class General extends Piece {
 				continue;
 			}
 			System.out.println("y, i " + y + " " + i);
-			if (board[i][y].getPiece() != null) { // TODO: getPiece -> allnull
-				// && board[y][i].getPiece().getPieceName().equals("General")
-				System.out.println(board[i][y].getPiece().getPieceName());
-				System.out.println("isFacing true");
-
-				return true;
+			if (board[i][y].getPiece() != null) {
+				System.out.println("Not Null");
+				if (board[i][y].getPiece().getPieceName().equals("General")) {
+					System.out.println("isFacing true");
+					return true;
+				}
 			}
 		}
 		System.out.println("isFacing false");
