@@ -207,5 +207,6 @@ public class InitializeManager {
 
         cell.drawPieceImageView(pieceImageView);
         this.pane.getChildren().add(cell.getImageView());
+
     }
 }
