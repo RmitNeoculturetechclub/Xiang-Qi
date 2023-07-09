@@ -106,6 +106,28 @@ public class InitializeManager {
         return true;
     }
 
+    private boolean checkGeneral(List<int[]> nextPossibleCells) {
+        // check if the opponent General is there.
+        for (int[] nextPositions : nextPossibleCells) {
+            int nextX = nextPositions[1];
+            int nextY = nextPositions[0];
+
+            if (board[nextY][nextX].getPiece() != null
+                    && board[nextY][nextX].getPiece().getPieceName().equals("General")) {
+
+                // if (board[nextX][nextY].getPiece() instanceof General) {
+                General opponentGeneral = (General) board[nextY][nextX].getPiece();
+                if (opponentGeneral.getPlayerName() != currentPlayer) {
+                    opponentGeneral.isChecked();
+                    return true;
+                }
+                // }
+            }
+        }
+
+        return false;
+    }
+
     private void imageViewSetOnMouseClicked(Cell cell) {
         ImageView pieceImageView;
 
@@ -136,11 +158,6 @@ public class InitializeManager {
                                 currentPlayer);
 
                         circlePossible.setOnMouseClicked(event -> {
-                            if (currentPlayer == "Red") {
-                                currentPlayer = "Black";
-                            } else {
-                                currentPlayer = "Red";
-                            }
 
                             // Get the new cell based on the clicked rectangle's position
                             Cell newCell = board[positionY][positionX];
@@ -164,6 +181,20 @@ public class InitializeManager {
 
                             // Set the image view (current piece) on the new cell
                             imageViewSetOnMouseClicked(newCell);
+
+                            // check if the opponent General is checkmate
+                            List<int[]> nextPossibleCells = newCell.getAllPossibleCells(this.board);
+                            if (checkGeneral(nextPossibleCells)) {
+                                // TODO: let the user know CHECKMATE
+                                System.out.println("General is checked");
+                            }
+
+                            // switch the current player
+                            if (currentPlayer == "Red") {
+                                currentPlayer = "Black";
+                            } else {
+                                currentPlayer = "Red";
+                            }
                         });
 
                         this.pane.getChildren().add(circlePossible);

@@ -2,6 +2,7 @@ package com.example.xiangqi.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Chariot extends Piece {
 
@@ -33,6 +34,9 @@ public class Chariot extends Piece {
 
 		while (x >= 0 && x <= 9 && y >= 0 && y <= 8) {
 			if (board[x][y].getPiece() != null) {
+				if (isBlocked == 0 && (!Objects.equals(board[x][y].getPiece().getPlayerName(), this.getPlayerName()))) {
+					possiblePositions.add(new int[] { x, y });
+				}
 				isBlocked++;
 			} else {
 				if (isBlocked == 0) {

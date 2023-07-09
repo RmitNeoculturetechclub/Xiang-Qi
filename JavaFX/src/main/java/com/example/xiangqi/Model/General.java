@@ -93,4 +93,8 @@ public class General extends Piece {
 		return array[0];
 	}
 
+	public void isChecked() {
+		this.isCheck = true;
+	}
+
 }
