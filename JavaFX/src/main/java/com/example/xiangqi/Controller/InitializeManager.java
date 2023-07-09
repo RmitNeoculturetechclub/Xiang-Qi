@@ -106,6 +106,28 @@ public class InitializeManager {
         return true;
     }
 
+    private boolean checkGeneral(List<int[]> nextPossibleCells) {
+        // check if the opponent General is there.
+        for (int[] nextPositions : nextPossibleCells) {
+            int nextX = nextPositions[1];
+            int nextY = nextPositions[0];
+
+            if (board[nextX][nextY].getPiece() != null
+                    && board[nextX][nextY].getPiece().getPieceName().equals("General")) {
+
+                // if (board[nextX][nextY].getPiece() instanceof General) {
+                General opponentGeneral = (General) board[nextX][nextY].getPiece();
+                if (opponentGeneral.getPlayerName() != currentPlayer) {
+                    opponentGeneral.isChecked();
+                    return true;
+                }
+                // }
+            }
+        }
+
+        return false;
+    }
+
     private void imageViewSetOnMouseClicked(Cell cell) {
         ImageView pieceImageView;
 
@@ -164,6 +186,14 @@ public class InitializeManager {
 
                             // Set the image view (current piece) on the new cell
                             imageViewSetOnMouseClicked(newCell);
+
+                            // check if the opponent General is checkmate
+                            List<int[]> nextPossibleCells = newCell.getAllPossibleCells(this.board);
+                            if (checkGeneral(nextPossibleCells)) {
+                                // TODO: let the user know CHECKMATE
+                                System.out.println("General is checked");
+                            }
+
                         });
 
                         this.pane.getChildren().add(circlePossible);
@@ -176,7 +206,5 @@ public class InitializeManager {
             }
         });
 
-        cell.drawPieceImageView(pieceImageView);
-        this.pane.getChildren().add(cell.getImageView());
     }
 }
