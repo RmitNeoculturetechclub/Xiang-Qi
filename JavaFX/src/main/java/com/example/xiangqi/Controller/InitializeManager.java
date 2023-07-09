@@ -109,23 +109,25 @@ public class InitializeManager {
     private boolean checkGeneral(List<int[]> nextPossibleCells) {
         // check if the opponent General is there.
         for (int[] nextPositions : nextPossibleCells) {
-            int nextX = nextPositions[1];
-            int nextY = nextPositions[0];
+            int nextX = nextPositions[0];
+            int nextY = nextPositions[1];
 
-            if (board[nextY][nextX].getPiece() != null
-                    && board[nextY][nextX].getPiece().getPieceName().equals("General")) {
+            if (board[nextX][nextY].getPiece() != null
+                    && board[nextX][nextY].getPiece().getPieceName().equals("General")) {
 
-                // if (board[nextX][nextY].getPiece() instanceof General) {
-                General opponentGeneral = (General) board[nextY][nextX].getPiece();
+                General opponentGeneral = (General) board[nextX][nextY].getPiece();
                 if (opponentGeneral.getPlayerName() != currentPlayer) {
                     opponentGeneral.isChecked();
                     return true;
                 }
-                // }
             }
         }
 
         return false;
+    }
+
+    private String switchPlayer(String currentPlayer) {
+        return currentPlayer.equals("Red") ? "Black" : "Red";
     }
 
     private void imageViewSetOnMouseClicked(Cell cell) {
@@ -190,11 +192,7 @@ public class InitializeManager {
                             }
 
                             // switch the current player
-                            if (currentPlayer == "Red") {
-                                currentPlayer = "Black";
-                            } else {
-                                currentPlayer = "Red";
-                            }
+                            currentPlayer = switchPlayer(currentPlayer);
                         });
 
                         this.pane.getChildren().add(circlePossible);
