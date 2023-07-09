@@ -115,17 +115,19 @@ public class InitializeManager {
             if (board[nextX][nextY].getPiece() != null
                     && board[nextX][nextY].getPiece().getPieceName().equals("General")) {
 
-                // if (board[nextX][nextY].getPiece() instanceof General) {
                 General opponentGeneral = (General) board[nextX][nextY].getPiece();
                 if (opponentGeneral.getPlayerName() != currentPlayer) {
                     opponentGeneral.isChecked();
                     return true;
                 }
-                // }
             }
         }
 
         return false;
+    }
+
+    private String switchPlayer(String currentPlayer) {
+        return currentPlayer.equals("Red") ? "Black" : "Red";
     }
 
     private void imageViewSetOnMouseClicked(Cell cell) {
@@ -190,11 +192,8 @@ public class InitializeManager {
                             }
 
                             // switch the current player
-                            if (currentPlayer == "Red") {
-                                currentPlayer = "Black";
-                            } else {
-                                currentPlayer = "Red";
-                            }
+                            currentPlayer = switchPlayer(currentPlayer);
+                            System.out.println("currentPlayer is " + currentPlayer);
                         });
 
                         this.pane.getChildren().add(circlePossible);
