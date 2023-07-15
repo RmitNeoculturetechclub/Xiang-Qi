@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class General extends Piece {
-	Boolean isChecked = false;
+	// Boolean isChecked = false;
 	Boolean isCheckMate = false;
+	Boolean BlackChecked = false;
+	Boolean RedChecked = false;
 
 	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
@@ -93,8 +95,19 @@ public class General extends Piece {
 		return array[0];
 	}
 
-	public void setChecked(boolean checked) {
-		this.isChecked = checked;
+	public void setChecked(boolean checked, String playerName) {
+		if (playerName.equals("Black")) {
+			this.BlackChecked = checked;
+		} else {
+			this.RedChecked = checked;
+		}
+	}
+
+	public boolean getChecked(String playerName) {
+		if (playerName.equals("Black")) {
+			return this.BlackChecked;
+		}
+		return this.RedChecked;
 	}
 
 }

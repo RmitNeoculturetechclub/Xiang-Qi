@@ -109,14 +109,12 @@ public class InitializeManager {
         return true;
     }
 
-    // TODO: complete inUnderThreat demo
     private void isUnderThreat(Cell[][] board) {
         for (String player : new String[] { "Red", "Black" }) {
             Cell generalCell = findGeneral(board, player);
             System.out.println("generalCell: " + generalCell);
             // if general is in the board
             if (generalCell != null) {
-                System.out.println("general is in the board");
                 int generalX = generalCell.getPosition()[0];
                 int generalY = generalCell.getPosition()[1];
                 System.out.println("General " + player + " position: " + generalX + " " + generalY);
@@ -139,15 +137,13 @@ public class InitializeManager {
                                 if (destRow == generalX && destCol == generalY) {
                                     count++;
                                     System.out.println(
-                                            "Opponent name:" + piece.getPlayerName() + " " + piece.getPieceName() + " "
+                                            "Opponent name: " + piece.getPlayerName() + " " + piece.getPieceName() + " "
                                                     + destRow + ", " + destCol);
                                     break;
                                 }
                             }
-
                         }
                     }
-
                 }
 
                 if (count != 0) {
@@ -155,7 +151,7 @@ public class InitializeManager {
                 }
 
                 General general = (General) generalCell.getPiece();
-                general.setChecked(isChecked);
+                general.setChecked(isChecked, player);
                 System.out.println("general" + player + "isChecked: " + isChecked);
             }
         }
@@ -168,12 +164,10 @@ public class InitializeManager {
                 Piece piece = cell.getPiece();
 
                 if (piece != null && piece.getPieceName().equals("General") && piece.getPlayerName().equals(player)) {
-                    System.out.println("findGeneral: " + row + " " + col);
                     return board[row][col];
                 }
             }
         }
-
         return null; // General not found
     }
 
@@ -203,7 +197,12 @@ public class InitializeManager {
                     currentClickedPiece = cell.getPiece();
 
                     List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
-                    // TODO: check if the player's general isUnderThreat
+                    // TODO: check if the current player's general isChecked is true or false
+                    // if getChecked(currentPlayer) {
+                    // } else {
+
+                    // }
+
                     // if true, recreate cells: eliminate the cells that cannot protect the General
                     // from being Checked (so the user can make a good decision for their general)
                     // if false, do nothing
@@ -241,8 +240,8 @@ public class InitializeManager {
 
                             // TODO: check both general isUnderThreat
                             isUnderThreat(board);
-                            System.out.println("finish checking general");
-                            // TODO: if in checked, both players should be notified of the check
+
+                            // TODO: if one of them in checked, both players should be notified of the check
 
                             // switch the current player
                             currentPlayer = switchPlayer(currentPlayer);
