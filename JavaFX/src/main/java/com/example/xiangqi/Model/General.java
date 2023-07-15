@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class General extends Piece {
-	Boolean isCheck = false;
+	Boolean isChecked = false;
 	Boolean isCheckMate = false;
 
 	@Override
@@ -93,8 +93,8 @@ public class General extends Piece {
 		return array[0];
 	}
 
-	public void isChecked() {
-		this.isCheck = true;
+	public void setChecked(boolean checked) {
+		this.isChecked = checked;
 	}
 
 }

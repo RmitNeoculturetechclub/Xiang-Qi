@@ -1,6 +1,8 @@
 package com.example.xiangqi.Controller;
 
 import com.example.xiangqi.Enums.Constant.InitPieceSetup;
+import com.example.xiangqi.Enums.Model.Player;
+import com.example.xiangqi.Enums.Model.PieceName;
 import com.example.xiangqi.Handler.IdGeneration;
 import com.example.xiangqi.Model.Advisor;
 import com.example.xiangqi.Model.Canon;
@@ -35,6 +37,7 @@ public class InitializeManager {
     private ImageView imageView;
     private Piece piece;
     private String currentPlayer;
+    private Player player;
 
     private ArrayList<Circle> displayCircles;
 
@@ -106,24 +109,72 @@ public class InitializeManager {
         return true;
     }
 
-    private boolean checkGeneral(List<int[]> nextPossibleCells) {
-        // check if the opponent General is there.
-        for (int[] nextPositions : nextPossibleCells) {
-            int nextX = nextPositions[0];
-            int nextY = nextPositions[1];
+    // TODO: complete inUnderThreat demo
+    private void isUnderThreat(Cell[][] board) {
+        for (String player : new String[] { "Red", "Black" }) {
+            Cell generalCell = findGeneral(board, player);
+            System.out.println("generalCell: " + generalCell);
+            // if general is in the board
+            if (generalCell != null) {
+                System.out.println("general is in the board");
+                int generalX = generalCell.getPosition()[0];
+                int generalY = generalCell.getPosition()[1];
+                System.out.println("General " + player + " position: " + generalX + " " + generalY);
+                boolean isChecked = false;
+                int count = 0;
 
-            if (board[nextX][nextY].getPiece() != null
-                    && board[nextX][nextY].getPiece().getPieceName().equals("General")) {
+                // check the possible moves of the opponent pieces
+                for (int row = 0; row < board.length; row++) {
+                    for (int col = 0; col < board[row].length; col++) {
+                        Cell cell = board[row][col];
+                        Piece piece = cell.getPiece();
 
-                General opponentGeneral = (General) board[nextX][nextY].getPiece();
-                if (opponentGeneral.getPlayerName() != currentPlayer) {
-                    opponentGeneral.isChecked();
-                    return true;
+                        if (piece != null && !piece.getPlayerName().equals(player)) {
+                            List<int[]> possibleMoves = cell.getAllPossibleCells(board);
+
+                            for (int[] move : possibleMoves) {
+                                int destRow = move[0];
+                                int destCol = move[1];
+
+                                if (destRow == generalX && destCol == generalY) {
+                                    count++;
+                                    System.out.println(
+                                            "Opponent name:" + piece.getPlayerName() + " " + piece.getPieceName() + " "
+                                                    + destRow + ", " + destCol);
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+
+                if (count != 0) {
+                    isChecked = true;
+                }
+
+                General general = (General) generalCell.getPiece();
+                general.setChecked(isChecked);
+                System.out.println("general" + player + "isChecked: " + isChecked);
+            }
+        }
+    }
+
+    private Cell findGeneral(Cell[][] board, String player) {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                Cell cell = board[row][col];
+                Piece piece = cell.getPiece();
+
+                if (piece != null && piece.getPieceName().equals("General") && piece.getPlayerName().equals(player)) {
+                    System.out.println("findGeneral: " + row + " " + col);
+                    return board[row][col];
                 }
             }
         }
 
-        return false;
+        return null; // General not found
     }
 
     private String switchPlayer(String currentPlayer) {
@@ -152,6 +203,10 @@ public class InitializeManager {
                     currentClickedPiece = cell.getPiece();
 
                     List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
+                    // TODO: check if the player's general isUnderThreat
+                    // if true, recreate cells: eliminate the cells that cannot protect the General
+                    // from being Checked (so the user can make a good decision for their general)
+                    // if false, do nothing
 
                     for (int[] positions : possibleCells) {
                         int positionX = positions[1];
@@ -184,12 +239,10 @@ public class InitializeManager {
                             // Set the image view (current piece) on the new cell
                             imageViewSetOnMouseClicked(newCell);
 
-                            // check if the opponent General is checkmate
-                            List<int[]> nextPossibleCells = newCell.getAllPossibleCells(this.board);
-                            if (checkGeneral(nextPossibleCells)) {
-                                // TODO: let the user know CHECKMATE
-                                System.out.println("General is checked");
-                            }
+                            // TODO: check both general isUnderThreat
+                            isUnderThreat(board);
+                            System.out.println("finish checking general");
+                            // TODO: if in checked, both players should be notified of the check
 
                             // switch the current player
                             currentPlayer = switchPlayer(currentPlayer);
