@@ -89,12 +89,6 @@ public class General extends Piece {
 		return PieceName + "_" + getPlayerName();
 	}
 
-	public String getPieceName() {
-		String className = this.getClass().getSimpleName();
-		String[] array = className.split("_");
-		return array[0];
-	}
-
 	public void setChecked(boolean checked, String playerName) {
 		if (playerName.equals("Black")) {
 			this.BlackChecked = checked;

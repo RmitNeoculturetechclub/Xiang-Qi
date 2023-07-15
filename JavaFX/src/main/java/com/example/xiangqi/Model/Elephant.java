@@ -9,9 +9,4 @@ public class Elephant extends Piece {
 		// TODO: Implement this method
 		return super.getAllPossibleMoves(currentPosition, board);
 	}
-
-	public String getPieceImageName() {
-		String PieceName = this.getPieceName();
-		return PieceName + "_" + getPlayerName();
-	}
 }

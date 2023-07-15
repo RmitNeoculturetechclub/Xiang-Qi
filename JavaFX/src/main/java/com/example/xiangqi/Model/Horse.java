@@ -49,9 +49,4 @@ public class Horse extends Piece {
 
 		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
-
-	public String getPieceImageName() {
-		String PieceName = this.getPieceName();
-		return PieceName + "_" + getPlayerName();
-	}
 }

@@ -28,9 +28,4 @@ public class Advisor extends Piece {
 		}
 		return possibleMoves;
 	}
-
-	public String getPieceImageName() {
-		String PieceName = this.getPieceName();
-		return PieceName + "_" + getPlayerName();
-	}
 }

@@ -54,9 +54,4 @@ public class Canon extends Piece {
 			y += dy;
 		}
 	}
-
-	public String getPieceImageName() {
-		String PieceName = this.getPieceName();
-		return PieceName + "_" + getPlayerName();
-	}
 }

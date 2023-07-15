@@ -2,17 +2,9 @@ package com.example.xiangqi.Controller;
 
 import com.example.xiangqi.Enums.Constant.InitPieceSetup;
 import com.example.xiangqi.Enums.Model.Player;
-import com.example.xiangqi.Enums.Model.PieceName;
-import com.example.xiangqi.Handler.IdGeneration;
-import com.example.xiangqi.Model.Advisor;
-import com.example.xiangqi.Model.Canon;
 import com.example.xiangqi.Model.Cell;
-import com.example.xiangqi.Model.Chariot;
-import com.example.xiangqi.Model.Elephant;
 import com.example.xiangqi.Model.General;
-import com.example.xiangqi.Model.Horse;
 import com.example.xiangqi.Model.Piece;
-import com.example.xiangqi.Model.Soldier;
 import com.example.xiangqi.View.InitializeView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -111,13 +103,12 @@ public class InitializeManager {
 
     private void isUnderThreat(Cell[][] board) {
         for (String player : new String[] { "Red", "Black" }) {
-            Cell generalCell = findGeneral(board, player);
-            System.out.println("generalCell: " + generalCell);
+            Cell generalCell = findGeneral(player);
             // if general is in the board
             if (generalCell != null) {
                 int generalX = generalCell.getPosition()[0];
                 int generalY = generalCell.getPosition()[1];
-                System.out.println("General " + player + " position: " + generalX + " " + generalY);
+//                System.out.println("General " + player + " position: " + generalX + " " + generalY);
                 boolean isChecked = false;
                 int count = 0;
 
@@ -136,9 +127,9 @@ public class InitializeManager {
 
                                 if (destRow == generalX && destCol == generalY) {
                                     count++;
-                                    System.out.println(
-                                            "Opponent name: " + piece.getPlayerName() + " " + piece.getPieceName() + " "
-                                                    + destRow + ", " + destCol);
+//                                    System.out.println(
+//                                            "Opponent name: " + piece.getPlayerName() + " " + piece.getPieceName() + " "
+//                                                    + destRow + ", " + destCol);
                                     break;
                                 }
                             }
@@ -150,6 +141,9 @@ public class InitializeManager {
                     isChecked = true;
                 }
 
+                // Todo 1: Add isChecked variable to General class
+                // Todo 2: And then set the isChecked to the general object
+                // Todo 3: Make the checked general to be colored , maybe by adding another circle on that general cell
                 General general = (General) generalCell.getPiece();
                 general.setChecked(isChecked, player);
                 System.out.println("general" + player + "isChecked: " + isChecked);
@@ -157,7 +151,7 @@ public class InitializeManager {
         }
     }
 
-    private Cell findGeneral(Cell[][] board, String player) {
+    private Cell findGeneral(String player) {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
                 Cell cell = board[row][col];
