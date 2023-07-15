@@ -20,8 +20,8 @@ public class Game extends Application {
 		stage.show();
 
 		// display the current player state on the UI view
-		DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
-		currentPlayerDisplay.displayPlayer("Red");
+		// DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
+		// currentPlayerDisplay.displayPlayer("Red");
 
 	}
 

@@ -1,16 +1,10 @@
 package com.example.xiangqi.Controller;
 
 import com.example.xiangqi.Enums.Constant.InitPieceSetup;
-import com.example.xiangqi.Handler.IdGeneration;
-import com.example.xiangqi.Model.Advisor;
-import com.example.xiangqi.Model.Canon;
+import com.example.xiangqi.Enums.Model.Player;
 import com.example.xiangqi.Model.Cell;
-import com.example.xiangqi.Model.Chariot;
-import com.example.xiangqi.Model.Elephant;
 import com.example.xiangqi.Model.General;
-import com.example.xiangqi.Model.Horse;
 import com.example.xiangqi.Model.Piece;
-import com.example.xiangqi.Model.Soldier;
 import com.example.xiangqi.View.InitializeView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -35,6 +29,7 @@ public class InitializeManager {
     private ImageView imageView;
     private Piece piece;
     private String currentPlayer;
+    private Player player;
 
     private ArrayList<Circle> displayCircles;
 
@@ -61,7 +56,7 @@ public class InitializeManager {
         this.piece = piece;
     }
 
-    private void initializeBoard(){
+    private void initializeBoard() {
         board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
 
         for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
@@ -69,24 +64,22 @@ public class InitializeManager {
                 Cell cell = new Cell(row, col);
                 String pieceName = InitPieceSetup.XiangQiBoard[row][col];
 
-
-
                 if (!pieceName.equals("")) {
                     // Extract player and piece type from the pieceName
                     String[] nameParts = pieceName.split("_");
                     String pieceType = nameParts[0];
                     String player = nameParts[1];
 
-                    try{
+                    try {
                         // Initialize Dynamic Class name
-                        Class<?> class1 = Class.forName("com.example.xiangqi.Model."+pieceType);
+                        Class<?> class1 = Class.forName("com.example.xiangqi.Model." + pieceType);
                         Piece object1 = (Piece) class1.getDeclaredConstructor().newInstance();
                         object1.setPlayer(player);
                         cell.setPiece(object1);
 
                         imageViewSetOnMouseClicked(cell);
-                    }catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException |
-                            InvocationTargetException | InstantiationException exception){
+                    } catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException
+                            | InvocationTargetException | InstantiationException exception) {
                         System.out.println("Exception: " + exception);
                     }
                 }
@@ -106,6 +99,74 @@ public class InitializeManager {
             }
         }
         return true;
+    }
+
+    private void isUnderThreat(Cell[][] board) {
+        for (String player : new String[] { "Red", "Black" }) {
+            Cell generalCell = findGeneral(player);
+            // if general is in the board
+            if (generalCell != null) {
+                int generalX = generalCell.getPosition()[0];
+                int generalY = generalCell.getPosition()[1];
+//                System.out.println("General " + player + " position: " + generalX + " " + generalY);
+                boolean isChecked = false;
+                int count = 0;
+
+                // check the possible moves of the opponent pieces
+                for (int row = 0; row < board.length; row++) {
+                    for (int col = 0; col < board[row].length; col++) {
+                        Cell cell = board[row][col];
+                        Piece piece = cell.getPiece();
+
+                        if (piece != null && !piece.getPlayerName().equals(player)) {
+                            List<int[]> possibleMoves = cell.getAllPossibleCells(board);
+
+                            for (int[] move : possibleMoves) {
+                                int destRow = move[0];
+                                int destCol = move[1];
+
+                                if (destRow == generalX && destCol == generalY) {
+                                    count++;
+//                                    System.out.println(
+//                                            "Opponent name: " + piece.getPlayerName() + " " + piece.getPieceName() + " "
+//                                                    + destRow + ", " + destCol);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (count != 0) {
+                    isChecked = true;
+                }
+
+                // Todo 1: Add isChecked variable to General class
+                // Todo 2: And then set the isChecked to the general object
+                // Todo 3: Make the checked general to be colored , maybe by adding another circle on that general cell
+                General general = (General) generalCell.getPiece();
+                general.setChecked(isChecked, player);
+                System.out.println("general" + player + "isChecked: " + isChecked);
+            }
+        }
+    }
+
+    private Cell findGeneral(String player) {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                Cell cell = board[row][col];
+                Piece piece = cell.getPiece();
+
+                if (piece != null && piece.getPieceName().equals("General") && piece.getPlayerName().equals(player)) {
+                    return board[row][col];
+                }
+            }
+        }
+        return null; // General not found
+    }
+
+    private String switchPlayer(String currentPlayer) {
+        return currentPlayer.equals("Red") ? "Black" : "Red";
     }
 
     private void imageViewSetOnMouseClicked(Cell cell) {
@@ -130,6 +191,15 @@ public class InitializeManager {
                     currentClickedPiece = cell.getPiece();
 
                     List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
+                    // TODO: check if the current player's general isChecked is true or false
+                    // if getChecked(currentPlayer) {
+                    // } else {
+
+                    // }
+
+                    // if true, recreate cells: eliminate the cells that cannot protect the General
+                    // from being Checked (so the user can make a good decision for their general)
+                    // if false, do nothing
 
                     for (int[] positions : possibleCells) {
                         int positionX = positions[1];
@@ -138,11 +208,6 @@ public class InitializeManager {
                                 currentPlayer);
 
                         circlePossible.setOnMouseClicked(event -> {
-                            if (currentPlayer == "Red") {
-                                currentPlayer = "Black";
-                            } else {
-                                currentPlayer = "Red";
-                            }
 
                             // Get the new cell based on the clicked rectangle's position
                             Cell newCell = board[positionY][positionX];
@@ -166,19 +231,28 @@ public class InitializeManager {
 
                             // Set the image view (current piece) on the new cell
                             imageViewSetOnMouseClicked(newCell);
+
+                            // TODO: check both general isUnderThreat
+                            isUnderThreat(board);
+
+                            // TODO: if one of them in checked, both players should be notified of the check
+
+                            // switch the current player
+                            currentPlayer = switchPlayer(currentPlayer);
                         });
 
                         this.pane.getChildren().add(circlePossible);
                         this.displayCircles.add(circlePossible);
                     }
-                } else {
-                    DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
-                    currentPlayerDisplay.displayPlayer(currentPlayer);
+                } else { // if the user clicks on the opposite side of the current player
+                    // DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
+                    // currentPlayerDisplay.displayPlayer(currentPlayer);
                 }
             }
         });
 
         cell.drawPieceImageView(pieceImageView);
         this.pane.getChildren().add(cell.getImageView());
+
     }
 }

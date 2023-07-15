@@ -24,9 +24,16 @@ public class Horse extends Piece {
 					int secondRow = firstRow + secondDirection[0];
 					int secondColumn = firstColumn + secondDirection[1];
 
-					if (isValidMove(secondRow, secondColumn, board)) {
-						possiblePositions.add(new int[] { secondRow, secondColumn });
+					// non-zero coordinates in the second dir if they were non-zero in the first dir
+					if ((firstDirection[0] != 0 && firstDirection[0] == secondDirection[0])
+							|| (firstDirection[1] != 0 && firstDirection[1] == secondDirection[1])) {
+
+						// Check if the move is valid in the second direction
+						if (isValidMove(secondRow, secondColumn, board)) {
+							possiblePositions.add(new int[] { secondRow, secondColumn });
+						}
 					}
+
 				}
 			}
 
@@ -41,9 +48,5 @@ public class Horse extends Piece {
 		}
 
 		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
-	}
-
-	public String getPieceImageName() {
-		return "Horse_" + getPlayerName();
 	}
 }

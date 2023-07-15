@@ -28,8 +28,4 @@ public class Advisor extends Piece {
 		}
 		return possibleMoves;
 	}
-
-	public String getPieceImageName() {
-		return "Advisor_" + getPlayerName();
-	}
 }
