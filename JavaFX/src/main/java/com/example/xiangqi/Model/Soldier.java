@@ -51,8 +51,4 @@ public class Soldier extends Piece {
 		// Check if the position is empty
 		// return board[x][y].getPiece() == null;
 	}
-
-	public String getPieceImageName() {
-		return "Soldier_" + getPlayerName();
-	}
 }
