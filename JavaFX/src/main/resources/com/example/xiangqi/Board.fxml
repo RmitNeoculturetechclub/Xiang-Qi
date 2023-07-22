@@ -3,7 +3,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="board" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.xiangqi.BoardController">
+<AnchorPane fx:id="board" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.xiangqi.BoardController">
     <ImageView fitHeight="609.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../pictures/Xiangqi_board.png" />
     </ImageView>
