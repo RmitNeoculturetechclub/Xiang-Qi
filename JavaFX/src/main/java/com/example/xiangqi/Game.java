@@ -14,7 +14,7 @@ public class Game extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		InitializeManager initializeManager = new InitializeManager();
-		Scene scene = initializeManager.init();
+		Scene scene = initializeManager.init(stage.getWidth(), stage.getHeight());
 		stage.setTitle("XiangQi");
 		stage.setScene(scene);
 		stage.show();

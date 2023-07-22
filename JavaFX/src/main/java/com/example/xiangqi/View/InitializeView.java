@@ -3,6 +3,7 @@ package com.example.xiangqi.View;
 import com.example.xiangqi.Controller.InitializeManager;
 import com.example.xiangqi.Enums.Constant.CellConstant;
 
+import com.example.xiangqi.Enums.Constant.PlayerConstant;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,32 +48,6 @@ public class InitializeView {
         return imageView;
     }
 
-    public Rectangle createRectanglePossibleCell(int positionX, int positionY, String currentPlayer) {
-        Rectangle rec = new Rectangle();
-
-        // Apply position to set X and Y
-        rec.setX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE);
-        rec.setY((CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE);
-
-        // Set size
-        rec.setWidth(CellConstant.CELL_SIZE);
-        rec.setHeight(CellConstant.CELL_SIZE);
-
-        // Set other properties
-        if (currentPlayer == "Red") {
-            rec.setFill(Color.RED);
-            rec.setStroke(Color.RED);
-        } else {
-            rec.setFill(Color.BLACK);
-            rec.setStroke(Color.BLACK);
-        }
-
-        rec.setStrokeWidth(2);
-        rec.setOpacity(0.5);
-
-        return rec;
-    }
-
     public Circle createCirclePossibleCell(int positionX, int positionY, String currentPlayer) {
         Circle circle = new Circle();
 
@@ -85,13 +60,8 @@ public class InitializeView {
         circle.setRadius(CellConstant.CELL_SIZE / 2);
 
         // Set other properties
-        if (currentPlayer == "Red") {
-            circle.setFill(Color.RED);
-            circle.setStroke(Color.RED);
-        } else {
-            circle.setFill(Color.BLACK);
-            circle.setStroke(Color.BLACK);
-        }
+        circle.setFill(PlayerConstant.PlayerConstant.get(currentPlayer));
+        circle.setStroke(PlayerConstant.PlayerConstant.get(currentPlayer));
 
         circle.setStrokeWidth(0.4);
         circle.setOpacity(0.5);

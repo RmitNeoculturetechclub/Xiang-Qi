@@ -12,6 +12,7 @@ import com.example.xiangqi.Model.Horse;
 import com.example.xiangqi.Model.Piece;
 import com.example.xiangqi.Model.Soldier;
 import com.example.xiangqi.View.InitializeView;
+import com.example.xiangqi.View.StatusView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
@@ -26,6 +27,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class InitializeManager {
     private InitializeView initializeView;
@@ -33,6 +35,7 @@ public class InitializeManager {
     private AnchorPane pane;
     private Piece currentClickedPiece;
     private ImageView imageView;
+    private StatusView statusView;
     private Piece piece;
     private String currentPlayer;
 
@@ -43,24 +46,27 @@ public class InitializeManager {
         currentPlayer = "Red";
     }
 
-    public Scene init() throws IOException {
+    public Scene init(double widthStage, double heightStage) throws IOException {
         URL url = InitializeManager.class.getResource("/com/example/xiangqi/Board.fxml");
         assert url != null;
         pane = FXMLLoader.load(url);
         displayCircles = new ArrayList<>();
 
         this.initializeBoard();
+        return this.initializeScene(widthStage, heightStage);
+    }
 
+    private Scene initializeScene(double widthStage, double heightStage){
+        statusView = new StatusView();
+        statusView.updatePlayerStatus(currentPlayer);
+
+        pane.setPrefSize(widthStage/3, heightStage);
         HBox hBox = new HBox();
+        hBox.setPrefSize(widthStage, heightStage);
         hBox.getChildren().add(pane);
+        hBox.getChildren().add(statusView.getPane());
         return new Scene(hBox);
     }
-
-    public InitializeManager(ImageView imageView, Piece piece) {
-        this.imageView = imageView;
-        this.piece = piece;
-    }
-
     private void initializeBoard(){
         board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
 
@@ -138,11 +144,8 @@ public class InitializeManager {
                                 currentPlayer);
 
                         circlePossible.setOnMouseClicked(event -> {
-                            if (currentPlayer == "Red") {
-                                currentPlayer = "Black";
-                            } else {
-                                currentPlayer = "Red";
-                            }
+                            currentPlayer = Objects.equals(currentPlayer, "Black") ? "Red" : "Black";
+                            statusView.updatePlayerStatus(currentPlayer);
 
                             // Get the new cell based on the clicked rectangle's position
                             Cell newCell = board[positionY][positionX];
