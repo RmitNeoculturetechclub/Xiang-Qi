@@ -4,14 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Elephant extends Piece {
-	static int elephantCounter = 0;
-
-	public Elephant(String id, String player) {
-		super(id, player);
-	}
-
-	public Elephant() {
-	}
 
 	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
@@ -50,17 +42,5 @@ public class Elephant extends Piece {
 			return true;
 		}
 		return false;
-	}
-
-	public void setNumPieces(int numPieces) {
-		Elephant.elephantCounter += numPieces;
-	}
-
-	public int getNumPiece() {
-		return Elephant.elephantCounter;
-	}
-
-	public String getPieceImageName() {
-		return "Elephant_" + getPlayerName();
 	}
 }
