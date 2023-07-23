@@ -3,51 +3,66 @@ package com.example.xiangqi.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Advisor extends Piece{
+public class Advisor extends Piece {
 	static int advisorCounter = 0;
-	public Advisor (String id, String player) {
+
+	public Advisor(String id, String player) {
 		super(id, player);
 	}
 
-	public Advisor () {
+	public Advisor() {
 	}
 
 	@Override
-	public List <int[]> getAllPossibleMoves (int[] currentPosition, Cell[][] board) {
-		List <int[]> possiblePositions = new ArrayList<>();
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
+		List<int[]> possiblePositions = new ArrayList<>();
+		int x = currentPosition[0];
+		int y = currentPosition[1];
+		String currentPlayer = getPlayerName();
 
-		getAdvisorMoves(currentPosition,1, 0);
+		int[][] directions = { { -1, -1 }, { 1, 1 }, { 1, -1 }, { -1, 1 } };
+
+		for (int[] direction : directions) {
+			int row = x + direction[0];
+			int col = y + direction[1];
+
+			if (isValidMove(row, col, board, currentPlayer)) {
+				possiblePositions.add(new int[] { row, col });
+			}
+
+		}
+
 		return possiblePositions;
 	}
 
-	private List<int[]> getAdvisorMoves(int[] currentPosition, int fromX, int fromY ) {
-		List<int[]> possibleMoves = new ArrayList<>();
-		// Loop through all possible positions within the palace
-		for (int toX = 3; toX <= 5; toX++) {
-			for (int toY = 0; toY <= 2; toY++) {
-				// Check if the Advisor is moving diagonally within the palace
-				if (Math.abs(toX - fromX) == 1 && Math.abs(toY - fromY) == 1) {
-					// Add the move to the list of possible moves
-					int[] move = {fromX, fromY, toX, toY};
-					possibleMoves.add(move);
-				}
+	private boolean isValidMove(int x, int y, Cell[][] board, String currentPlayer) {
+		// Check if the position is within the palace
+		if (currentPlayer == "Black") {
+			if (!(x >= 0 && x <= 2 && y >= 3 && y <= 5)) {
+				return false;
+			}
+		} else {
+			if (!(x >= 7 && x <= 9 && y >= 3 && y <= 5)) {
+				return false;
 			}
 		}
-		return possibleMoves;
+
+		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
 
-	public void setNumPieces (int numPieces) {
+	public void setNumPieces(int numPieces) {
 		Advisor.advisorCounter = numPieces;
 	}
 
 	public void setNumPiece(int numPiece) {
 		Advisor.advisorCounter += numPiece;
 	}
+
 	public int getNumPiece() {
 		return Advisor.advisorCounter;
 	}
 
 	public String getPieceImageName() {
-        return "Advisor_" + getPlayerName();
-    }
+		return "Advisor_" + getPlayerName();
+	}
 }
