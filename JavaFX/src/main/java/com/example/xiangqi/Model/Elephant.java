@@ -1,46 +1,50 @@
 package com.example.xiangqi.Model;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Elephant extends Piece {
 
 	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
-		// TODO: Implement this method
-		return super.getAllPossibleMoves(currentPosition, board);
-	}
+		List<int[]> possiblePositions = new ArrayList<>();
+		int x = currentPosition[0];
+		int y = currentPosition[1];
+		String currentPlayer = getPlayerName();
 
-	public List<int[]> getElephantMoves(int fromX, int fromY) {
-		List<int[]> possibleMoves = new ArrayList<int[]>();
-		// Loop through all possible positions within the elephant's range
-		for (int toX = 0; toX <= 8; toX++) {
-			for (int toY = 0; toY <= 9; toY++) {
-				// Check if the Elephant is moving within its range and following the diagonal pattern
-				if (Math.abs(toX - fromX) == 2 && Math.abs(toY - fromY) == 2
-						&& ((toX <= 4 && fromX <= 4) || (toX >= 5 && fromX >= 5))
-						&& ((toY <= 2 && fromY <= 2) || (toY >= 7 && fromY >= 7))) {
-					// Check if the path is not blocked by any piece
-					if (!isPathBlocked(fromX, fromY, toX, toY)) {
-						// Add the move to the list of possible moves
-						int[] move = {fromX, fromY, toX, toY};
-						possibleMoves.add(move);
-					}
+		int[][] directions = { { -1, -1 }, { -1, 1 }, { 1, 1 }, { 1, -1 } };
+
+		for (int[] direction : directions) {
+			int firstRow = x + direction[0];
+			int firstCol = y + direction[1];
+
+			// check if there's a piece blocking the path
+			if (isValidMove(firstRow, firstCol, board, currentPlayer)) {
+				int secondRow = firstRow + direction[0];
+				int secondCol = firstCol + direction[1];
+
+				if (isValidMove(secondRow, secondCol, board, currentPlayer)) {
+					possiblePositions.add(new int[] { secondRow, secondCol });
 				}
+
 			}
+
 		}
-		return possibleMoves;
+		return possiblePositions;
 	}
 
-	private boolean isPathBlocked(int fromX, int fromY, int toX, int toY) {
-		// Check if the path between the starting and ending position is blocked by any piece
-		int offsetX = (toX - fromX) / 2;
-		int offsetY = (toY - fromY) / 2;
-		int midX = fromX + offsetX;
-		int midY = fromY + offsetY;
-		if (board[midX][midY] != null) {
-			return true;
+	private boolean isValidMove(int x, int y, Cell[][] board, String currentPlayer) {
+		// Check if the position is within the board bounds
+		if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
+			return false;
 		}
-		return false;
+
+		// Check if the Soldier has crossed the river
+		if ((currentPlayer.equals("Black") && x >= 5) || (currentPlayer.equals("Red") && x <= 4)) {
+			return false;
+		}
+
+		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
+
 }
