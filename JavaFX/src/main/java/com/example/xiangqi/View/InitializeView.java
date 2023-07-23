@@ -3,6 +3,7 @@ package com.example.xiangqi.View;
 import com.example.xiangqi.Controller.InitializeManager;
 import com.example.xiangqi.Enums.Constant.CellConstant;
 
+import com.example.xiangqi.Enums.Constant.PlayerConstant;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 
 import java.io.Console;
 import java.io.IOException;
@@ -46,24 +48,25 @@ public class InitializeView {
         return imageView;
     }
 
-    public Rectangle createRectanglePossibleCell(int positionX, int positionY) {
-        Rectangle rec = new Rectangle();
+    public Circle createCirclePossibleCell(int positionX, int positionY, String currentPlayer) {
+        Circle circle = new Circle();
 
-        // Apply position to set X and Y
-        rec.setX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE);
-        rec.setY((CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE);
+        // Apply position to set center coordinates
+        circle.setCenterX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+        circle.setCenterY(
+                (CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
 
-        // Set size
-        rec.setWidth(CellConstant.CELL_SIZE);
-        rec.setHeight(CellConstant.CELL_SIZE);
+        // Set radius
+        circle.setRadius(CellConstant.CELL_SIZE / 2);
 
         // Set other properties
-        rec.setFill(Color.BLUE); // dif side dif col?
-        rec.setStroke(Color.BLUE);
-        rec.setStrokeWidth(2);
-        rec.setOpacity(0.5);
+        circle.setFill(PlayerConstant.PlayerConstant.get(currentPlayer));
+        circle.setStroke(PlayerConstant.PlayerConstant.get(currentPlayer));
 
-        return rec;
+        circle.setStrokeWidth(0.4);
+        circle.setOpacity(0.5);
+
+        return circle;
     }
 
 }

@@ -4,14 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Advisor extends Piece {
-	static int advisorCounter = 0;
-
-	public Advisor(String id, String player) {
-		super(id, player);
-	}
-
-	public Advisor() {
-	}
 
 	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
@@ -58,21 +50,5 @@ public class Advisor extends Piece {
 		// 	return false;
 		// }
 		return true;
-	}
-	
-	public void setNumPieces(int numPieces) {
-		Advisor.advisorCounter = numPieces;
-	}
-
-	public void setNumPiece(int numPiece) {
-		Advisor.advisorCounter += numPiece;
-	}
-
-	public int getNumPiece() {
-		return Advisor.advisorCounter;
-	}
-
-	public String getPieceImageName() {
-		return "Advisor_" + getPlayerName();
 	}
 }

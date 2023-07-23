@@ -5,14 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Canon extends Piece {
-	static int canonCounter = 0;
-
-	public Canon(String id, String player) {
-		super(id, player);
-	}
-
-	public Canon() {
-	}
 
 	// Get all possible moves for the Cannon piece
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
@@ -61,17 +53,5 @@ public class Canon extends Piece {
 			x += dx;
 			y += dy;
 		}
-	}
-
-	public void setNumPieces(int numPiece) {
-		Canon.canonCounter += numPiece;
-	}
-
-	public int getNumPiece() {
-		return Canon.canonCounter;
-	}
-
-	public String getPieceImageName() {
-		return "Canon_" + getPlayerName();
 	}
 }
