@@ -17,6 +17,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 import javafx.scene.Node;
 
 import com.example.xiangqi.View.DisplayPlayer;
@@ -109,7 +110,7 @@ public class InitializeManager {
         return true;
     }
 
-    private Circle previousGeneralCircle;
+    private List<Pair<String, Circle>> previousGeneralCircles;
 
     private void isUnderThreat(Cell[][] board) {
         for (String player : new String[] { "Red", "Black" }) {
@@ -150,20 +151,38 @@ public class InitializeManager {
                     Color circleColor = (player.equals("Black")) ? Color.RED : Color.BLACK;
                     Circle generalCircle = initializeView.createGeneralColor(generalY, generalX, circleColor);
 
-                    // Remove the previously created circle if it exists
-                    if (previousGeneralCircle != null) {
-                        pane.getChildren().remove(previousGeneralCircle);
+                    // Remove the previously created circles if they exist and not checked anymore
+                    if (previousGeneralCircles != null) {
+                        Iterator<Pair<String, Circle>> iterator = previousGeneralCircles.iterator();
+                        while (iterator.hasNext()) {
+                            Pair<String, Circle> pair = iterator.next();
+                            Circle circle = pair.getValue();
+                            if (pair.getKey().equals(player) && !isChecked) {
+                                pane.getChildren().remove(circle);
+                                iterator.remove();
+                            }
+                        }
                     }
 
                     pane.getChildren().add(generalCircle);
 
-                    // Store the reference to the current circle as the previous circle
-                    previousGeneralCircle = generalCircle;
+                    // Store the reference to the current circle in the list of previous circles
+                    if (previousGeneralCircles == null) {
+                        previousGeneralCircles = new ArrayList<>();
+                    }
+                    previousGeneralCircles.add(new Pair<>(player, generalCircle));
                 } else {
-                    // Remove the previously created circle if it exists
-                    if (previousGeneralCircle != null) {
-                        pane.getChildren().remove(previousGeneralCircle);
-                        previousGeneralCircle = null;
+                    // Remove the previously created circles if they exist and not checked anymore
+                    if (previousGeneralCircles != null) {
+                        Iterator<Pair<String, Circle>> iterator = previousGeneralCircles.iterator();
+                        while (iterator.hasNext()) {
+                            Pair<String, Circle> pair = iterator.next();
+                            Circle circle = pair.getValue();
+                            if (pair.getKey().equals(player) && !isChecked) {
+                                pane.getChildren().remove(circle);
+                                iterator.remove();
+                            }
+                        }
                     }
                 }
 
