@@ -34,6 +34,7 @@ public class InitializeManager {
     private Piece piece;
     private String currentPlayer;
     private Player player;
+    private List<Pair<String, Circle>> previousGeneralCircles;
 
     private ArrayList<Circle> displayCircles;
 
@@ -105,8 +106,6 @@ public class InitializeManager {
         }
         return true;
     }
-
-    private List<Pair<String, Circle>> previousGeneralCircles;
 
     private void isUnderThreat(Cell[][] board) {
         for (String player : new String[] { "Red", "Black" }) {
