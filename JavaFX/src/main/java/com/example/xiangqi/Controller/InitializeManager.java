@@ -176,7 +176,6 @@ public class InitializeManager {
                         Circle generalCircle = initializeView.createGeneralColor(generalY, generalX, circleColor);
                         pane.getChildren().add(generalCircle);
 
-                        // Store the reference to the current circle in the list of previous circles
                         if (previousGeneralCircles == null) {
                             previousGeneralCircles = new ArrayList<>();
                         }
@@ -224,24 +223,6 @@ public class InitializeManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        // Piece piece = cell.getPiece();
-        // if (piece instanceof General) { // if board is non-empty
-        // Cell generalCell = findGeneral(currentPlayer);
-        // if (generalCell != null) {
-        // General general = (General) generalCell.getPiece();
-        // boolean isChecked = general.getChecked(currentPlayer);
-        // if (isChecked) {
-        // int generalX = generalCell.getPosition()[0];
-        // int generalY = generalCell.getPosition()[1];
-        // System.out.println("!!!!!!!!!!!");
-        // InitializeView initializeView = new InitializeView();
-        // Circle generalCircle = initializeView.createGeneralColor(generalX, generalY,
-        // currentPlayer);
-        // pane.getChildren().add(generalCircle);
-        // }
-        // }
-        // }
 
         pieceImageView.setOnMouseClicked(e -> {
             // TODO: test after finishing the movement of all types of pieces
@@ -292,10 +273,8 @@ public class InitializeManager {
                             // Set the image view (current piece) on the new cell
                             imageViewSetOnMouseClicked(newCell);
 
-                            // TODO: check both general isUnderThreat
+                            // check both general isUnderThreat
                             isUnderThreat(board);
-
-                            // TODO: if one of them in checked, both players should be notified of the check
 
                             // switch the current player
                             currentPlayer = switchPlayer(currentPlayer);
