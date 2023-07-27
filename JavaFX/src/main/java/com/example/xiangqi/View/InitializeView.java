@@ -3,17 +3,17 @@ package com.example.xiangqi.View;
 import com.example.xiangqi.Controller.InitializeManager;
 import com.example.xiangqi.Enums.Constant.CellConstant;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+// import javafx.fxml.FXMLLoader;
+// import javafx.scene.Parent;
+// import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+// import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 
-import java.io.Console;
+// import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
 
@@ -99,4 +99,24 @@ public class InitializeView {
         return circle;
     }
 
+    public Circle createGeneralColor(int positionX, int positionY, Color color) {
+        Circle circle = new Circle();
+
+        // Apply position to set center coordinates
+        circle.setCenterX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+        circle.setCenterY(
+                (CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+
+        // Set radius
+        circle.setRadius(CellConstant.CELL_SIZE / 2);
+
+        // Set the specified color
+        circle.setFill(color);
+        circle.setStroke(color);
+
+        circle.setStrokeWidth(0.4);
+        circle.setOpacity(0.8);
+
+        return circle;
+    }
 }

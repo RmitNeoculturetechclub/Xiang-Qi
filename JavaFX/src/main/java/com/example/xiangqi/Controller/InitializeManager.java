@@ -1,5 +1,6 @@
 package com.example.xiangqi.Controller;
 
+import com.example.xiangqi.Enums.Constant.CellConstant;
 import com.example.xiangqi.Enums.Constant.InitPieceSetup;
 import com.example.xiangqi.Enums.Model.Player;
 import com.example.xiangqi.Model.Cell;
@@ -11,7 +12,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.Node;
 
 import com.example.xiangqi.View.DisplayPlayer;
 
@@ -20,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 public class InitializeManager {
     private InitializeView initializeView;
@@ -43,6 +50,7 @@ public class InitializeManager {
         assert url != null;
         pane = FXMLLoader.load(url);
         displayCircles = new ArrayList<>();
+        initializeView = new InitializeView();
 
         this.initializeBoard();
 
@@ -101,6 +109,8 @@ public class InitializeManager {
         return true;
     }
 
+    private Circle previousGeneralCircle;
+
     private void isUnderThreat(Cell[][] board) {
         for (String player : new String[] { "Red", "Black" }) {
             Cell generalCell = findGeneral(player);
@@ -108,7 +118,7 @@ public class InitializeManager {
             if (generalCell != null) {
                 int generalX = generalCell.getPosition()[0];
                 int generalY = generalCell.getPosition()[1];
-//                System.out.println("General " + player + " position: " + generalX + " " + generalY);
+                System.out.println("General " + player + " position: " + generalX + " " + generalY);
                 boolean isChecked = false;
                 int count = 0;
 
@@ -127,9 +137,6 @@ public class InitializeManager {
 
                                 if (destRow == generalX && destCol == generalY) {
                                     count++;
-//                                    System.out.println(
-//                                            "Opponent name: " + piece.getPlayerName() + " " + piece.getPieceName() + " "
-//                                                    + destRow + ", " + destCol);
                                     break;
                                 }
                             }
@@ -139,13 +146,30 @@ public class InitializeManager {
 
                 if (count != 0) {
                     isChecked = true;
+                    InitializeView initializeView = new InitializeView();
+                    Color circleColor = (player.equals("Black")) ? Color.RED : Color.BLACK;
+                    Circle generalCircle = initializeView.createGeneralColor(generalY, generalX, circleColor);
+
+                    // Remove the previously created circle if it exists
+                    if (previousGeneralCircle != null) {
+                        pane.getChildren().remove(previousGeneralCircle);
+                    }
+
+                    pane.getChildren().add(generalCircle);
+
+                    // Store the reference to the current circle as the previous circle
+                    previousGeneralCircle = generalCircle;
+                } else {
+                    // Remove the previously created circle if it exists
+                    if (previousGeneralCircle != null) {
+                        pane.getChildren().remove(previousGeneralCircle);
+                        previousGeneralCircle = null;
+                    }
                 }
 
-                // Todo 1: Add isChecked variable to General class
-                // Todo 2: And then set the isChecked to the general object
-                // Todo 3: Make the checked general to be colored , maybe by adding another circle on that general cell
                 General general = (General) generalCell.getPiece();
                 general.setChecked(isChecked, player);
+
                 System.out.println("general" + player + "isChecked: " + isChecked);
             }
         }
@@ -155,11 +179,16 @@ public class InitializeManager {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
                 Cell cell = board[row][col];
-                Piece piece = cell.getPiece();
+                if (cell != null) {
+                    Piece piece = cell.getPiece();
 
-                if (piece != null && piece.getPieceName().equals("General") && piece.getPlayerName().equals(player)) {
-                    return board[row][col];
+                    if (piece != null && piece.getPieceName().equals("General")
+                            && piece.getPlayerName().equals(player)) {
+                        return board[row][col];
+                    }
+
                 }
+
             }
         }
         return null; // General not found
@@ -179,6 +208,24 @@ public class InitializeManager {
             throw new RuntimeException(e);
         }
 
+        // Piece piece = cell.getPiece();
+        // if (piece instanceof General) { // if board is non-empty
+        // Cell generalCell = findGeneral(currentPlayer);
+        // if (generalCell != null) {
+        // General general = (General) generalCell.getPiece();
+        // boolean isChecked = general.getChecked(currentPlayer);
+        // if (isChecked) {
+        // int generalX = generalCell.getPosition()[0];
+        // int generalY = generalCell.getPosition()[1];
+        // System.out.println("!!!!!!!!!!!");
+        // InitializeView initializeView = new InitializeView();
+        // Circle generalCircle = initializeView.createGeneralColor(generalX, generalY,
+        // currentPlayer);
+        // pane.getChildren().add(generalCircle);
+        // }
+        // }
+        // }
+
         pieceImageView.setOnMouseClicked(e -> {
             // TODO: test after finishing the movement of all types of pieces
             if (isLastExistingPiece(cell)) {
@@ -192,10 +239,6 @@ public class InitializeManager {
 
                     List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
                     // TODO: check if the current player's general isChecked is true or false
-                    // if getChecked(currentPlayer) {
-                    // } else {
-
-                    // }
 
                     // if true, recreate cells: eliminate the cells that cannot protect the General
                     // from being Checked (so the user can make a good decision for their general)
