@@ -49,4 +49,10 @@ public class Horse extends Piece {
 
 		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
+
+	@Override
+	public Horse clone() {
+		Horse clonedHorse = (Horse) super.clone();
+		return clonedHorse;
+	}
 }

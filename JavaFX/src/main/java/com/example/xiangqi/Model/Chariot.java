@@ -48,4 +48,10 @@ public class Chariot extends Piece {
 			y += dy;
 		}
 	}
+
+	@Override
+	public Chariot clone() {
+		Chariot clonedChariot = (Chariot) super.clone();
+		return clonedChariot;
+	}
 }

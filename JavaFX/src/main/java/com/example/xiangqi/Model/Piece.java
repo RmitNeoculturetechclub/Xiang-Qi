@@ -6,7 +6,7 @@ import java.util.List;
 import com.example.xiangqi.Enums.Model.PieceName;
 import com.example.xiangqi.Enums.Model.Player;
 
-public class Piece {
+public abstract class Piece implements Cloneable {
 
 	private boolean isAlive;
 	private String id;
@@ -44,4 +44,17 @@ public class Piece {
 		return array[0];
 	}
 
+	// @Override
+	// public abstract Piece clone();
+
+	@Override
+	public Piece clone() {
+		try {
+			return (Piece) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// Handle the exception as needed
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

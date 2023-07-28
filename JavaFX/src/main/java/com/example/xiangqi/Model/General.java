@@ -104,4 +104,10 @@ public class General extends Piece {
 		return this.RedChecked;
 	}
 
+	@Override
+	public General clone() {
+		General clonedGeneral = (General) super.clone();
+		return clonedGeneral;
+	}
+
 }

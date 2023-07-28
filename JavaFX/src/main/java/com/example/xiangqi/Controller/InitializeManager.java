@@ -13,7 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.util.Pair;
 
 import com.example.xiangqi.View.DisplayPlayer;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Iterator;
 
@@ -190,6 +192,50 @@ public class InitializeManager {
         }
     }
 
+    private boolean isProtection(Cell[][] board, String currentPlayer) {
+        // check only their own general.
+        String player = currentPlayer.equals("Red") ? "Red" : "Black";
+        boolean isProtection = false;
+
+        Cell generalCell = findGeneral(player);
+        // if general is in the board
+        if (generalCell != null) {
+            int generalX = generalCell.getPosition()[0];
+            int generalY = generalCell.getPosition()[1];
+            System.out.println("General " + player + " position: " + generalX + " " + generalY);
+            int count = 0;
+
+            // check the possible moves of the opponent pieces
+            for (int row = 0; row < board.length; row++) {
+                for (int col = 0; col < board[row].length; col++) {
+                    Cell cell = board[row][col];
+                    Piece piece = cell.getPiece();
+
+                    if (piece != null && !piece.getPlayerName().equals(player)) {
+                        List<int[]> possibleMoves = cell.getAllPossibleCells(board);
+
+                        for (int[] move : possibleMoves) {
+                            int destRow = move[0];
+                            int destCol = move[1];
+
+                            if (destRow == generalX && destCol == generalY) {
+                                count++;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (count == 0) { // it can escape capture (no longer threaten)
+                isProtection = true;
+            }
+
+        }
+        System.out.println("isProtection" + isProtection);
+        return isProtection;
+    }
+
     private Cell findGeneral(String player) {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
@@ -207,6 +253,63 @@ public class InitializeManager {
             }
         }
         return null; // General not found
+    }
+
+    // private static Cell[][] makeTemporaryMove(Cell[][] currentBoard, Cell
+    // cellToCheck, String currentPlayer,
+    // String PieceName) {
+    // private Cell[][] tmpBoard;
+
+    // // 1. remove the current piece from the board
+
+    // // 2. set the piece in cellToCheck position
+
+    // // 3. return the modified tmpBoard
+
+    // return tmpBoard;
+    // }
+
+    private static Cell[][] makeTemporaryMove(Cell[][] currentBoard, Cell sourceCell, int destRow, int destCol) {
+        // Create a deep copy of the current board to create a temporary board
+        Cell[][] tmpBoard = new Cell[currentBoard.length][currentBoard[0].length];
+        for (int row = 0; row < currentBoard.length; row++) {
+            for (int col = 0; col < currentBoard[row].length; col++) {
+                Cell originalCell = currentBoard[row][col];
+                if (originalCell != null) {
+                    // Create a new Cell instance with the same piece, if any
+                    Piece piece = originalCell.getPiece();
+                    Cell newCell = new Cell(row, col);
+                    if (piece != null) {
+                        Piece newPiece = piece.clone(); // Assuming Piece implements a clone() method
+                        newCell.setPiece(newPiece);
+                    }
+                    tmpBoard[row][col] = newCell;
+                } else {
+                    tmpBoard[row][col] = null;
+                }
+            }
+        }
+
+        // 1. Get the source position of the piece to be moved
+        int sourceX = sourceCell.getPosition()[0];
+        int sourceY = sourceCell.getPosition()[1];
+
+        // 2. Remove the piece from the source position
+        Piece pieceToMove = tmpBoard[sourceX][sourceY].getPiece();
+        tmpBoard[sourceX][sourceY].setPiece(null);
+
+        // 3. set the destination position as null (previous piece)
+        tmpBoard[destRow][destCol].setPiece(null);
+
+        // 5. Set the piece in the destination position
+        tmpBoard[destRow][destCol].setPiece(pieceToMove);
+
+        System.out.println("current source:" + currentBoard[sourceX][sourceY].getPiece());
+        System.out.println("tmpBoard source:" + tmpBoard[sourceX][sourceY].getPiece());
+
+        System.out.println("current dest:" + currentBoard[destRow][destCol].getPiece());
+        System.out.println("tmpBoard dest:" + tmpBoard[destRow][destCol].getPiece());
+        return tmpBoard;
     }
 
     private String switchPlayer(String currentPlayer) {
@@ -235,11 +338,32 @@ public class InitializeManager {
                     currentClickedPiece = cell.getPiece();
 
                     List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
-                    // TODO: check if the current player's general isChecked is true or false
 
-                    // if true, recreate cells: eliminate the cells that cannot protect the General
-                    // from being Checked (so the user can make a good decision for their general)
-                    // if false, do nothing
+                    // check if the current player's general isChecked is true or false
+                    General general = (General) findGeneral(currentPlayer).getPiece();
+                    if (general != null) {
+                        boolean isChecked = general.getChecked(currentPlayer);
+
+                        if (isChecked) {
+                            List<int[]> cellsToRemove = new ArrayList<>();
+                            // for every possible cell, simulate -> tmp board -> isProtection
+                            for (int[] possibleCell : possibleCells) {
+                                int positionX = possibleCell[0];
+                                int positionY = possibleCell[1];
+                                // Cell cellToCheck = board[positionX][positionY];
+
+                                // String pieceName = cellToCheck.getPiece().getPieceName();
+                                Cell[][] tmpBoard = makeTemporaryMove(board, cell, positionX, positionY);
+
+                                // filter the cells with isProtection
+                                // if isProtection false, delete the cell from the possible cells
+                                if (!isProtection(tmpBoard, currentPlayer)) {
+                                    cellsToRemove.add(possibleCell);
+                                }
+                            }
+                            possibleCells.removeAll(cellsToRemove);
+                        }
+                    }
 
                     for (int[] positions : possibleCells) {
                         int positionX = positions[1];

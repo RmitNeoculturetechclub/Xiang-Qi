@@ -28,4 +28,10 @@ public class Advisor extends Piece {
 		}
 		return possibleMoves;
 	}
+
+	@Override
+	public Advisor clone() {
+		Advisor clonedAdvisor = (Advisor) super.clone();
+		return clonedAdvisor;
+	}
 }
