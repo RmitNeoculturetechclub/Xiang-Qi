@@ -157,6 +157,7 @@ public class InitializeManager {
                 }
 
                 if (isChecked) {
+                    // mark it as the opponent's color
                     InitializeView initializeView = new InitializeView();
                     Color circleColor = (player.equals("Black")) ? Color.RED : Color.BLACK;
 
@@ -170,6 +171,7 @@ public class InitializeManager {
                         }
                     }
 
+                    // avoid duplicating the mark in case the general remains checked
                     if (!circleExists) {
                         Circle generalCircle = initializeView.createGeneralColor(generalY, generalX, circleColor);
                         pane.getChildren().add(generalCircle);
@@ -227,7 +229,6 @@ public class InitializeManager {
             if (count == 0) { // it can escape capture (no longer threaten)
                 isProtection = true;
             }
-
         }
         System.out.println("isProtection" + isProtection);
         return isProtection;
@@ -242,11 +243,9 @@ public class InitializeManager {
 
                     if (piece != null && piece.getPieceName().equals("General")
                             && piece.getPlayerName().equals(player)) {
-                        return board[row][col];
+                        return board[row][col]; // General found
                     }
-
                 }
-
             }
         }
         return null; // General not found
@@ -317,6 +316,7 @@ public class InitializeManager {
                     List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
                     // check if the current player's general isChecked is true or false
+                    // if checked, regenerate the possible cells
                     General general = (General) findGeneral(currentPlayer).getPiece();
                     if (general != null) {
                         boolean isChecked = general.getChecked(currentPlayer);
