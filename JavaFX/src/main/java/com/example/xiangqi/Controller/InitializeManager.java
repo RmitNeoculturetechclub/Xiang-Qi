@@ -259,11 +259,10 @@ public class InitializeManager {
             for (int col = 0; col < currentBoard[row].length; col++) {
                 Cell originalCell = currentBoard[row][col];
                 if (originalCell != null) {
-                    // Create a new Cell instance with the same piece, if any
                     Piece piece = originalCell.getPiece();
                     Cell newCell = new Cell(row, col);
                     if (piece != null) {
-                        Piece newPiece = piece.clone(); // Assuming Piece implements a clone() method
+                        Piece newPiece = piece.clone();
                         newCell.setPiece(newPiece);
                     }
                     tmpBoard[row][col] = newCell;
@@ -284,14 +283,9 @@ public class InitializeManager {
         // 3. set the destination position as null (previous piece)
         tmpBoard[destRow][destCol].setPiece(null);
 
-        // 5. Set the piece in the destination position
+        // 4. Set the piece in the destination position
         tmpBoard[destRow][destCol].setPiece(pieceToMove);
 
-        System.out.println("current source:" + currentBoard[sourceX][sourceY].getPiece());
-        System.out.println("tmpBoard source:" + tmpBoard[sourceX][sourceY].getPiece());
-
-        System.out.println("current dest:" + currentBoard[destRow][destCol].getPiece());
-        System.out.println("tmpBoard dest:" + tmpBoard[destRow][destCol].getPiece());
         return tmpBoard;
     }
 
@@ -342,6 +336,7 @@ public class InitializeManager {
                                     cellsToRemove.add(possibleCell);
                                 }
                             }
+                            // display only helpful movements for their general
                             possibleCells.removeAll(cellsToRemove);
                         }
                     }
