@@ -13,8 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.util.Pair;
 
 import com.example.xiangqi.View.DisplayPlayer;
@@ -23,7 +21,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Iterator;
 
@@ -255,20 +252,6 @@ public class InitializeManager {
         return null; // General not found
     }
 
-    // private static Cell[][] makeTemporaryMove(Cell[][] currentBoard, Cell
-    // cellToCheck, String currentPlayer,
-    // String PieceName) {
-    // private Cell[][] tmpBoard;
-
-    // // 1. remove the current piece from the board
-
-    // // 2. set the piece in cellToCheck position
-
-    // // 3. return the modified tmpBoard
-
-    // return tmpBoard;
-    // }
-
     private static Cell[][] makeTemporaryMove(Cell[][] currentBoard, Cell sourceCell, int destRow, int destCol) {
         // Create a deep copy of the current board to create a temporary board
         Cell[][] tmpBoard = new Cell[currentBoard.length][currentBoard[0].length];
@@ -350,9 +333,7 @@ public class InitializeManager {
                             for (int[] possibleCell : possibleCells) {
                                 int positionX = possibleCell[0];
                                 int positionY = possibleCell[1];
-                                // Cell cellToCheck = board[positionX][positionY];
 
-                                // String pieceName = cellToCheck.getPiece().getPieceName();
                                 Cell[][] tmpBoard = makeTemporaryMove(board, cell, positionX, positionY);
 
                                 // filter the cells with isProtection

@@ -44,9 +44,6 @@ public abstract class Piece implements Cloneable {
 		return array[0];
 	}
 
-	// @Override
-	// public abstract Piece clone();
-
 	@Override
 	public Piece clone() {
 		try {
