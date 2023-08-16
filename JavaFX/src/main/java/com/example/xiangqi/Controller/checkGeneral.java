@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Pair;
 
-public class checkGeneral {
+public class CheckGeneral {
 
     public void isUnderThreat(Cell[][] board, AnchorPane pane, List<Pair<String, Circle>> previousGeneralCircles) {
         for (String player : new String[] { "Red", "Black" }) {
