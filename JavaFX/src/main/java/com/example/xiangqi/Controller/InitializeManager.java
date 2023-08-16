@@ -111,7 +111,7 @@ public class InitializeManager {
 
     private void imageViewSetOnMouseClicked(Cell cell) {
         ImageView pieceImageView;
-        checkGeneral InsCheckGeneral = new checkGeneral();
+        CheckGeneral InsCheckGeneral = new CheckGeneral();
 
         try {
             pieceImageView = this.initializeView.createPieceView(
@@ -146,7 +146,7 @@ public class InitializeManager {
                                 int positionX = possibleCell[0];
                                 int positionY = possibleCell[1];
 
-                                Cell[][] tmpBoard = checkGeneral.makeTemporaryMove(board, cell, positionX, positionY);
+                                Cell[][] tmpBoard = CheckGeneral.makeTemporaryMove(board, cell, positionX, positionY);
 
                                 // filter the cells with isProtection
                                 // if isProtection false, delete the cell from the possible cells

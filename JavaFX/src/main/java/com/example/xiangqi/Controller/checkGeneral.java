@@ -16,6 +16,49 @@ import javafx.util.Pair;
 
 public class CheckGeneral {
 
+    public Cell findGeneral(String player, Cell[][] board) {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                Cell cell = board[row][col];
+                if (cell != null) {
+                    Piece piece = cell.getPiece();
+
+                    if (piece != null && piece.getPieceName().equals("General")
+                            && piece.getPlayerName().equals(player)) {
+                        return board[row][col]; // General found
+                    }
+                }
+            }
+        }
+        return null; // General not found
+    }
+
+    public int countThreatenedGenerals(String player, Cell[][] board, int generalX, int generalY) {
+        int count = 0;
+
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                Cell cell = board[row][col];
+                Piece piece = cell.getPiece();
+
+                if (piece != null && !piece.getPlayerName().equals(player)) {
+                    List<int[]> possibleMoves = cell.getAllPossibleCells(board);
+
+                    for (int[] move : possibleMoves) {
+                        int destRow = move[0];
+                        int destCol = move[1];
+
+                        if (destRow == generalX && destCol == generalY) {
+                            count++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
     public void isUnderThreat(Cell[][] board, AnchorPane pane, List<Pair<String, Circle>> previousGeneralCircles) {
         for (String player : new String[] { "Red", "Black" }) {
             Cell generalCell = findGeneral(player, board);
@@ -25,37 +68,14 @@ public class CheckGeneral {
                 int generalY = generalCell.getPosition()[1];
                 System.out.println("General " + player + " position: " + generalX + " " + generalY);
                 boolean isChecked = false;
-                int count = 0;
 
-                // check the possible moves of the opponent pieces
-                for (int row = 0; row < board.length; row++) {
-                    for (int col = 0; col < board[row].length; col++) {
-                        Cell cell = board[row][col];
-                        Piece piece = cell.getPiece();
-
-                        if (piece != null && !piece.getPlayerName().equals(player)) {
-                            List<int[]> possibleMoves = cell.getAllPossibleCells(board);
-
-                            for (int[] move : possibleMoves) {
-                                int destRow = move[0];
-                                int destCol = move[1];
-
-                                if (destRow == generalX && destCol == generalY) {
-                                    count++;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
+                int count = countThreatenedGenerals(player, board, generalX, generalY);
 
                 if (count != 0) {
                     isChecked = true;
                 }
 
                 // Remove the previously created circles if they exist and not checked anymore
-                System.out.println(previousGeneralCircles + " " + "previousGeneralCircles");
-
                 if (previousGeneralCircles != null) {
                     Iterator<Pair<String, Circle>> iterator = previousGeneralCircles.iterator();
                     while (iterator.hasNext()) {
@@ -74,7 +94,6 @@ public class CheckGeneral {
                     Color circleColor = (player.equals("Black")) ? Color.RED : Color.BLACK;
 
                     boolean circleExists = false;
-                    System.out.println(previousGeneralCircles + " " + "previousGeneralCircles");
                     if (previousGeneralCircles != null) {
                         for (Pair<String, Circle> pair : previousGeneralCircles) {
                             if (pair.getKey().equals(player)) {
@@ -115,29 +134,8 @@ public class CheckGeneral {
             int generalX = generalCell.getPosition()[0];
             int generalY = generalCell.getPosition()[1];
             System.out.println("General " + player + " position: " + generalX + " " + generalY);
-            int count = 0;
 
-            // check the possible moves of the opponent pieces
-            for (int row = 0; row < board.length; row++) {
-                for (int col = 0; col < board[row].length; col++) {
-                    Cell cell = board[row][col];
-                    Piece piece = cell.getPiece();
-
-                    if (piece != null && !piece.getPlayerName().equals(player)) {
-                        List<int[]> possibleMoves = cell.getAllPossibleCells(board);
-
-                        for (int[] move : possibleMoves) {
-                            int destRow = move[0];
-                            int destCol = move[1];
-
-                            if (destRow == generalX && destCol == generalY) {
-                                count++;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
+            int count = countThreatenedGenerals(player, board, generalX, generalY);
 
             if (count == 0) { // it can escape capture (no longer threaten)
                 isProtection = true;
@@ -147,24 +145,6 @@ public class CheckGeneral {
         return isProtection;
     }
 
-    public Cell findGeneral(String player, Cell[][] board) {
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[row].length; col++) {
-                Cell cell = board[row][col];
-                if (cell != null) {
-                    Piece piece = cell.getPiece();
-
-                    if (piece != null && piece.getPieceName().equals("General")
-                            && piece.getPlayerName().equals(player)) {
-                        return board[row][col]; // General found
-                    }
-                }
-            }
-        }
-        return null; // General not found
-    }
-
-    // makeTemporaryMove
     public static Cell[][] makeTemporaryMove(Cell[][] currentBoard, Cell sourceCell, int destRow, int destCol) {
         // Create a deep copy of the current board to create a temporary board
         Cell[][] tmpBoard = new Cell[currentBoard.length][currentBoard[0].length];
