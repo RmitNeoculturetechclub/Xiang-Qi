@@ -3,6 +3,7 @@ package com.example.xiangqi.Controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import com.example.xiangqi.Model.Cell;
 import com.example.xiangqi.Model.General;
@@ -16,47 +17,46 @@ import javafx.util.Pair;
 
 public class CheckGeneral {
 
-    public Cell findGeneral(String player, Cell[][] board) {
+    private void processBoard(Cell[][] board, BiConsumer<Cell, Piece> processor) {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
                 Cell cell = board[row][col];
                 if (cell != null) {
                     Piece piece = cell.getPiece();
-
-                    if (piece != null && piece.getPieceName().equals("General")
-                            && piece.getPlayerName().equals(player)) {
-                        return board[row][col]; // General found
+                    if (piece != null) {
+                        processor.accept(cell, piece);
                     }
                 }
             }
         }
-        return null; // General not found
+    }
+
+    public Cell findGeneral(String player, Cell[][] board) {
+        Cell[] generalCell = new Cell[1]; // Using an array to hold the result
+        processBoard(board, (cell, piece) -> {
+            if (piece.getPieceName().equals("General") && piece.getPlayerName().equals(player)) {
+                generalCell[0] = cell;
+            }
+        });
+        return generalCell[0];
     }
 
     public int countThreatenedGenerals(String player, Cell[][] board, int generalX, int generalY) {
-        int count = 0;
-
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[row].length; col++) {
-                Cell cell = board[row][col];
-                Piece piece = cell.getPiece();
-
-                if (piece != null && !piece.getPlayerName().equals(player)) {
-                    List<int[]> possibleMoves = cell.getAllPossibleCells(board);
-
-                    for (int[] move : possibleMoves) {
-                        int destRow = move[0];
-                        int destCol = move[1];
-
-                        if (destRow == generalX && destCol == generalY) {
-                            count++;
-                            break;
-                        }
+        int[] count = new int[1];
+        processBoard(board, (cell, piece) -> {
+            if (!piece.getPlayerName().equals(player)) {
+                List<int[]> possibleMoves = cell.getAllPossibleCells(board);
+                for (int[] move : possibleMoves) {
+                    int destRow = move[0];
+                    int destCol = move[1];
+                    if (destRow == generalX && destCol == generalY) {
+                        count[0]++;
+                        break;
                     }
                 }
             }
-        }
-        return count;
+        });
+        return count[0];
     }
 
     public void isUnderThreat(Cell[][] board, AnchorPane pane, List<Pair<String, Circle>> previousGeneralCircles) {
