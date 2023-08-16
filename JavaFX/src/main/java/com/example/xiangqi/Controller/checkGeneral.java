@@ -62,64 +62,64 @@ public class CheckGeneral {
     public void isUnderThreat(Cell[][] board, AnchorPane pane, List<Pair<String, Circle>> previousGeneralCircles) {
         for (String player : new String[] { "Red", "Black" }) {
             Cell generalCell = findGeneral(player, board);
-            // if general is in the board
             if (generalCell != null) {
                 int generalX = generalCell.getPosition()[0];
                 int generalY = generalCell.getPosition()[1];
                 System.out.println("General " + player + " position: " + generalX + " " + generalY);
-                boolean isChecked = false;
 
                 int count = countThreatenedGenerals(player, board, generalX, generalY);
+                boolean isChecked = (count != 0);
 
-                if (count != 0) {
-                    isChecked = true;
-                }
-
-                // Remove the previously created circles if they exist and not checked anymore
-                if (previousGeneralCircles != null) {
-                    Iterator<Pair<String, Circle>> iterator = previousGeneralCircles.iterator();
-                    while (iterator.hasNext()) {
-                        Pair<String, Circle> pair = iterator.next();
-                        Circle circle = pair.getValue();
-                        if (pair.getKey().equals(player) && !isChecked) {
-                            pane.getChildren().remove(circle);
-                            iterator.remove();
-                        }
-                    }
-                }
+                removePreviousCircles(player, isChecked, previousGeneralCircles, pane);
 
                 if (isChecked) {
-                    // mark it as the opponent's color
-                    InitializeView initializeView = new InitializeView();
                     Color circleColor = (player.equals("Black")) ? Color.RED : Color.BLACK;
-
-                    boolean circleExists = false;
-                    if (previousGeneralCircles != null) {
-                        for (Pair<String, Circle> pair : previousGeneralCircles) {
-                            if (pair.getKey().equals(player)) {
-                                circleExists = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    // avoid duplicating the mark in case the general remains checked
-                    if (!circleExists) {
-                        Circle generalCircle = initializeView.createGeneralColor(generalY, generalX, circleColor);
-                        pane.getChildren().add(generalCircle);
-
-                        if (previousGeneralCircles == null) {
-                            previousGeneralCircles = new ArrayList<>();
-                        }
-                        previousGeneralCircles.add(new Pair<>(player, generalCircle));
-                    }
+                    addNewCircle(player, circleColor, generalX, generalY, pane, previousGeneralCircles);
                 }
 
                 General general = (General) generalCell.getPiece();
                 general.setChecked(isChecked, player);
-
                 System.out.println("general" + player + "isChecked: " + isChecked);
             }
+        }
+    }
+
+    private void removePreviousCircles(String player, boolean isChecked,
+            List<Pair<String, Circle>> previousGeneralCircles, AnchorPane pane) {
+        if (previousGeneralCircles != null) {
+            Iterator<Pair<String, Circle>> iterator = previousGeneralCircles.iterator();
+            while (iterator.hasNext()) {
+                Pair<String, Circle> pair = iterator.next();
+                Circle circle = pair.getValue();
+                if (pair.getKey().equals(player) && !isChecked) {
+                    pane.getChildren().remove(circle);
+                    iterator.remove();
+                }
+            }
+        }
+    }
+
+    private void addNewCircle(String player, Color circleColor, int generalX, int generalY, AnchorPane pane,
+            List<Pair<String, Circle>> previousGeneralCircles) {
+        boolean circleExists = false;
+        if (previousGeneralCircles != null) {
+            for (Pair<String, Circle> pair : previousGeneralCircles) {
+                if (pair.getKey().equals(player)) {
+                    circleExists = true;
+                    break;
+                }
+            }
+        }
+
+        if (!circleExists) {
+            InitializeView initializeView = new InitializeView();
+            Circle generalCircle = initializeView.createGeneralColor(generalY, generalX, circleColor);
+            pane.getChildren().add(generalCircle);
+
+            if (previousGeneralCircles == null) {
+                previousGeneralCircles = new ArrayList<>();
+            }
+            previousGeneralCircles.add(new Pair<>(player, generalCircle));
         }
     }
 
