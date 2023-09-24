@@ -3,8 +3,6 @@ package com.example.xiangqi.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.xiangqi.Enums.Model.PieceName;
-
 public class Horse extends Piece {
 	@Override
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {

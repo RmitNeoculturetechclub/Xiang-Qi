@@ -54,13 +54,8 @@ public class InitializeView {
         circle.setRadius(CellConstant.CELL_SIZE / 2);
 
         // Set other properties
-        if (currentPlayer == "Red") {
-            circle.setFill(Color.RED);
-            circle.setStroke(Color.RED);
-        } else {
-            circle.setFill(Color.BLACK);
-            circle.setStroke(Color.BLACK);
-        }
+        circle.setFill(PlayerConstant.PlayerConstant.get(currentPlayer));
+        circle.setStroke(PlayerConstant.PlayerConstant.get(currentPlayer));
 
         circle.setStrokeWidth(0.4);
         circle.setOpacity(0.5);

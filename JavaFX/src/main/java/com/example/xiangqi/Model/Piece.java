@@ -1,5 +1,4 @@
 package com.example.xiangqi.Model;
-
 import java.util.ArrayList;
 import java.util.List;
 
