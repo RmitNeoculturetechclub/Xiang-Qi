@@ -1,11 +1,11 @@
 package com.example.xiangqi.Model;
-
-import com.example.xiangqi.Enums.Model.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Piece {
+import com.example.xiangqi.Enums.Model.PieceName;
+import com.example.xiangqi.Enums.Model.Player;
+
+public abstract class Piece implements Cloneable {
 
 	private boolean isAlive;
 	private String id;
@@ -43,4 +43,14 @@ public class Piece {
 		return array[0];
 	}
 
+	@Override
+	public Piece clone() {
+		try {
+			return (Piece) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// Handle the exception as needed
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
