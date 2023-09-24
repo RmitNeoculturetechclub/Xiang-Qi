@@ -9,4 +9,10 @@ public class Elephant extends Piece {
 		// TODO: Implement this method
 		return super.getAllPossibleMoves(currentPosition, board);
 	}
+
+	@Override
+	public Elephant clone() {
+		Elephant clonedElephant = (Elephant) super.clone();
+		return clonedElephant;
+	}
 }

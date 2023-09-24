@@ -51,4 +51,10 @@ public class Soldier extends Piece {
 		// Check if the position is empty
 		// return board[x][y].getPiece() == null;
 	}
+
+	@Override
+	public Soldier clone() {
+		Soldier clonedSoldier = (Soldier) super.clone();
+		return clonedSoldier;
+	}
 }

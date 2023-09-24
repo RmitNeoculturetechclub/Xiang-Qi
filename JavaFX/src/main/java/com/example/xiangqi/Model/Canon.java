@@ -54,4 +54,10 @@ public class Canon extends Piece {
 			y += dy;
 		}
 	}
+
+	@Override
+	public Canon clone() {
+		Canon clonedCanon = (Canon) super.clone();
+		return clonedCanon;
+	}
 }
