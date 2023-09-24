@@ -3,6 +3,7 @@ package com.example.xiangqi.View;
 import com.example.xiangqi.Controller.InitializeManager;
 import com.example.xiangqi.Enums.Constant.CellConstant;
 
+import com.example.xiangqi.Enums.Constant.PlayerConstant;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
