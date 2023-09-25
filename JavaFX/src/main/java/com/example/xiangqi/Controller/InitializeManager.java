@@ -173,7 +173,8 @@ public class InitializeManager {
                                 currentPlayer);
 
                         circlePossible.setOnMouseClicked(event -> {
-                            currentPlayer = Objects.equals(currentPlayer, "Black") ? "Red" : "Black";
+                            // switch the current player
+                            currentPlayer = switchPlayer(currentPlayer);
                             statusView.updatePlayerStatus(currentPlayer);
 
                             // Get the new cell based on the clicked rectangle's position
@@ -201,9 +202,6 @@ public class InitializeManager {
 
                             // check both general isUnderThreat
                             InsCheckGeneral.isUnderThreat(board, this.pane, this.previousGeneralCircles);
-
-                            // switch the current player
-                            currentPlayer = switchPlayer(currentPlayer);
                         });
 
                         this.pane.getChildren().add(circlePossible);
