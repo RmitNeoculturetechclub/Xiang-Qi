@@ -9,24 +9,38 @@ public class Advisor extends Piece {
 	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
 		List<int[]> possiblePositions = new ArrayList<>();
 
-		getAdvisorMoves(currentPosition, 1, 0);
+		int x = currentPosition[0];
+		int y = currentPosition[1];
+		String currentPlayer = getPlayerName();
+
+		int[][] directions = { { -1, -1 }, { 1, 1 }, { 1, -1 }, { -1, 1 } };
+
+		for (int[] direction : directions) {
+			int row = x + direction[0];
+			int col = y + direction[1];
+
+			if (isValidMove(row, col, board, currentPlayer)) {
+				possiblePositions.add(new int[] { row, col });
+			}
+
+		}
+
 		return possiblePositions;
 	}
 
-	private List<int[]> getAdvisorMoves(int[] currentPosition, int fromX, int fromY) {
-		List<int[]> possibleMoves = new ArrayList<>();
-		// Loop through all possible positions within the palace
-		for (int toX = 3; toX <= 5; toX++) {
-			for (int toY = 0; toY <= 2; toY++) {
-				// Check if the Advisor is moving diagonally within the palace
-				if (Math.abs(toX - fromX) == 1 && Math.abs(toY - fromY) == 1) {
-					// Add the move to the list of possible moves
-					int[] move = { fromX, fromY, toX, toY };
-					possibleMoves.add(move);
-				}
+	private boolean isValidMove(int x, int y, Cell[][] board, String currentPlayer) {
+		// Check if the position is within the palace
+		if (currentPlayer == "Black") {
+			if (!(x >= 0 && x <= 2 && y >= 3 && y <= 5)) {
+				return false;
+			}
+		} else {
+			if (!(x >= 7 && x <= 9 && y >= 3 && y <= 5)) {
+				return false;
 			}
 		}
-		return possibleMoves;
+
+		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
 
 	@Override
