@@ -122,7 +122,7 @@ public class InitializeManager {
 
         try {
             pieceImageView = this.initializeView.createPieceView(
-                    String.format("/pictures/%s.png", cell.getPiece().getPieceImageName()));
+                    String.format("/com/example/xiangqi/pictures/%s.png", cell.getPiece().getPieceImageName()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

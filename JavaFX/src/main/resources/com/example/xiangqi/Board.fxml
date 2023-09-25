@@ -5,6 +5,6 @@
 
 <AnchorPane fx:id="board" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.xiangqi.BoardController">
     <ImageView fitHeight="609.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../../pictures/Xiangqi_board.png" />
+        <Image url="@pictures/Xiangqi_board.png" />
     </ImageView>
 </AnchorPane>
