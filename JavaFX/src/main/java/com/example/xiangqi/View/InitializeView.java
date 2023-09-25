@@ -3,25 +3,23 @@ package com.example.xiangqi.View;
 import com.example.xiangqi.Controller.InitializeManager;
 import com.example.xiangqi.Enums.Constant.CellConstant;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import com.example.xiangqi.Enums.Constant.PlayerConstant;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.net.URL;
 
+// managing the graphical representation of the XiangQi game board and its pieces
 public class InitializeView {
 
     public InitializeView() {
     }
 
     public static Image createImage(String resourceName) {
-        System.out.println(resourceName);
         URL _url = InitializeManager.class.getResource(resourceName);
         assert _url != null;
         return new Image(_url.toExternalForm());
@@ -30,8 +28,8 @@ public class InitializeView {
     public ImageView createPieceView(String imageLink) throws IOException {
         Image image = createImage(imageLink);
 
-        //creating ImageView for adding image
-        ImageView imageView=new ImageView();
+        // creating ImageView for adding image
+        ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
@@ -45,18 +43,45 @@ public class InitializeView {
         return imageView;
     }
 
+    public Circle createCirclePossibleCell(int positionX, int positionY, String currentPlayer) {
+        Circle circle = new Circle();
 
-    /**
-     * Apply position to set X and Y
-     * Note, if the y is more than 7, then set the height with +- constant number
-     * Rectangle on clicked then
-     * Todo: For each cell create draw function to draw rectangle on listen mouse clicked.
-     *          If there is a cell and player enemy then remove image view, and set piece isAlive to False, set Piece to the currentClickedPiece
-     */
-    public Rectangle createRectanglePossibleCell(int positionX, int positionY){
-        Rectangle rec = new Rectangle();
-        // draw rectangle with position X and Y
+        // Apply position to set center coordinates
+        circle.setCenterX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+        circle.setCenterY(
+                (CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
 
-        return rec;
+        // Set radius
+        circle.setRadius(CellConstant.CELL_SIZE / 2);
+
+        // Set other properties
+        circle.setFill(PlayerConstant.PlayerConstant.get(currentPlayer));
+        circle.setStroke(PlayerConstant.PlayerConstant.get(currentPlayer));
+
+        circle.setStrokeWidth(0.4);
+        circle.setOpacity(0.5);
+
+        return circle;
+    }
+
+    public Circle createGeneralColor(int positionX, int positionY, Color color) {
+        Circle circle = new Circle();
+
+        // Apply position to set center coordinates
+        circle.setCenterX((CellConstant.TOTAL_COL - positionX) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+        circle.setCenterY(
+                (CellConstant.ROW_STARTING_INDEX + positionY) * CellConstant.CELL_SIZE + CellConstant.CELL_SIZE / 2);
+
+        // Set radius
+        circle.setRadius(CellConstant.CELL_SIZE / 2);
+
+        // Set the specified color
+        circle.setFill(color);
+        circle.setStroke(color);
+
+        circle.setStrokeWidth(0.4);
+        circle.setOpacity(0.8);
+
+        return circle;
     }
 }
