@@ -15,8 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.util.Pair;
 
-import com.example.xiangqi.View.DisplayPlayer;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -55,19 +53,20 @@ public class InitializeManager {
         return this.initializeScene(widthStage, heightStage);
     }
 
-    private Scene initializeScene(double widthStage, double heightStage){
+    private Scene initializeScene(double widthStage, double heightStage) {
         statusView = new StatusView();
+        statusView.updateBoard(this.board);
         statusView.updatePlayerStatus(currentPlayer);
 
-        pane.setPrefSize(widthStage/3, heightStage);
+        pane.setPrefSize(widthStage / 3, heightStage);
         HBox hBox = new HBox();
         hBox.setPrefSize(widthStage, heightStage);
         hBox.getChildren().add(pane);
         hBox.getChildren().add(statusView.getPane());
         return new Scene(hBox);
     }
-  
-    private void initializeBoard(){
+
+    private void initializeBoard() {
         board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
 
         for (int row = 0; row < InitPieceSetup.XiangQiBoard.length; row++) {
@@ -112,8 +111,8 @@ public class InitializeManager {
         return true;
     }
 
-    private String switchPlayer(String currentPlayer) {
-        return currentPlayer.equals("Red") ? "Black" : "Red";
+    public void switchPlayer(String currentPlayer) {
+        this.currentPlayer = currentPlayer.equals("Red") ? "Black" : "Red";
     }
 
     private void imageViewSetOnMouseClicked(Cell cell) {
@@ -127,12 +126,14 @@ public class InitializeManager {
             throw new RuntimeException(e);
         }
 
+        // Click on a piece to move
         pieceImageView.setOnMouseClicked(e -> {
             // TODO: test after finishing the movement of all types of pieces
             if (isLastExistingPiece(cell)) {
-                DisplayPlayer winnerDisplay = new DisplayPlayer();
+                StatusView winnerDisplay = new StatusView();
                 winnerDisplay.displayWinner(cell.getPiece().getPlayerName());
             } else {
+                // only if the piece is not null && the current player
                 if (cell.getPiece() != null && cell.getPiece().getPlayerName().equals(currentPlayer)) {
                     pane.getChildren().removeAll(displayCircles);
                     displayCircles.clear();
@@ -172,10 +173,13 @@ public class InitializeManager {
                         Circle circlePossible = this.initializeView.createCirclePossibleCell(positionX, positionY,
                                 currentPlayer);
 
+                        // Made a decision by clicking on a possible movement
                         circlePossible.setOnMouseClicked(event -> {
                             // switch the current player
-                            currentPlayer = switchPlayer(currentPlayer);
+                            switchPlayer(currentPlayer);
+                            statusView.updateBoard(this.board);
                             statusView.updatePlayerStatus(currentPlayer);
+                            statusView.resetTimer(60);
 
                             // Get the new cell based on the clicked rectangle's position
                             Cell newCell = board[positionY][positionX];
@@ -202,14 +206,12 @@ public class InitializeManager {
 
                             // check both general isUnderThreat
                             InsCheckGeneral.isUnderThreat(board, this.pane, this.previousGeneralCircles);
+
                         });
 
                         this.pane.getChildren().add(circlePossible);
                         this.displayCircles.add(circlePossible);
                     }
-                } else { // if the user clicks on the opposite side of the current player
-                    // DisplayPlayer currentPlayerDisplay = new DisplayPlayer();
-                    // currentPlayerDisplay.displayPlayer(currentPlayer);
                 }
             }
         });

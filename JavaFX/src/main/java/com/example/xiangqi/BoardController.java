@@ -53,42 +53,44 @@ public class BoardController {
 
 	public String current_clicked_piece;
 
-	public void chariotMove (MouseEvent mouseEvent) {
+	public void chariotMove(MouseEvent mouseEvent) {
 	}
 
-	public void generalMove (MouseEvent mouseEvent) {
+	public void generalMove(MouseEvent mouseEvent) {
 	}
 
-	public void horseMove (MouseEvent mouseEvent) {
+	public void horseMove(MouseEvent mouseEvent) {
 	}
 
-	public void elephantMove (MouseEvent mouseEvent) {
+	public void elephantMove(MouseEvent mouseEvent) {
 	}
 
-	public void canonMove (MouseEvent mouseEvent) {
-//		ImageView tmp = (ImageView) mouseEvent.getSource();
-////		int[] currentPos = {(int) (tmp.getLayoutX() / 50), (int) ((508 - tmp.getLayoutY()) / 50)};
-//		Piece canon = new Canon("0", "White");
-//		List <int[]> possiblePositions = canon.getAllPossibleMoves(this.getBoard(tmp));
-//		// Remove the previous canon moves.
-//		board.getChildren().removeIf(node -> node instanceof Rectangle);
-//
-//		// Create the canon moves.
-//		for (int[] possiblePosition : possiblePositions) {
-//			Rectangle rec = new Rectangle();
-//			rec.setX(possiblePosition[0] * 50);
-//			rec.setY(508 - 50 * possiblePosition[1]);
-//			rec.setFill(Color.YELLOW);
-//			rec.setOpacity(0.5);
-//			rec.setWidth(50);
-//			rec.setHeight(50);
-//			board.getChildren().add(rec);
-//			rec.setOnMouseClicked(e -> {
-//				tmp.relocate(rec.getX(), rec.getY());
-//				// Remove the previous canon moves.
-//				board.getChildren().removeIf(node -> node instanceof Rectangle);
-//			});
-//		}
+	public void canonMove(MouseEvent mouseEvent) {
+		// ImageView tmp = (ImageView) mouseEvent.getSource();
+		//// int[] currentPos = {(int) (tmp.getLayoutX() / 50), (int) ((508 -
+		// tmp.getLayoutY()) / 50)};
+		// Piece canon = new Canon("0", "White");
+		// List <int[]> possiblePositions =
+		// canon.getAllPossibleMoves(this.getBoard(tmp));
+		// // Remove the previous canon moves.
+		// board.getChildren().removeIf(node -> node instanceof Rectangle);
+		//
+		// // Create the canon moves.
+		// for (int[] possiblePosition : possiblePositions) {
+		// Rectangle rec = new Rectangle();
+		// rec.setX(possiblePosition[0] * 50);
+		// rec.setY(508 - 50 * possiblePosition[1]);
+		// rec.setFill(Color.YELLOW);
+		// rec.setOpacity(0.5);
+		// rec.setWidth(50);
+		// rec.setHeight(50);
+		// board.getChildren().add(rec);
+		// rec.setOnMouseClicked(e -> {
+		// tmp.relocate(rec.getX(), rec.getY());
+		// // Remove the previous canon moves.
+		// board.getChildren().removeIf(node -> node instanceof Rectangle);
+		// });
+		// }
 	}
 
 	public void soldierMove(MouseEvent mouseEvent) {
@@ -144,8 +146,6 @@ public class BoardController {
 		}
 	}
 
-
-
 	private void clearRectangles() {
 		List<Node> toRemove = new ArrayList<>();
 		for (Node node : board.getChildren()) {
@@ -180,30 +180,29 @@ public class BoardController {
 		return null;
 	}
 
-
-	public void advisorMove (MouseEvent mouseEvent) {
+	public void advisorMove(MouseEvent mouseEvent) {
 	}
 
-	public void setPosition (double x, double y, ImageView piece) {
+	public void setPosition(double x, double y, ImageView piece) {
 		piece.setX(x);
 		piece.setY(y);
 	}
 
 	// Return the current board
-	public Cell[][] getBoard (ImageView images) {
+	public Cell[][] getBoard(ImageView images) {
 		Cell[][] Cell = new Cell[10][9];
-//		// Loop through the board and set the piece to the cell
-//		for (int i = 0; i < XiangQiBoard.length; i++) {
-//			for (int j = 0; j < XiangQiBoard[i].length; j++) {
-//				// if the current cell is not empty, set the piece to the cell
-//				if (! XiangQiBoard[i][j].isEmpty()) {
-//					Piece piece = new Piece(i + j + " ", "White", XiangQiBoard[i][j]);
-//					Cell[i][j] = new Cell(i, j);
-//					Cell[i][j].setPiece(piece);
-//					Cell[i][j].setImageView(images);
-//				}
-//			}
-//		}
+		// // Loop through the board and set the piece to the cell
+		// for (int i = 0; i < XiangQiBoard.length; i++) {
+		// for (int j = 0; j < XiangQiBoard[i].length; j++) {
+		// // if the current cell is not empty, set the piece to the cell
+		// if (! XiangQiBoard[i][j].isEmpty()) {
+		// Piece piece = new Piece(i + j + " ", "White", XiangQiBoard[i][j]);
+		// Cell[i][j] = new Cell(i, j);
+		// Cell[i][j].setPiece(piece);
+		// Cell[i][j].setImageView(images);
+		// }
+		// }
+		// }
 		return Cell;
 	}
 }

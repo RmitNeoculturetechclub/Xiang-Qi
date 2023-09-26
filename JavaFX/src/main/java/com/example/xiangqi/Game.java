@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import com.example.xiangqi.Controller.InitializeManager;
-import com.example.xiangqi.View.DisplayPlayer;
 
 public class Game extends Application {
 	@Override
