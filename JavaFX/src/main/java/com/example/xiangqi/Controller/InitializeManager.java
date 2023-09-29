@@ -1,6 +1,8 @@
 package com.example.xiangqi.Controller;
 
 import com.example.xiangqi.Enums.Constant.InitPieceSetup;
+import com.example.xiangqi.Enums.Constant.PlayerConstant;
+import com.example.xiangqi.Enums.Constant.PointConstant;
 import com.example.xiangqi.Enums.Model.Player;
 import com.example.xiangqi.Model.Cell;
 import com.example.xiangqi.Model.General;
@@ -57,6 +59,7 @@ public class InitializeManager {
         statusView = new StatusView();
         statusView.updateBoard(this.board);
         statusView.updatePlayerStatus(currentPlayer);
+        statusView.updatePointStatus(0.0, 0.0);
 
         pane.setPrefSize(widthStage / 3, heightStage);
         HBox hBox = new HBox();
@@ -100,16 +103,16 @@ public class InitializeManager {
 
     }
 
-    private boolean isLastExistingPiece(Cell cell) {
-        for (Cell[] row : board) {
-            for (Cell c : row) {
-                if (c.getPiece() != null && c != cell) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+    // private boolean isLastExistingPiece(Cell cell) {
+    // for (Cell[] row : board) {
+    // for (Cell c : row) {
+    // if (c.getPiece() != null && c != cell) {
+    // return false;
+    // }
+    // }
+    // }
+    // return true;
+    // }
 
     public void switchPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer.equals("Red") ? "Black" : "Red";
@@ -129,91 +132,129 @@ public class InitializeManager {
         // Click on a piece to move
         pieceImageView.setOnMouseClicked(e -> {
             // TODO: test after finishing the movement of all types of pieces
-            if (isLastExistingPiece(cell)) {
-                StatusView winnerDisplay = new StatusView();
-                winnerDisplay.displayWinner(cell.getPiece().getPlayerName());
-            } else {
-                // only if the piece is not null && the current player
-                if (cell.getPiece() != null && cell.getPiece().getPlayerName().equals(currentPlayer)) {
-                    pane.getChildren().removeAll(displayCircles);
-                    displayCircles.clear();
-                    currentClickedPiece = cell.getPiece();
+            // if (isLastExistingPiece(cell)) {
+            // StatusView winnerDisplay = new StatusView();
+            // winnerDisplay.displayWinner();
+            // } else {
+            // only if the piece is not null && the current player
+            if (cell.getPiece() != null && cell.getPiece().getPlayerName().equals(currentPlayer)) {
+                pane.getChildren().removeAll(displayCircles);
+                displayCircles.clear();
+                currentClickedPiece = cell.getPiece();
 
-                    List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
+                List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
-                    // check if the current player's general isChecked is true or false
-                    // if checked, regenerate the possible cells
-                    General general = (General) InsCheckGeneral.findGeneral(currentPlayer, this.board).getPiece();
-                    if (general != null) {
-                        boolean isChecked = general.getChecked(currentPlayer);
+                // check if the current player's general isChecked is true or false
+                // if checked, regenerate the possible cells
+                General general = (General) InsCheckGeneral.findGeneral(currentPlayer, this.board).getPiece();
+                if (general != null) {
+                    boolean isChecked = general.getChecked(currentPlayer);
 
-                        if (isChecked) {
-                            List<int[]> cellsToRemove = new ArrayList<>();
-                            // for every possible cell, simulate -> tmp board -> isProtection
-                            for (int[] possibleCell : possibleCells) {
-                                int positionX = possibleCell[0];
-                                int positionY = possibleCell[1];
+                    if (isChecked) {
+                        List<int[]> cellsToRemove = new ArrayList<>();
+                        // for every possible cell, simulate -> tmp board -> isProtection
+                        for (int[] possibleCell : possibleCells) {
+                            int positionX = possibleCell[0];
+                            int positionY = possibleCell[1];
 
-                                Cell[][] tmpBoard = CheckGeneral.makeTemporaryMove(board, cell, positionX, positionY);
+                            Cell[][] tmpBoard = CheckGeneral.makeTemporaryMove(board, cell, positionX, positionY);
 
-                                // filter the cells with isProtection
-                                // if isProtection false, delete the cell from the possible cells
-                                if (!InsCheckGeneral.isProtection(tmpBoard, currentPlayer)) {
-                                    cellsToRemove.add(possibleCell);
-                                }
+                            // filter the cells with isProtection
+                            // if isProtection false, delete the cell from the possible cells
+                            if (!InsCheckGeneral.isProtection(tmpBoard, currentPlayer)) {
+                                cellsToRemove.add(possibleCell);
                             }
-                            // display only helpful movements for their general
-                            possibleCells.removeAll(cellsToRemove);
                         }
-                    }
-
-                    for (int[] positions : possibleCells) {
-                        int positionX = positions[1];
-                        int positionY = positions[0];
-                        Circle circlePossible = this.initializeView.createCirclePossibleCell(positionX, positionY,
-                                currentPlayer);
-
-                        // Made a decision by clicking on a possible movement
-                        circlePossible.setOnMouseClicked(event -> {
-                            // switch the current player
-                            switchPlayer(currentPlayer);
-                            statusView.updateBoard(this.board);
-                            statusView.updatePlayerStatus(currentPlayer);
-                            statusView.resetTimer(60);
-
-                            // Get the new cell based on the clicked rectangle's position
-                            Cell newCell = board[positionY][positionX];
-
-                            // remove images on both cells
-                            pane.getChildren().remove(newCell.getImageView());
-                            pane.getChildren().remove(cell.getImageView());
-
-                            // Set the current clicked piece to the new cell
-                            newCell.setPiece(currentClickedPiece);
-
-                            // remove all the rectangles
-                            pane.getChildren().removeAll(displayCircles);
-                            displayCircles.clear();
-
-                            // reset the global clicked piece
-                            this.currentClickedPiece = null;
-
-                            // Clear the old piece from the old cell
-                            cell.setPiece(null);
-
-                            // Set the image view (current piece) on the new cell
-                            imageViewSetOnMouseClicked(newCell);
-
-                            // check both general isUnderThreat
-                            InsCheckGeneral.isUnderThreat(board, this.pane, this.previousGeneralCircles);
-
-                        });
-
-                        this.pane.getChildren().add(circlePossible);
-                        this.displayCircles.add(circlePossible);
+                        // display only helpful movements for their general
+                        possibleCells.removeAll(cellsToRemove);
                     }
                 }
+
+                for (int[] positions : possibleCells) {
+                    int positionX = positions[1];
+                    int positionY = positions[0];
+                    Circle circlePossible = this.initializeView.createCirclePossibleCell(positionX, positionY,
+                            currentPlayer);
+
+                    // Made a decision by clicking on a possible movement
+                    circlePossible.setOnMouseClicked(event -> {
+
+                        // Get the new cell based on the clicked rectangle's position
+                        Cell newCell = board[positionY][positionX];
+
+                        // add points
+                        if (newCell.getPiece() != null) {
+                            String pointPieceName = newCell.getPiece().getPieceName();
+
+                            String pointPieceColor = newCell.getPiece().getPlayerName();
+                            if (currentPlayer == "Black" && pointPieceColor == "Red") {
+                                PointConstant.BLACK += PointConstant.PointConstant.get(pointPieceName);
+
+                                // Handle different soldier points
+                                if (cell.getPiece().getPieceName().equals("Soldier")) {
+                                    int x = cell.getPosition()[0];
+                                    if (x >= 5) {
+                                        PointConstant.BLACK += 1.0;
+                                    }
+                                }
+
+                            } else if (currentPlayer == "Red" && pointPieceColor == "Black") {
+                                PointConstant.RED += PointConstant.PointConstant.get(pointPieceName);
+
+                                // Handle different soldier points
+                                if (cell.getPiece().getPieceName().equals("Soldier")) {
+                                    int x = cell.getPosition()[0];
+                                    if (x <= 4) {
+                                        PointConstant.RED += 1.0;
+                                    }
+                                }
+                            }
+
+                            if (pointPieceName == "General") {
+                                StatusView winnerDisplay = new StatusView();
+                                winnerDisplay.displayWinner();
+                            }
+
+                        }
+
+                        // remove images on both cells
+                        pane.getChildren().remove(newCell.getImageView());
+                        pane.getChildren().remove(cell.getImageView());
+
+                        // Set the current clicked piece to the new cell
+                        newCell.setPiece(currentClickedPiece);
+
+                        // remove all the rectangles
+                        pane.getChildren().removeAll(displayCircles);
+                        displayCircles.clear();
+
+                        // reset the global clicked piece
+                        this.currentClickedPiece = null;
+
+                        // Clear the old piece from the old cell
+                        cell.setPiece(null);
+
+                        // Set the image view (current piece) on the new cell
+                        imageViewSetOnMouseClicked(newCell);
+
+                        // check both general isUnderThreat
+                        InsCheckGeneral.isUnderThreat(board, this.pane, this.previousGeneralCircles);
+
+                        // switch the current player
+                        switchPlayer(currentPlayer);
+                        statusView.updateBoard(this.board);
+                        statusView.updatePlayerStatus(currentPlayer);
+                        statusView.updatePointStatus(PointConstant.BLACK, PointConstant.RED);
+
+                        // statusView.resetTimer(60);
+
+                    });
+
+                    this.pane.getChildren().add(circlePossible);
+                    this.displayCircles.add(circlePossible);
+                }
             }
+            // }
         });
 
         cell.drawPieceImageView(pieceImageView);
