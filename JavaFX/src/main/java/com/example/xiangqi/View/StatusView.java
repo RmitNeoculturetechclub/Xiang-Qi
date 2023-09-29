@@ -1,22 +1,20 @@
 package com.example.xiangqi.View;
 
-import com.example.xiangqi.Controller.CheckGeneral;
-import com.example.xiangqi.Controller.InitializeManager;
 import com.example.xiangqi.Model.Cell;
-import com.example.xiangqi.Model.General;
 import com.example.xiangqi.Enums.Constant.PointConstant;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -28,7 +26,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -130,47 +127,45 @@ public class StatusView {
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setTitle("Game Over");
 
-        GridPane gridPane = new GridPane();
-        gridPane.setAlignment(Pos.CENTER);
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-
         // Winner Display
         Text winnerText = new Text("Game Over\nWinner is " + winnerPlayer);
         winnerText.setFont(Font.font("Arial", 24));
         winnerText.setTextAlignment(TextAlignment.CENTER);
-        GridPane.setConstraints(winnerText, 0, 0, 2, 1);
-        GridPane.setValignment(winnerText, VPos.CENTER);
 
         // Total points Display
         Label blackLabel = new Label("Black Total Point: " + PointConstant.BLACK);
         Label redLabel = new Label("Red Total Point: " + PointConstant.RED);
         blackLabel.setFont(Font.font("Arial", 20));
         redLabel.setFont(Font.font("Arial", 20));
-        GridPane.setConstraints(blackLabel, 0, 1);
-        GridPane.setValignment(blackLabel, VPos.CENTER);
-        GridPane.setConstraints(redLabel, 1, 1);
-        GridPane.setValignment(redLabel, VPos.CENTER);
-
-        // Each point display
-
-        // Setup
-        gridPane.getChildren().addAll(winnerText, blackLabel, redLabel);
+        HBox totalPointBox = new HBox(20); // 20 is the spacing between elements
+        totalPointBox.setAlignment(Pos.CENTER);
+        totalPointBox.getChildren().addAll(blackLabel, redLabel);
 
         // Create tables for black and red players
         TableView<PointsData> blackTable = createTable(PointConstant.blackPointMap, "Black");
         TableView<PointsData> redTable = createTable(PointConstant.redPointMap, "Red");
+        HBox tableBox = new HBox(20); // 20 is the spacing between elements
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().addAll(blackTable, redTable);
 
-        GridPane.setConstraints(blackTable, 0, 2);
-        GridPane.setConstraints(redTable, 1, 2);
+        // End the game with the 'Exit' button
+        Button exitButton = new Button("Exit");
+        exitButton.setOnAction(event -> {
+            Platform.exit();
+        });
 
-        gridPane.getChildren().addAll(blackTable, redTable);
+        // Create a VBox to organize the elements
+        VBox vbox = new VBox(20); // 20 is the spacing between elements
+        vbox.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(gridPane, 600, 500);
+        // Add all the elements to the VBox
+        vbox.getChildren().addAll(winnerText, totalPointBox, tableBox, exitButton);
+
+        // Create the scene using the VBox
+        Scene scene = new Scene(vbox, 600, 500);
         popupStage.setScene(scene);
         popupStage.show();
 
-        // TODO: end the game
     }
 
     private TableView<PointsData> createTable(HashMap<String, Double> pointMap, String player) {
