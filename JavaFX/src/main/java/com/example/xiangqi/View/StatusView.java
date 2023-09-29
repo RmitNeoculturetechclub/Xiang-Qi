@@ -6,17 +6,17 @@ import com.example.xiangqi.Enums.Constant.PointConstant;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -144,6 +144,7 @@ public class StatusView {
         // Create tables for black and red players
         TableView<PointsData> blackTable = createTable(PointConstant.blackPointMap, "Black");
         TableView<PointsData> redTable = createTable(PointConstant.redPointMap, "Red");
+
         HBox tableBox = new HBox(20); // 20 is the spacing between elements
         tableBox.setAlignment(Pos.CENTER);
         tableBox.getChildren().addAll(blackTable, redTable);
@@ -189,9 +190,19 @@ public class StatusView {
 
         table.getColumns().addAll(columns);
 
+        List<PointsData> itemsToAdd = new ArrayList<>();
+
+        // Iterate through the entries in pointMap and add non-empty rows to the list
         for (Map.Entry<String, Double> entry : pointMap.entrySet()) {
-            table.getItems().add(new PointsData(entry.getKey(), entry.getValue(), player));
+            if (!entry.getKey().isEmpty()) {
+                itemsToAdd.add(new PointsData(entry.getKey(), entry.getValue(), player));
+            }
         }
+
+        // Adjust the number of rows
+        table.setItems(FXCollections.observableArrayList(itemsToAdd));
+        table.setFixedCellSize(25); // Set the row height
+        table.prefHeightProperty().bind(Bindings.size(table.getItems()).multiply(table.getFixedCellSize()).add(30));
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
