@@ -8,18 +8,31 @@ import com.example.xiangqi.Enums.Constant.PointConstant;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class StatusView {
     private final AnchorPane pane;
@@ -102,6 +115,7 @@ public class StatusView {
     }
 
     public void displayWinner() {
+        // Determine the winner
         String winnerPlayer = "";
         if (PointConstant.BLACK > PointConstant.RED) {
             winnerPlayer = "Black";
@@ -111,21 +125,106 @@ public class StatusView {
             winnerPlayer = "Tie";
         }
 
-        AnchorPane anchorPane = new AnchorPane();
+        // Stage, Pane setup
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Game Over");
 
-        Text text = new Text("Winner is " + winnerPlayer);
-        text.setFont(Font.font("Arial", 24));
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
 
-        AnchorPane.setTopAnchor(text, 50.0);
-        AnchorPane.setLeftAnchor(text, 50.0);
+        // Winner Display
+        Text winnerText = new Text("Game Over\nWinner is " + winnerPlayer);
+        winnerText.setFont(Font.font("Arial", 24));
+        winnerText.setTextAlignment(TextAlignment.CENTER);
+        GridPane.setConstraints(winnerText, 0, 0, 2, 1);
+        GridPane.setValignment(winnerText, VPos.CENTER);
 
-        anchorPane.getChildren().add(text);
+        // Total points Display
+        Label blackLabel = new Label("Black Total Point: " + PointConstant.BLACK);
+        Label redLabel = new Label("Red Total Point: " + PointConstant.RED);
+        blackLabel.setFont(Font.font("Arial", 20));
+        redLabel.setFont(Font.font("Arial", 20));
+        GridPane.setConstraints(blackLabel, 0, 1);
+        GridPane.setValignment(blackLabel, VPos.CENTER);
+        GridPane.setConstraints(redLabel, 1, 1);
+        GridPane.setValignment(redLabel, VPos.CENTER);
 
-        Stage primaryStage = new Stage();
-        Scene scene = new Scene(anchorPane, 700, 400);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        // Each point display
+
+        // Setup
+        gridPane.getChildren().addAll(winnerText, blackLabel, redLabel);
+
+        // Create tables for black and red players
+        TableView<PointsData> blackTable = createTable(PointConstant.blackPointMap, "Black");
+        TableView<PointsData> redTable = createTable(PointConstant.redPointMap, "Red");
+
+        GridPane.setConstraints(blackTable, 0, 2);
+        GridPane.setConstraints(redTable, 1, 2);
+
+        gridPane.getChildren().addAll(blackTable, redTable);
+
+        Scene scene = new Scene(gridPane, 600, 500);
+        popupStage.setScene(scene);
+        popupStage.show();
 
         // TODO: end the game
+    }
+
+    private TableView<PointsData> createTable(HashMap<String, Double> pointMap, String player) {
+        TableView<PointsData> table = new TableView<>();
+        TableColumn<PointsData, String> pieceNameColumn = new TableColumn<>("Piece Name");
+        TableColumn<PointsData, Double> pointsColumn = new TableColumn<>("Points");
+
+        pieceNameColumn.setCellValueFactory(cellData -> {
+            PointsData rowData = cellData.getValue();
+            return new SimpleStringProperty(rowData.getPieceName());
+        });
+
+        pointsColumn.setCellValueFactory(cellData -> {
+            PointsData rowData = cellData.getValue();
+            return new SimpleDoubleProperty(rowData.getPoints()).asObject();
+        });
+
+        List<TableColumn<PointsData, ?>> columns = new ArrayList<>();
+        columns.add(pieceNameColumn);
+        columns.add(pointsColumn);
+
+        table.getColumns().addAll(columns);
+
+        for (Map.Entry<String, Double> entry : pointMap.entrySet()) {
+            table.getItems().add(new PointsData(entry.getKey(), entry.getValue(), player));
+        }
+
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+
+        return table;
+    }
+
+    // Class to represent data in the table
+    public static class PointsData {
+        private final SimpleStringProperty pieceName;
+        private final SimpleDoubleProperty points;
+        private final SimpleStringProperty player;
+
+        public PointsData(String pieceName, Double points, String player) {
+            this.pieceName = new SimpleStringProperty(pieceName);
+            this.points = new SimpleDoubleProperty(points);
+            this.player = new SimpleStringProperty(player);
+        }
+
+        public String getPieceName() {
+            return pieceName.get();
+        }
+
+        public Double getPoints() {
+            return points.get();
+        }
+
+        public String getPlayer() {
+            return player.get();
+        }
     }
 }

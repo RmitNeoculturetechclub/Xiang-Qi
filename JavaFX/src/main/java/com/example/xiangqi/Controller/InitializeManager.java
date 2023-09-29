@@ -1,7 +1,6 @@
 package com.example.xiangqi.Controller;
 
 import com.example.xiangqi.Enums.Constant.InitPieceSetup;
-import com.example.xiangqi.Enums.Constant.PlayerConstant;
 import com.example.xiangqi.Enums.Constant.PointConstant;
 import com.example.xiangqi.Enums.Model.Player;
 import com.example.xiangqi.Model.Cell;
@@ -103,17 +102,6 @@ public class InitializeManager {
 
     }
 
-    // private boolean isLastExistingPiece(Cell cell) {
-    // for (Cell[] row : board) {
-    // for (Cell c : row) {
-    // if (c.getPiece() != null && c != cell) {
-    // return false;
-    // }
-    // }
-    // }
-    // return true;
-    // }
-
     public void switchPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer.equals("Red") ? "Black" : "Red";
     }
@@ -131,11 +119,6 @@ public class InitializeManager {
 
         // Click on a piece to move
         pieceImageView.setOnMouseClicked(e -> {
-            // TODO: test after finishing the movement of all types of pieces
-            // if (isLastExistingPiece(cell)) {
-            // StatusView winnerDisplay = new StatusView();
-            // winnerDisplay.displayWinner();
-            // } else {
             // only if the piece is not null && the current player
             if (cell.getPiece() != null && cell.getPiece().getPlayerName().equals(currentPlayer)) {
                 pane.getChildren().removeAll(displayCircles);
@@ -183,38 +166,12 @@ public class InitializeManager {
                         Cell newCell = board[positionY][positionX];
 
                         // add points
-                        if (newCell.getPiece() != null) {
-                            String pointPieceName = newCell.getPiece().getPieceName();
-
-                            String pointPieceColor = newCell.getPiece().getPlayerName();
-                            if (currentPlayer == "Black" && pointPieceColor == "Red") {
-                                PointConstant.BLACK += PointConstant.PointConstant.get(pointPieceName);
-
-                                // Handle different soldier points
-                                if (cell.getPiece().getPieceName().equals("Soldier")) {
-                                    int x = cell.getPosition()[0];
-                                    if (x >= 5) {
-                                        PointConstant.BLACK += 1.0;
-                                    }
-                                }
-
-                            } else if (currentPlayer == "Red" && pointPieceColor == "Black") {
-                                PointConstant.RED += PointConstant.PointConstant.get(pointPieceName);
-
-                                // Handle different soldier points
-                                if (cell.getPiece().getPieceName().equals("Soldier")) {
-                                    int x = cell.getPosition()[0];
-                                    if (x <= 4) {
-                                        PointConstant.RED += 1.0;
-                                    }
-                                }
-                            }
-
-                            if (pointPieceName == "General") {
-                                StatusView winnerDisplay = new StatusView();
-                                winnerDisplay.displayWinner();
-                            }
-
+                        PointConstant pointConstant = new PointConstant();
+                        pointConstant.addPoint(newCell, cell, currentPlayer);
+                        // Handle the case where it's general
+                        if (newCell.getPiece() != null && newCell.getPiece().getPieceName().equals("General")) {
+                            StatusView winnerDisplay = new StatusView();
+                            winnerDisplay.displayWinner();
                         }
 
                         // remove images on both cells
@@ -245,8 +202,6 @@ public class InitializeManager {
                         statusView.updateBoard(this.board);
                         statusView.updatePlayerStatus(currentPlayer);
                         statusView.updatePointStatus(PointConstant.BLACK, PointConstant.RED);
-
-                        // statusView.resetTimer(60);
 
                     });
 
