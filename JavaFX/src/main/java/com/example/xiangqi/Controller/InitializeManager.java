@@ -108,7 +108,7 @@ public class InitializeManager {
 
     private void imageViewSetOnMouseClicked(Cell cell) {
         ImageView pieceImageView;
-        CheckGeneral InsCheckGeneral = new CheckGeneral();
+        CheckGeneral IsCheckGeneral = new CheckGeneral();
 
         try {
             pieceImageView = this.initializeView.createPieceView(
@@ -128,29 +128,13 @@ public class InitializeManager {
                 List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
                 // check if the current player's general isChecked is true or false
-                // if checked, regenerate the possible cells
-                General general = (General) InsCheckGeneral.findGeneral(currentPlayer, this.board).getPiece();
+                General general = (General) IsCheckGeneral.findGeneral(currentPlayer, this.board).getPiece();
                 if (general != null) {
-                    boolean isChecked = general.getChecked(currentPlayer);
-
-                    if (isChecked) {
-                        List<int[]> cellsToRemove = new ArrayList<>();
-                        // for every possible cell, simulate -> tmp board -> isProtection
-                        for (int[] possibleCell : possibleCells) {
-                            int positionX = possibleCell[0];
-                            int positionY = possibleCell[1];
-
-                            Cell[][] tmpBoard = CheckGeneral.makeTemporaryMove(board, cell, positionX, positionY);
-
-                            // filter the cells with isProtection
-                            // if isProtection false, delete the cell from the possible cells
-                            if (!InsCheckGeneral.isProtection(tmpBoard, currentPlayer)) {
-                                cellsToRemove.add(possibleCell);
-                            }
-                        }
-                        // display only helpful movements for their general
-                        possibleCells.removeAll(cellsToRemove);
-                    }
+                    // if checked, regenerate the possible cells
+                    BoardManager boardManager = new BoardManager();
+                    possibleCells = boardManager.regeneratePossibleCells(possibleCells, general,
+                            currentPlayer, board,
+                            cell);
                 }
 
                 for (int[] positions : possibleCells) {
@@ -168,6 +152,7 @@ public class InitializeManager {
                         // add points
                         PointConstant pointConstant = new PointConstant();
                         pointConstant.addPoint(newCell, cell, currentPlayer);
+
                         // Handle the case where it's general
                         if (newCell.getPiece() != null && newCell.getPiece().getPieceName().equals("General")) {
                             StatusView winnerDisplay = new StatusView();
@@ -195,7 +180,7 @@ public class InitializeManager {
                         imageViewSetOnMouseClicked(newCell);
 
                         // check both general isUnderThreat
-                        InsCheckGeneral.isUnderThreat(board, this.pane, this.previousGeneralCircles);
+                        IsCheckGeneral.isUnderThreat(board, this.pane, this.previousGeneralCircles);
 
                         // switch the current player
                         switchPlayer(currentPlayer);
@@ -209,7 +194,6 @@ public class InitializeManager {
                     this.displayCircles.add(circlePossible);
                 }
             }
-            // }
         });
 
         cell.drawPieceImageView(pieceImageView);
