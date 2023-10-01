@@ -148,6 +148,7 @@ public class InitializeManager {
         CheckGeneral checkGeneral = new CheckGeneral();
         pointConstant.addPoint(newCell, cell, currentPlayer);
 
+        // Handle if the general got occupied
         if (newCell.getPiece() != null && newCell.getPiece().getPieceName().equals("General")) {
             new StatusView().displayWinner();
         }
