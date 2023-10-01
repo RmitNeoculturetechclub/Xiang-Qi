@@ -70,30 +70,29 @@ public class InitializeManager {
                 Cell cell = new Cell(row, col);
                 String pieceName = InitPieceSetup.XiangQiBoard[row][col];
 
-                if (!pieceName.equals("")) {
-                    // Extract player and piece type from the pieceName
-                    String[] nameParts = pieceName.split("_");
-                    String pieceType = nameParts[0];
-                    String player = nameParts[1];
-
-                    try {
-                        // Initialize Dynamic Class name
-                        Class<?> class1 = Class.forName("com.example.xiangqi.Model." + pieceType);
-                        Piece object1 = (Piece) class1.getDeclaredConstructor().newInstance();
-                        object1.setPlayer(player);
-                        cell.setPiece(object1);
-
-                        imageViewSetOnMouseClicked(cell);
-                    } catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException
-                            | InvocationTargetException | InstantiationException exception) {
-                        System.out.println("Exception: " + exception);
-                    }
+                if (!pieceName.isEmpty()) {
+                    initializePiece(cell, pieceName);
                 }
-
                 board[row][col] = cell;
             }
         }
+    }
 
+    private void initializePiece(Cell cell, String pieceName) {
+        String[] nameParts = pieceName.split("_");
+        String pieceType = nameParts[0];
+        String player = nameParts[1];
+
+        try {
+            Class<?> pieceClass = Class.forName("com.example.xiangqi.Model." + pieceType);
+            Piece newPiece = (Piece) pieceClass.getDeclaredConstructor().newInstance();
+            newPiece.setPlayer(player);
+            cell.setPiece(newPiece);
+            imageViewSetOnMouseClicked(cell);
+        } catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException
+                | InvocationTargetException | InstantiationException exception) {
+            System.err.println("Exception: " + exception);
+        }
     }
 
     public void switchPlayer(String currentPlayer) {
@@ -101,97 +100,80 @@ public class InitializeManager {
     }
 
     private void imageViewSetOnMouseClicked(Cell cell) {
-        ImageView pieceImageView;
-        CheckGeneral IsCheckGeneral = new CheckGeneral();
+        ImageView pieceImageView = createPieceImageView(cell);
+        pieceImageView.setOnMouseClicked(event -> handlePieceImageViewClick(cell, currentPlayer));
+        cell.drawPieceImageView(pieceImageView);
+        this.pane.getChildren().add(cell.getImageView());
+    }
 
+    private ImageView createPieceImageView(Cell cell) {
         try {
-            pieceImageView = this.initializeView.createPieceView(
+            return this.initializeView.createPieceView(
                     String.format("/com/example/xiangqi/pictures/%s.png", cell.getPiece().getPieceImageName()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        // Click on a piece to move
-        pieceImageView.setOnMouseClicked(e -> {
-            // only if the piece is not null && the current player
-            if (cell.getPiece() != null && cell.getPiece().getPlayerName().equals(currentPlayer)) {
-                pane.getChildren().removeAll(displayCircles);
-                displayCircles.clear();
-                currentClickedPiece = cell.getPiece();
-
-                List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
-
-                // check if the current player's general is in checked
-                General general = (General) IsCheckGeneral.findGeneral(currentPlayer, this.board).getPiece();
-                if (general != null) {
-                    // if checked, regenerate the possible cells
-                    BoardManager boardManager = new BoardManager();
-                    possibleCells = boardManager.regeneratePossibleCells(possibleCells, general,
-                            currentPlayer, board,
-                            cell);
-                }
-
-                for (int[] positions : possibleCells) {
-                    int positionX = positions[1];
-                    int positionY = positions[0];
-                    Circle circlePossible = this.initializeView.createCirclePossibleCell(positionX, positionY,
-                            currentPlayer);
-
-                    // Made a decision by clicking on a possible movement
-                    circlePossible.setOnMouseClicked(event -> {
-
-                        // Get the new cell based on the clicked rectangle's position
-                        Cell newCell = board[positionY][positionX];
-
-                        // add points
-                        PointConstant pointConstant = new PointConstant();
-                        pointConstant.addPoint(newCell, cell, currentPlayer);
-
-                        // Handle the case where it's general
-                        if (newCell.getPiece() != null && newCell.getPiece().getPieceName().equals("General")) {
-                            StatusView winnerDisplay = new StatusView();
-                            winnerDisplay.displayWinner();
-                        }
-
-                        // remove images on both cells
-                        pane.getChildren().remove(newCell.getImageView());
-                        pane.getChildren().remove(cell.getImageView());
-
-                        // Set the current clicked piece to the new cell
-                        newCell.setPiece(currentClickedPiece);
-
-                        // remove all the rectangles
-                        pane.getChildren().removeAll(displayCircles);
-                        displayCircles.clear();
-
-                        // reset the global clicked piece
-                        this.currentClickedPiece = null;
-
-                        // Clear the old piece from the old cell
-                        cell.setPiece(null);
-
-                        // Set the image view (current piece) on the new cell
-                        imageViewSetOnMouseClicked(newCell);
-
-                        // check both general isUnderThreat
-                        IsCheckGeneral.isUnderThreat(board, this.pane, this.previousGeneralCircles);
-
-                        // switch the current player
-                        switchPlayer(currentPlayer);
-                        statusView.updateBoard(this.board);
-                        statusView.updatePlayerStatus(currentPlayer);
-                        statusView.updatePointStatus(PointConstant.BLACK, PointConstant.RED);
-
-                    });
-
-                    this.pane.getChildren().add(circlePossible);
-                    this.displayCircles.add(circlePossible);
-                }
-            }
-        });
-
-        cell.drawPieceImageView(pieceImageView);
-        this.pane.getChildren().add(cell.getImageView());
-
     }
+
+    private void handlePieceImageViewClick(Cell cell, String currentPlayer) {
+        if (cell.getPiece() != null && cell.getPiece().getPlayerName() == currentPlayer) {
+            clearDisplayCircles();
+            currentClickedPiece = cell.getPiece();
+            List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
+            CheckGeneral IsCheckGeneral = new CheckGeneral();
+
+            General general = (General) IsCheckGeneral.findGeneral(currentPlayer, this.board).getPiece();
+            if (general != null) {
+                BoardManager boardManager = new BoardManager();
+                possibleCells = boardManager.regeneratePossibleCells(possibleCells, general, currentPlayer, board,
+                        cell);
+            }
+
+            for (int[] positions : possibleCells) {
+                int positionX = positions[1];
+                int positionY = positions[0];
+                Circle circlePossible = this.initializeView.createCirclePossibleCell(positionX, positionY,
+                        currentPlayer);
+
+                circlePossible.setOnMouseClicked(event -> handlePossibleCellClick(positionX, positionY, cell));
+                this.pane.getChildren().add(circlePossible);
+                this.displayCircles.add(circlePossible);
+            }
+        }
+    }
+
+    private void handlePossibleCellClick(int positionX, int positionY, Cell cell) {
+        Cell newCell = board[positionY][positionX];
+        PointConstant pointConstant = new PointConstant();
+        CheckGeneral checkGeneral = new CheckGeneral();
+        pointConstant.addPoint(newCell, cell, currentPlayer);
+
+        if (newCell.getPiece() != null && newCell.getPiece().getPieceName().equals("General")) {
+            new StatusView().displayWinner();
+        }
+
+        // Remove images on both cells
+        pane.getChildren().remove(newCell.getImageView());
+        pane.getChildren().remove(cell.getImageView());
+
+        // Set the current clicked piece to the new cell
+        newCell.setPiece(currentClickedPiece);
+
+        clearDisplayCircles();
+        currentClickedPiece = null;
+        cell.setPiece(null);
+        imageViewSetOnMouseClicked(newCell);
+
+        checkGeneral.isUnderThreat(board, this.pane, this.previousGeneralCircles);
+        switchPlayer(currentPlayer);
+        statusView.updateBoard(this.board);
+        statusView.updatePlayerStatus(currentPlayer);
+        statusView.updatePointStatus(PointConstant.BLACK, PointConstant.RED);
+    }
+
+    private void clearDisplayCircles() {
+        pane.getChildren().removeAll(displayCircles);
+        displayCircles.clear();
+    }
+
 }
