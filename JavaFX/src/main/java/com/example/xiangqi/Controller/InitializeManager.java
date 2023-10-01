@@ -127,7 +127,7 @@ public class InitializeManager {
 
                 List<int[]> possibleCells = cell.getAllPossibleCells(this.board);
 
-                // check if the current player's general isChecked is true or false
+                // check if the current player's general is in checked
                 General general = (General) IsCheckGeneral.findGeneral(currentPlayer, this.board).getPiece();
                 if (general != null) {
                     // if checked, regenerate the possible cells
