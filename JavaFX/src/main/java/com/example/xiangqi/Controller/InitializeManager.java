@@ -39,27 +39,21 @@ public class InitializeManager {
 
     public InitializeManager() throws IOException {
         initializeView = new InitializeView();
-        currentPlayer = "Red";
+        currentPlayer = Player.Red.toString();
+        board = new Cell[InitPieceSetup.XiangQiBoard.length][InitPieceSetup.XiangQiBoard[0].length];
+        displayCircles = new ArrayList<>();
+        previousGeneralCircles = new ArrayList<>();
     }
 
     public Scene init(double widthStage, double heightStage) throws IOException {
         URL url = InitializeManager.class.getResource("/com/example/xiangqi/Board.fxml");
         assert url != null;
         pane = FXMLLoader.load(url);
-        displayCircles = new ArrayList<>();
-        initializeView = new InitializeView();
-        previousGeneralCircles = new ArrayList<>();
-
-        this.initializeBoard();
-        return this.initializeScene(widthStage, heightStage);
-    }
-
-    private Scene initializeScene(double widthStage, double heightStage) {
+        initializeBoard();
         statusView = new StatusView();
-        statusView.updateBoard(this.board);
+        statusView.updateBoard(board);
         statusView.updatePlayerStatus(currentPlayer);
         statusView.updatePointStatus(0.0, 0.0);
-
         pane.setPrefSize(widthStage / 3, heightStage);
         HBox hBox = new HBox();
         hBox.setPrefSize(widthStage, heightStage);
