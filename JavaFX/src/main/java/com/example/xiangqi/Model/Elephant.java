@@ -19,7 +19,7 @@ public class Elephant extends Piece {
 			int firstCol = y + direction[1];
 
 			// check if there's a piece blocking the path
-			if (isValidMove(firstRow, firstCol, board, currentPlayer)) {
+			if (isMiddleBlocked(firstRow, firstCol, board, currentPlayer)) {
 				int secondRow = firstRow + direction[0];
 				int secondCol = firstCol + direction[1];
 
@@ -32,6 +32,7 @@ public class Elephant extends Piece {
 		}
 		return possiblePositions;
 	}
+
 	private boolean isValidMove(int x, int y, Cell[][] board, String currentPlayer) {
 		// Check if the position is within the board bounds
 		if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
@@ -45,6 +46,21 @@ public class Elephant extends Piece {
 
 		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
+
+	private boolean isMiddleBlocked(int x, int y, Cell[][] board, String currentPlayer) {
+		// Check if the position is within the board bounds
+		if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
+			return false;
+		}
+
+		// Check if the Soldier has crossed the river
+		if ((currentPlayer.equals("Black") && x >= 5) || (currentPlayer.equals("Red") && x <= 4)) {
+			return false;
+		}
+
+		return board[x][y].getPiece() == null;
+	}
+
 	@Override
 	public Elephant clone() {
 		Elephant clonedElephant = (Elephant) super.clone();
