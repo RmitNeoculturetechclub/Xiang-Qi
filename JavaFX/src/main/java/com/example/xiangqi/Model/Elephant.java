@@ -19,7 +19,7 @@ public class Elephant extends Piece {
 			int firstCol = y + direction[1];
 
 			// check if there's a piece blocking the path
-			if (isMiddleBlocked(firstRow, firstCol, board, currentPlayer)) {
+			if (isNotMiddleBlocked(firstRow, firstCol, board, currentPlayer)) {
 				int secondRow = firstRow + direction[0];
 				int secondCol = firstCol + direction[1];
 
@@ -47,7 +47,7 @@ public class Elephant extends Piece {
 		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
 
-	private boolean isMiddleBlocked(int x, int y, Cell[][] board, String currentPlayer) {
+	private boolean isNotMiddleBlocked(int x, int y, Cell[][] board, String currentPlayer) {
 		// Check if the position is within the board bounds
 		if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
 			return false;

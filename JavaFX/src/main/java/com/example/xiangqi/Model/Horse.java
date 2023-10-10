@@ -17,7 +17,7 @@ public class Horse extends Piece {
 			int firstRow = x + firstDirection[0];
 			int firstColumn = y + firstDirection[1];
 
-			if (isMiddleBlocked(firstRow, firstColumn, board)) {
+			if (isNotMiddleBlocked(firstRow, firstColumn, board)) {
 				for (int[] secondDirection : secondDirections) {
 					int secondRow = firstRow + secondDirection[0];
 					int secondColumn = firstColumn + secondDirection[1];
@@ -49,7 +49,7 @@ public class Horse extends Piece {
 		return board[x][y].getPiece() == null || board[x][y].getPiece().getPlayerName() != this.getPlayerName();
 	}
 
-	private boolean isMiddleBlocked(int x, int y, Cell[][] board) {
+	private boolean isNotMiddleBlocked(int x, int y, Cell[][] board) {
 
 		// Check if the position is within the board bounds
 		if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
