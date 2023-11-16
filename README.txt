@@ -1,16 +1,40 @@
-"You should use GlobalBoard instead of XiangQiBoard, XiangQiBoard is for initialization." --> Fixed
+<h1>Xiang Qi</h1>
 
-"Have you handled the logic, the cell that Cannon can jump over another piece?"
-Yes, the logic for Cannon jumping over another piece has been implemented using the isBlocked variable. Here's the pseudocode to explain the logic:
+<h2>Overview</h2>
 
-Pseudocode:
+This project is an implementation of Xiang Qi (Chinese Chess) using Java and JavaFX. It provides a graphical user interface for playing the game.
 
-The Cannon piece will attempt to move horizontally to the left until it reaches the first blocked position.
-If the Cannon encounters a piece (which blocks its movement) and that piece belongs to the opponent, it will add the position to its list of possible moves.
-If the Cannon encounters a piece that is not an opponent's piece, it will ignore that position and stop.
-The Cannon will follow the same logic for moving in other directions.
+<h2>Pieces</h2>
 
-"Static variables should be placed in another static folder."
-Since these are static variables specific to each piece, it is recommended to keep them in the corresponding class itself. However, if you still want to relocate them, please specify the desired location for the static variables.
+- **Soldier**
+- **General**
+- **Elephant**
+- **Canon**
+- **Chariot**
+- **Advisor**
+- **Horse**
 
-Please let me know if you need any further assistance or clarification.
+<h2>Features</h2>
+
+- **Black Player vs Red Player Mode:** Enjoy engaging matches between two players.
+- **Movement Guide:** Receive guidance on possible movements for each piece during gameplay.
+- **General Piece Handling:** Implement specific logic for the General piece.
+- **Time Measurement:** Keep track of the time spent by each player during the game.
+- **Final Score Popup:** Display a pop-up message chart showcasing the final score and the victorious player.
+
+
+<h2>Screenshots</h2>
+
+
+<h2>Getting Started</h2>
+- Clone the repository.
+- Run the src/main/java/com/example/xiangqi/Game.java file.
+
+<h2>Prerequisites</h2>
+- Java 8 or higher
+- JavaFX (included in Java SE 8 and 11)
+
+<h2>Usage</h2>
+- Use the mouse to interact with the game board.
+- Moves are allowed only in corresponding player order (Red or Black).<h2>Clone the repository</h2>
+
