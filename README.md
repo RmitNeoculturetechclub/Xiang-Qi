@@ -39,5 +39,5 @@ This project is an implementation of Xiang Qi (Chinese Chess) using Java and Jav
 <h2>Usage</h2>
 
 - Use the mouse to interact with the game board.
-- Moves are allowed only in corresponding player order (Red or Black).<h2>Clone the repository</h2>
+- Moves are allowed only in corresponding player order (Red or Black).
 
