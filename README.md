@@ -27,14 +27,17 @@ This project is an implementation of Xiang Qi (Chinese Chess) using Java and Jav
 
 
 <h2>Getting Started</h2>
+
 - Clone the repository.
 - Run the src/main/java/com/example/xiangqi/Game.java file.
 
 <h2>Prerequisites</h2>
+
 - Java 8 or higher
 - JavaFX (included in Java SE 8 and 11)
 
 <h2>Usage</h2>
+
 - Use the mouse to interact with the game board.
 - Moves are allowed only in corresponding player order (Red or Black).<h2>Clone the repository</h2>
 
