@@ -35,6 +35,7 @@ This project is an implementation of Xiang Qi (Chinese Chess) using Java and Jav
 
 
 <h2>Getting Started</h2>
+
 - **Clone project repository in terminal:**
 ```
 git clone https://github.com/RmitNeoculturetechclub/Xiang-Qi.git
