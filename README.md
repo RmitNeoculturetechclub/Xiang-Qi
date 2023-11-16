@@ -1,4 +1,4 @@
-<h1>Xiang Qi</h1>
+<h1>XIANG QI</h1>
 
 <h2>Overview</h2>
 
@@ -26,16 +26,27 @@ This project is an implementation of Xiang Qi (Chinese Chess) using Java and Jav
 
 
 <h2>Screenshots</h2>
+**User Interface**
+<img src="JavaFX/src/main/resources/pictures/screen.png">
+
+**Gameplay with possible move**
+<img src="JavaFX/src/main/resources/pictures/possiblemove.png">
 
 
 <h2>Getting Started</h2>
+- **Clone project repository in terminal:**
+```
+git clone https://github.com/RmitNeoculturetechclub/Xiang-Qi.git
+```
 
-- Clone the repository.
-- Run the src/main/java/com/example/xiangqi/Game.java file.
+- **Run file path (by hand):**
+```
+JavaFX/src/main/java/com/example/xiangqi/Game.java
+```
 
 <h2>Prerequisites</h2>
 
-- Java 8 or higher
+- Java >= 8
 - JavaFX (included in Java SE 8 and 11)
 
 <h2>Usage</h2>
