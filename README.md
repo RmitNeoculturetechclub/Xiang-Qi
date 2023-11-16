@@ -4,15 +4,17 @@
 
 This project is an implementation of Xiang Qi (Chinese Chess) using Java and JavaFX. It provides a graphical user interface for playing the game.
 
-<h2>Pieces</h2>
+<h2>Pieces' Value</h2>
 
-- **Soldier**
-- **General**
-- **Elephant**
-- **Canon**
-- **Chariot**
-- **Advisor**
-- **Horse**
+| PIECES   | POINTS | 
+|----------|--------|
+| Solider  | 1.0    |
+| General  | 1000.0 |
+| Elephant | 2.0    |
+| Canon    | 4.5    |
+| Chariot  | 9.0    |
+| Advisor  | 2.0    |
+| Horse    | 4.0    |
 
 <h2>Features</h2>
 
