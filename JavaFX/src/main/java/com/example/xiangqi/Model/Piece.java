@@ -1,62 +1,57 @@
 package com.example.xiangqi.Model;
 
-import com.example.xiangqi.Enums.Model.PieceName;
-import com.example.xiangqi.Enums.Model.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Piece {
-    private boolean isAlive;
-    private String id;
-    private PieceName pieceName;
-    private Player player;
+import com.example.xiangqi.Enums.Model.PieceName;
+import com.example.xiangqi.Enums.Model.Player;
 
-    public Piece(String id, String player, String pieceName) {
-        this.isAlive = true;
-        this.id = id;
-        // Todo: Change the string to player and piece name
-        // Piece name is init in the InitializeManager
-        this.player = Player.valueOf("Black");
-        this.pieceName = PieceName.valueOf("Soldier");
-    }
+public abstract class Piece implements Cloneable {
 
-    public Piece() {
-        this.isAlive = true;
-    }
+	private boolean isAlive;
+	private String id;
+	private Player player;
 
-    public void pieceMovement(){}
+	public Piece() {
+		this.isAlive = true;
+	}
 
-    public String getPieceImageName() {
-        return pieceName.name() + '_' + player.name();
-    }
+	public void setPlayer(String player) {
+		this.player = Player.valueOf(player);
+	}
 
-    public List<int[]> getAllPossibleMoves(Cell[][] GlobalBoard){
-        /*
-        Change the list name
-        Change the new int to find all possible positions
-        Check the condition to find suitable move, and eliminate the occupied piece
-         */
-        List<int[]> example = new ArrayList<>();
-        switch (this.pieceName){
-            case Soldier -> {
-                /*
-                Soldier movement here
-                 */
-                break;
-            }
+	public String getPieceImageName() {
+		return getPieceName() + "_" + getPlayerName();
+	}
 
-            case Canon -> {
-                /*
-                Cannon here
-                 */
-                break;
-            }
-            default -> {
-                break;
-            }
-        }
-        example.add(new int[]{0, 0});
-        return example;
-    }
+	public List<int[]> getAllPossibleMoves(int[] currentPosition, Cell[][] board) {
+		/*
+		 * Change the list name
+		 * Change the new int to find all possible positions
+		 * Check the condition to find suitable move, and eliminate the occupied piece
+		 */
+		List<int[]> example = new ArrayList<>();
+		return example;
+	}
+
+	public String getPlayerName() {
+		return player.name();
+	}
+
+	public String getPieceName() {
+		String className = this.getClass().getSimpleName();
+		String[] array = className.split("_");
+		return array[0];
+	}
+
+	@Override
+	public Piece clone() {
+		try {
+			return (Piece) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// Handle the exception as needed
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
