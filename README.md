@@ -26,7 +26,8 @@ This project is an implementation of Xiang Qi (Chinese Chess) using Java and Jav
 
 
 <h2>Screenshots</h2>
-**User Interface**
+
+**User interface**
 <img src="JavaFX/src/main/resources/pictures/screen.png">
 
 **Gameplay with possible move**
